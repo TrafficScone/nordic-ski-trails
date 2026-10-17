@@ -3,7 +3,8 @@
 A static map of nordic ski trails, drawn in [CalTopo](https://caltopo.com) and
 hosted on Netlify for the Boulder Nordic Club. Trails keep the colours and line
 styles you gave them in CalTopo; click one for its name, length, and
-description.
+description, along with distance, climb (↑ gain / ↓ loss) and an elevation
+profile computed from the elevation model.
 
 The basemap ("Corduroy", `public/js/basemap.js`) is a light winter style built
 on MapTiler's vector tiles: snow-white ground, forest tinted so treeline reads
@@ -30,53 +31,60 @@ markers (a coloured disc with a letter for the symbol, such as `P` for
 parking), and polygons (as tinted areas). Sections named `Trail_1`, `Trail_2`…
 are shown as one trail with a combined length.
 
-## Pulling trails from OpenStreetMap
+## Areas and OpenStreetMap trails
 
-For established trail networks it's easier to pull the trails from OSM than to
-draw them. Groomed nordic trails there often carry difficulty and grooming
-tags, which become the green/blue/black colour and the popup text; ungroomed
-(`piste:grooming=backcountry`) trails are drawn dashed.
+Polygons in the CalTopo map are **areas** ("Eldora", "West Magnolia Trails").
+On the site, an area is a light outline (strongest zoomed out) and a section in
+the trail list holding every trail and place inside it; its CalTopo description
+shows when you click it.
 
-1. In CalTopo, draw a polygon around the area and export it as GeoJSON into
-   `tools/osm-areas/`.
-2. Add the area to `tools/osm-trails.json`:
+Areas also drive the OpenStreetMap sync. For each one, `tools/sync_osm.py`
+pulls every OSM trail inside the polygon (groomed nordic trails, named paths
+and tracks, named minor roads), clips it to the polygon, and joins it by name
+("Devils" and "Devil's" count as the same). Groomed trails often carry OSM
+difficulty and grooming tags, which become the green/blue/black colour and the
+popup text; ungroomed (`piste:grooming=backcountry`) trails are drawn dashed.
 
-   ```json
-   {
-     "areas": [
-       {
-         "name": "Eldora",
-         "polygon": "osm-areas/eldora.geojson",
-         "include": ["nordic", "paths"],
-         "color": "blue",
-         "exclude": ["Devils Thumb Trail", 206211544],
-         "colors": { "Fourth of July Road": "green" }
-       }
-     ],
-     "trails": []
-   }
-   ```
+```bash
+python3 tools/sync_osm.py        # writes public/trails/osm.geojson
+python3 tools/index_trails.py    # then review the diff and commit
+```
 
-   | Key | Meaning |
-   |---|---|
-   | `include` | `nordic` (groomed ski trails), `paths` (named hiking trails and tracks), `roads` (named minor roads). Default `["nordic"]`. |
-   | `color` | Colour for trails OSM gives no difficulty for: `green`, `blue`, `black`, or a hex colour. |
-   | `exclude` | Trail names or OSM way ids to leave out, e.g. one you've drawn better in CalTopo. |
-   | `colors` | Per-trail colour overrides, by name. |
+What to keep, drop, or recolour lives in `tools/osm-trails.json`, keyed by the
+polygon's CalTopo title, so it survives every re-export:
 
-   For exact control, list ways instead under `trails`:
-   `{"name": "…", "sections": [{"ways": [123, 456], "color": "blue", "description": "…"}]}`.
+```json
+{
+  "areas": {
+    "Eldora": {
+      "include": ["nordic", "paths", "roads"],
+      "exclude": ["Kinglet Trail", 206211544],
+      "colors": { "Jenny Creek": "green" },
+      "color": "blue",
+      "notes": { "Jenny Creek": "Dogs allowed on this one." }
+    }
+  },
+  "trails": []
+}
+```
 
-3. `python3 tools/sync_osm.py` writes `public/trails/osm.geojson`. Trails are
-   clipped to the polygon and joined by name ("Devils" and "Devil's" count as
-   the same). It warns when an OSM trail has the same name as a CalTopo one,
-   because the map would merge them.
-4. `python3 tools/index_trails.py`, look over the diff, commit. Re-run the sync
-   whenever you want OSM's latest; review before committing, since anyone can
-   edit OSM.
+| Key | Meaning |
+|---|---|
+| `include` | `nordic`, `paths`, `roads`. Default: all three. |
+| `exclude` | Trail names or OSM way ids to leave out. |
+| `colors` | Per-trail colour: `green`, `blue`, `black`, or a hex colour. |
+| `color` | Colour for trails OSM gives no difficulty for (default blue). |
+| `notes` | Extra description text per trail, shown above OSM's grooming info. |
+| `min_length_m` | Drop pieces shorter than this (default 100 m; edge slivers). |
 
-Trail data from OSM is © OpenStreetMap contributors (ODbL), credited in the map's
-attribution.
+`trails` takes exact way lists for when an area isn't the right tool:
+`{"name": "…", "sections": [{"ways": [123, 456], "color": "blue", "description": "…"}]}`.
+
+The sync warns when an OSM trail has the same name as a CalTopo line, because
+the map would merge them; exclude it to let the CalTopo version win. Re-run it
+whenever you want OSM's latest, and review before committing, since anyone can
+edit OSM. Trail data from OSM is © OpenStreetMap contributors (ODbL), credited
+in the map's attribution.
 
 ## Run it locally
 
@@ -117,14 +125,15 @@ public/                 ← the only folder Netlify deploys
   css/app.css           styling
   js/config.js          MapTiler key, opening view, units
   js/basemap.js         the winter basemap style (palette + layers)
+  js/dem.js             elevation tile loading (shared)
   js/slope.js           slope-angle shading, computed from elevation tiles
+  js/profile.js         elevation profiles and climb stats
   js/layers.js          trail layer specs
   js/app.js             loads trails, list, popups
   trails/*.geojson      CalTopo exports
   trails/index.json     generated list of the above
 docs/cartography.md     design principles and sources
 tools/                  dev only — index script, OSM sync, checks
-  osm-trails.json       which OSM areas/trails to pull
-  osm-areas/            CalTopo polygon exports for those areas
+  osm-trails.json       per-area OSM keep/drop/recolour decisions
 netlify.toml            static hosting config
 ```

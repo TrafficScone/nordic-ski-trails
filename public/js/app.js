@@ -6,11 +6,14 @@
 //
 // A trail drawn in sections ("Devil's Thumb Trail_1", "…_2", usually one per
 // difficulty colour) is treated as one trail: one list row, one popup.
+// CalTopo polygons are areas ("Eldora"): trails inside one are listed under it,
+// and tools/sync_osm.py pulls the OSM trails inside it.
 // ---------------------------------------------------------------------------
 
 import { basemapStyle } from './basemap.js';
 import { DEFAULT_VIEW, DEM_TILES, FALLBACK_COLOR, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
 import { HIT_LAYERS, trailLayers } from './layers.js';
+import { profileOf, profileSvg } from './profile.js';
 import { SLOPE_CLASSES, registerSlopeProtocol } from './slope.js';
 
 const SRC = 'trails';
@@ -50,6 +53,7 @@ map.on('load', async () => {
   const bb = bboxOf(fc.features);
   if (bb) map.fitBounds(bb, { padding: 60, maxZoom: 15, duration: 0 });
 
+  assignAreas(fc.features);
   groups = groupFeatures(fc.features);
   renderList();
   renderSlopeLegend();
@@ -70,7 +74,7 @@ $('#slope-toggle').onchange = (e) => {
   $('#slope-legend').hidden = !e.target.checked;
 };
 
-/** @type {Map<string, {name: string, kind: 'trail'|'place', features: object[], length: number}>} */
+/** @type {Map<string, {name: string, kind: 'trail'|'place'|'area', area: string, features: object[], length: number}>} */
 let groups = new Map();
 
 // ===========================================================================
@@ -107,6 +111,7 @@ async function getJSON(url) {
 function styled(f) {
   const p = f.properties ?? {};
   const isPoint = f.geometry.type.endsWith('Point');
+  const kind = isPoint ? 'place' : f.geometry.type.endsWith('Polygon') ? 'area' : 'trail';
   const title = String(p.title || p.name || '').trim();
   // "Devil's Thumb Trail_2" is section 2 of "Devil's Thumb Trail".
   const name = title.replace(/[\s_-]+\d+$/, '') || title;
@@ -118,7 +123,8 @@ function styled(f) {
       ...p,
       _name: name,
       _section: title,
-      _group: `${isPoint ? 'place' : 'trail'}:${name || Math.random()}`,
+      _group: `${kind}:${kind === 'area' ? title : name || Math.random()}`,
+      _area: kind === 'area' ? title : p.area ?? '',
       _glyph: MARKER_GLYPHS[p['marker-symbol']] ?? '',
       _color: color(isPoint ? p['marker-color'] : p.stroke),
       _width: num(p['stroke-width'], 3),
@@ -140,12 +146,27 @@ function color(c) {
 // UI
 // ===========================================================================
 
-/** Collect sections that share a name into one trail (or place). */
+/**
+ * Give each CalTopo trail and place the area whose polygon contains it (OSM
+ * trails already carry theirs from the sync).
+ */
+function assignAreas(features) {
+  const areas = features.filter((f) => f.geometry.type.endsWith('Polygon'));
+  for (const f of features) {
+    if (f.properties._area || !areas.length) continue;
+    const probe = centerOf(f.geometry);
+    const home = areas.find((a) => inPolygon(probe, a.geometry));
+    if (home) f.properties._area = home.properties._area;
+  }
+}
+
+/** Collect sections that share a name into one trail (or place, or area). */
 function groupFeatures(features) {
   const out = new Map();
   for (const f of features) {
     const p = f.properties;
-    const g = out.get(p._group) ?? { name: p._name, kind: p._group.startsWith('place') ? 'place' : 'trail', features: [], length: 0 };
+    const kind = p._group.slice(0, p._group.indexOf(':'));
+    const g = out.get(p._group) ?? { name: kind === 'area' ? p._section : p._name, kind, area: p._area, features: [], length: 0 };
     g.features.push(f);
     g.length += p._length;
     out.set(p._group, g);
@@ -153,34 +174,57 @@ function groupFeatures(features) {
   return out;
 }
 
+/**
+ * The list: one collapsible section per area (its trails, then its places),
+ * then anything outside every area.
+ */
 function renderList() {
   const list = $('#list');
   list.replaceChildren();
-  const named = [...groups.values()].filter((g) => g.name).sort((a, b) => a.name.localeCompare(b.name));
-  if (!named.length) { list.textContent = 'No trails yet.'; return; }
+  const all = [...groups.values()].filter((g) => g.name).sort((a, b) => a.name.localeCompare(b.name));
+  if (!all.length) { list.textContent = 'No trails yet.'; return; }
 
-  for (const kind of ['trail', 'place']) {
-    const items = named.filter((g) => g.kind === kind);
-    if (!items.length) continue;
+  const byKind = (items) => [...items.filter((g) => g.kind === 'trail'), ...items.filter((g) => g.kind === 'place')];
+  for (const area of all.filter((g) => g.kind === 'area')) {
+    const items = byKind(all.filter((g) => g.kind !== 'area' && g.area === area.name));
+    const section = document.createElement('details');
+    section.className = 'area';
+    const summary = document.createElement('summary');
+    summary.append(span('area-name', area.name), span('len', `${items.length}`));
+    section.append(summary);
+    const show = document.createElement('button');
+    show.className = 'area-show';
+    show.textContent = 'Show area on map';
+    show.onclick = () => focus(area);
+    section.append(show);
+    for (const g of items) section.append(listItem(g));
+    list.append(section);
+  }
+
+  const loose = byKind(all.filter((g) => g.kind !== 'area' && !groups.has(`area:${g.area}`)));
+  if (loose.length) {
     const h = document.createElement('h2');
     h.className = 'list-head';
-    h.textContent = kind === 'trail' ? 'Trails' : 'Places';
+    h.textContent = all.some((g) => g.kind === 'area') ? 'Other trails & places' : 'Trails & places';
     list.append(h);
-    for (const g of items) list.append(listItem(g));
+    for (const g of loose) list.append(listItem(g));
   }
+}
+
+/** Fly to a trail, place or area and open its popup. */
+function focus(g) {
+  const bb = bboxOf(g.features);
+  if (g.kind === 'place') map.flyTo({ center: bb[0], zoom: Math.max(map.getZoom(), 14) });
+  else map.fitBounds(bb, { padding: 80, maxZoom: 15 });
+  showPopup(g, g.kind === 'area' ? [(bb[0][0] + bb[1][0]) / 2, bb[1][1]] : centerOf(g.features[0].geometry));
+  if (window.matchMedia('(max-width: 640px)').matches) $('#panel').classList.add('is-collapsed');
 }
 
 function listItem(g) {
   const btn = document.createElement('button');
   btn.className = 'item';
   btn.append(swatches(g), span('name', g.name), span('len', g.length ? formatDistance(g.length) : ''));
-  btn.onclick = () => {
-    const bb = bboxOf(g.features);
-    if (g.kind === 'place') map.flyTo({ center: bb[0], zoom: Math.max(map.getZoom(), 14) });
-    else map.fitBounds(bb, { padding: 80, maxZoom: 15 });
-    showPopup(g, centerOf(g.features[0].geometry));
-    if (window.matchMedia('(max-width: 640px)').matches) $('#panel').classList.add('is-collapsed');
-  };
+  btn.onclick = () => focus(g);
   return btn;
 }
 
@@ -202,7 +246,9 @@ function showPopup(g, lngLat) {
   const h = document.createElement('h3');
   h.textContent = g.name || 'Untitled';
   el.append(h);
-  if (g.length) el.append(span('meta', formatDistance(g.length)));
+  const stats = span('meta', g.length ? formatDistance(g.length) : '');
+  el.append(stats);
+  if (g.kind === 'trail') addProfile(g, el, stats);
 
   // One line per section that has something to say, keyed by its colour.
   for (const f of g.features) {
@@ -218,6 +264,40 @@ function showPopup(g, lngLat) {
     el.append(row);
   }
   popup.setLngLat(lngLat).setDOMContent(el).addTo(map);
+}
+
+/** Fill in climb stats and the elevation chart once the DEM has been read. */
+async function addProfile(g, el, stats) {
+  const chart = span('profile-slot', 'Loading elevation…');
+  stats.after(chart);
+  try {
+    const profile = await profileOf(travelOrder(g), DEM_TILES);
+    const ft = (m) => `${Math.round(m * 3.28084).toLocaleString()} ft`;
+    stats.textContent = `${formatDistance(g.length)} · ↑ ${ft(profile.gain)} · ↓ ${ft(profile.loss)}`;
+    const range = span('meta', `Elevation ${ft(profile.min)} – ${ft(profile.max)}`);
+    chart.replaceWith(profileSvg(profile), range);
+  } catch (err) {
+    console.error('Elevation profile failed:', err);
+    chart.remove();
+  }
+}
+
+/**
+ * A trail's lines in the order you'd ski them: sections by number, each
+ * section's parts as drawn, joining parts that meet end to start.
+ */
+function travelOrder(g) {
+  const sectionNo = (f) => Number(f.properties._section.match(/(\d+)$/)?.[1] ?? 0);
+  const parts = [...g.features]
+    .sort((a, b) => sectionNo(a) - sectionNo(b))
+    .flatMap((f) => (f.geometry.type === 'LineString' ? [f.geometry.coordinates] : f.geometry.coordinates));
+  const joined = [parts[0]];
+  for (const part of parts.slice(1)) {
+    const prev = joined.at(-1);
+    if (haversine(prev.at(-1), part[0]) < 30) joined[joined.length - 1] = prev.concat(part.slice(1));
+    else joined.push(part);
+  }
+  return joined;
 }
 
 function renderSlopeLegend() {
@@ -258,6 +338,20 @@ function bboxOf(features) {
   const xs = pts.map((p) => p[0]);
   const ys = pts.map((p) => p[1]);
   return [[Math.min(...xs), Math.min(...ys)], [Math.max(...xs), Math.max(...ys)]];
+}
+
+/** Ray-casting point-in-polygon, holes included. */
+function inPolygon([x, y], geometry) {
+  const polys = geometry.type === 'Polygon' ? [geometry.coordinates] : geometry.coordinates;
+  const inRing = (ring) => {
+    let hit = false;
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const [xi, yi] = ring[i], [xj, yj] = ring[j];
+      if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) hit = !hit;
+    }
+    return hit;
+  };
+  return polys.some(([outer, ...holes]) => inRing(outer) && !holes.some(inRing));
 }
 
 function centerOf(g) {

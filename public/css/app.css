@@ -62,11 +62,38 @@ button { font: inherit; color: inherit; }
 .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .len { flex: none; color: var(--ink-2); font-size: 12px; font-variant-numeric: tabular-nums; }
 
+/* ---------- areas in the list ---------- */
+.area { border-bottom: 1px solid #eceef1; }
+.area > summary {
+  display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px;
+  cursor: pointer; list-style: none; color: var(--brand-ink); font-weight: 600;
+  border-radius: 6px;
+}
+.area > summary::-webkit-details-marker { display: none; }
+.area > summary::before {
+  content: "▸"; flex: none; width: 12px; color: var(--ink-2); transition: transform .15s;
+}
+.area[open] > summary::before { transform: rotate(90deg); }
+.area > summary:hover { background: var(--hover); }
+.area > summary:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+.area-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.area > summary .len {
+  background: #eef1f4; border-radius: 10px; padding: 0 7px; font-weight: 500; line-height: 20px;
+}
+.area-show {
+  display: block; margin: 0 8px 4px 28px; padding: 6px 0; border: 0; background: none;
+  color: var(--brand); font-size: 13px; cursor: pointer; text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.area .item { padding-left: 20px; }
+
 /* ---------- popup ---------- */
 .maplibregl-popup-content { border-radius: 8px; padding: 12px 14px; font: 14px/1.45 var(--font); color: var(--ink); }
 .maplibregl-popup-close-button { width: 32px; height: 32px; font-size: 20px; }
 .pop h3 { margin: 0 24px 2px 0; font-size: 15px; color: var(--brand-ink); }
-.pop .meta { color: var(--ink-2); font-size: 13px; }
+.pop .meta { display: block; color: var(--ink-2); font-size: 13px; font-variant-numeric: tabular-nums; }
+.pop .profile { display: block; width: 100%; height: auto; margin: 8px 0 2px; }
+.pop .profile-slot { display: block; margin: 8px 0; color: var(--ink-2); font-size: 12px; }
 .pop p { margin: 6px 0 0; white-space: pre-line; }
 .pop p .swatch { width: 14px; margin-right: 6px; vertical-align: middle; }
 

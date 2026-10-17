@@ -66,6 +66,15 @@ const { window } = dom;
 globalThis.window = window;
 globalThis.document = window.document;
 
+globalThis.createImageBitmap = async () => ({ width: 4 });
+globalThis.OffscreenCanvas = class {
+  getContext() {
+    const v = (DEM_METRES + 10000) * 10; // terrain-RGB encoding
+    const data = new Uint8ClampedArray(4 * 4 * 4).map((_, i) => [v >> 16, (v >> 8) & 255, v & 255, 255][i % 4]);
+    return { drawImage() {}, getImageData: () => ({ data }) };
+  }
+};
+
 let created;
 const protocols = new Map();
 globalThis.maplibregl = {
@@ -76,8 +85,11 @@ globalThis.maplibregl = {
   Popup: FakePopup,
 };
 
-// Serve public/ from disk instead of over HTTP.
+// Serve public/ from disk instead of over HTTP. Elevation tiles are faked as a
+// flat 3000 m plateau, decoded through stubbed canvas APIs.
+const DEM_METRES = 3000;
 globalThis.fetch = async (url) => {
+  if (/^https?:/.test(String(url))) return { ok: true, blob: async () => ({}) };
   const file = path.join(SITE, String(url));
   if (!fs.existsSync(file)) return { ok: false, status: 404 };
   return { ok: true, json: async () => JSON.parse(fs.readFileSync(file, 'utf8')) };
@@ -112,7 +124,10 @@ const items = [...window.document.querySelectorAll('#list .item')];
 const names = items.map((el) => el.querySelector('.name').textContent);
 check('trail list rendered', items.length > 0, `${items.length} items`);
 check('sections of one trail share a row', names.filter((n) => n === "Devil's Thumb Trail").length === 1, names.join(', '));
-check('places get their own section', [...window.document.querySelectorAll('.list-head')].some((h) => h.textContent === 'Places'));
+const areaNames = [...window.document.querySelectorAll('#list details.area .area-name')].map((el) => el.textContent);
+check('CalTopo polygons become list sections', areaNames.includes('Eldora'), areaNames.join(', '));
+const eldora = [...window.document.querySelectorAll('#list details.area')].find((d) => d.querySelector('.area-name').textContent === 'Eldora');
+check('OSM trails list under their area', eldora?.querySelectorAll('.item').length > 5);
 const parking = fc.features.find((f) => f.properties['marker-symbol'] === 'parked-car');
 check('parking marker gets a P', parking?.properties._glyph === 'P');
 
@@ -126,6 +141,10 @@ map.queryResult = [devil];
 await map.fire('click', { point: { x: 1, y: 1 }, lngLat: { lng: 0, lat: 0 } });
 check('a section opens the whole trail', popupContent?.querySelector('h3')?.textContent === "Devil's Thumb Trail"
   && popupContent.querySelectorAll('p').length === 2);
+await new Promise((r) => setTimeout(r, 50)); // let the elevation profile resolve
+check('trail popup gets an elevation profile', !!popupContent.querySelector('svg.profile'));
+check('climb stats shown (flat DEM: no gain)', /↑ 0 ft · ↓ 0 ft/.test(popupContent.querySelector('.meta')?.textContent),
+  popupContent.querySelector('.meta')?.textContent);
 
 const toggle = $('#slope-toggle');
 toggle.checked = true;

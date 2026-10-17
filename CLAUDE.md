@@ -24,8 +24,14 @@ the build command. `app.js` copies CalTopo's styling (`stroke`, `stroke-width`,
 `stroke-opacity`, `pattern`, `marker-color`, `fill-opacity`, `title`) onto
 `_`-prefixed properties that the layers read.
 
+CalTopo polygons are *areas*: list sections in the app, and the regions
+`tools/sync_osm.py` pulls OSM trails from. The user curates OSM results by
+telling Claude what to drop or recolour; record those decisions in
+`tools/osm-trails.json` (keyed by polygon title), re-run the sync, and commit —
+never hand-edit `osm.geojson`.
+
 `tools/sync_osm.py` builds `public/trails/osm.geojson` from OpenStreetMap
-(Overpass) for the areas/ways in `tools/osm-trails.json`. It writes CalTopo-shaped
+(Overpass) for every CalTopo polygon plus the way lists in `tools/osm-trails.json`. It writes CalTopo-shaped
 properties (`title`, `stroke`, `pattern`…) so `app.js` needs no OSM-specific code.
 It runs by hand, never in the Netlify build: Overpass can be down, and OSM edits
 should be reviewed before they go live. `python3 tools/test_sync_osm.py` tests it

@@ -11,6 +11,8 @@
 // See docs/cartography.md for why these breaks.
 // ---------------------------------------------------------------------------
 
+import { loadDemTile, tileLatitude } from './dem.js';
+
 /** [min degrees, colour] — each class runs up to the next one's minimum. */
 export const SLOPE_CLASSES = [
   [27, '#f2e200'], // 27–29  yellow
@@ -32,24 +34,18 @@ const EARTH_CIRCUMFERENCE = 40075016.686;
 export function registerSlopeProtocol(demUrl) {
   const palette = SLOPE_CLASSES.map(([deg, hex]) => [deg, hexToRgb(hex)]);
 
-  maplibregl.addProtocol(SLOPE_PROTOCOL, async (params, abort) => {
+  maplibregl.addProtocol(SLOPE_PROTOCOL, async (params) => {
     const [z, x, y] = params.url.replace(`${SLOPE_PROTOCOL}://`, '').split('/').map(Number);
-    const res = await fetch(demUrl.replace('{z}', z).replace('{x}', x).replace('{y}', y), { signal: abort.signal });
-    if (!res.ok) throw new Error(`DEM tile ${z}/${x}/${y}: HTTP ${res.status}`);
-    const bitmap = await createImageBitmap(await res.blob());
-    const size = bitmap.width;
-
+    const { size, elev } = await loadDemTile(demUrl, z, x, y);
     const canvas = new OffscreenCanvas(size, size);
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
-    ctx.drawImage(bitmap, 0, 0);
-    const px = ctx.getImageData(0, 0, size, size);
-    const elev = decodeTerrainRgb(px.data, size);
+    const ctx = canvas.getContext('2d');
+    const px = ctx.createImageData(size, size);
 
     // Ground size of one pixel at this tile's latitude.
     const lat = tileLatitude(y + 0.5, z);
     const cell = (EARTH_CIRCUMFERENCE * Math.cos((lat * Math.PI) / 180)) / (2 ** z * size);
 
-    const out = px.data; // reuse the buffer for the output colours
+    const out = px.data;
     const at = (i, j) => elev[Math.min(size - 1, Math.max(0, j)) * size + Math.min(size - 1, Math.max(0, i))];
     for (let j = 0; j < size; j++) {
       for (let i = 0; i < size; i++) {
@@ -73,24 +69,10 @@ export function registerSlopeProtocol(demUrl) {
   });
 }
 
-/** Mapbox terrain-RGB: height = -10000 + (R·65536 + G·256 + B) · 0.1 metres. */
-function decodeTerrainRgb(data, size) {
-  const elev = new Float32Array(size * size);
-  for (let p = 0, o = 0; p < elev.length; p++, o += 4) {
-    elev[p] = -10000 + (data[o] * 65536 + data[o + 1] * 256 + data[o + 2]) * 0.1;
-  }
-  return elev;
-}
-
 function classify(deg, palette) {
   let hit = null;
   for (const [min, rgb] of palette) if (deg >= min) hit = rgb;
   return hit;
-}
-
-function tileLatitude(y, z) {
-  const n = Math.PI - (2 * Math.PI * y) / 2 ** z;
-  return (180 / Math.PI) * Math.atan(Math.sinh(n));
 }
 
 function hexToRgb(hex) {

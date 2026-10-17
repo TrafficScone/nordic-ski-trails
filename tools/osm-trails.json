@@ -1,13 +1,4 @@
 {
-  "areas": [
-    {
-      "name": "Eldora & Hessie (example)",
-      "polygon": "osm-areas/eldora-hessie.geojson",
-      "include": ["nordic", "paths"],
-      "color": "blue",
-      "exclude": ["Devils Thumb Trail"],
-      "colors": {}
-    }
-  ],
+  "areas": {},
   "trails": []
 }

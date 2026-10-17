@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
-"""Build trails from OpenStreetMap, as configured in tools/osm-trails.json.
+"""Build trails from OpenStreetMap for the areas drawn in CalTopo.
 
     python3 tools/sync_osm.py
 
-Two ways to say which trails you want:
+Every polygon in the CalTopo exports in public/trails/ is an area. Every OSM
+trail inside it (groomed nordic trails, named paths and tracks, named minor
+roads) is fetched, clipped to the polygon, and joined by name.
 
-  areas   Draw a polygon in CalTopo, export it as GeoJSON into tools/osm-areas/,
-          and list it here. Every OSM trail inside it is fetched, clipped to
-          the polygon, and joined by name.
+tools/osm-trails.json refines that, keyed by the polygon's CalTopo title:
 
-  trails  An exact list of OSM way ids, optionally in sections with their own
-          colours. For when an area pulls in too much or too little.
+  "areas": {
+    "Eldora": {
+      "include": ["nordic", "paths", "roads"],   default: all three
+      "exclude": ["Kinglet Trail", 206211544],   trail names or OSM way ids
+      "colors":  {"Jenny Creek": "green"},       per-trail colour overrides
+      "color":   "blue",                         when OSM has no difficulty
+      "notes":   {"Jenny Creek": "Dogs allowed"} extra description text
+    }
+  },
+  "trails": [ … ]   exact OSM way lists, optionally in coloured sections
 
 The result is written to public/trails/osm.geojson in the same shape CalTopo
 exports, so the map treats it exactly like a hand-drawn trail. Run it by hand
@@ -32,7 +40,8 @@ ROOT = Path(__file__).resolve().parent.parent
 SITE_DIR = ROOT / "public"
 TOOLS_DIR = ROOT / "tools"
 MANIFEST = TOOLS_DIR / "osm-trails.json"
-OUTPUT = SITE_DIR / "trails" / "osm.geojson"
+TRAILS_DIR = SITE_DIR / "trails"
+OUTPUT = TRAILS_DIR / "osm.geojson"
 
 OVERPASS = [
     "https://overpass-api.de/api/interpreter",
@@ -49,6 +58,9 @@ PISTE_DIFFICULTY = {
     "advanced": "black", "expert": "black", "freeride": "black", "extreme": "black",
 }
 DEFAULT_WIDTH = 2
+DEFAULT_INCLUDE = ["nordic", "paths", "roads"]
+# Pieces shorter than this (usually a trail clipped at the polygon edge) are dropped.
+MIN_LENGTH_M = 100
 
 # What each `include` keyword fetches inside an area. Paths and roads must be
 # named; an unnamed path can't be listed or labelled.
@@ -174,20 +186,23 @@ def clip_way(way: dict, polygons: list) -> list[dict]:
     return [p for p in pieces if len(p["coords"]) > 1]
 
 
-def load_polygons(path: Path) -> list:
-    """Polygons from a GeoJSON file (e.g. a CalTopo polygon export)."""
-    data = json.loads(path.read_text(encoding="utf-8"))
-    features = data["features"] if data.get("type") == "FeatureCollection" else [data]
-    polys = []
-    for f in features:
-        g = f.get("geometry") or f
-        if g["type"] == "Polygon":
-            polys.append(g["coordinates"])
-        elif g["type"] == "MultiPolygon":
-            polys.extend(g["coordinates"])
-    if not polys:
-        raise SystemExit(f"{path}: no polygon in this file")
-    return [[[c[:2] for c in ring] for ring in poly] for poly in polys]
+def caltopo_files() -> list[Path]:
+    return [p for p in sorted(TRAILS_DIR.glob("*.*json")) if p.name not in (OUTPUT.name, "index.json")]
+
+
+def find_areas() -> dict[str, list]:
+    """{polygon title: [polygon, …]} from every CalTopo export in public/trails/."""
+    areas: dict[str, list] = {}
+    for path in caltopo_files():
+        for f in json.loads(path.read_text(encoding="utf-8")).get("features", []):
+            g = f.get("geometry") or {}
+            title = ((f.get("properties") or {}).get("title") or "").strip()
+            polys = ([g["coordinates"]] if g.get("type") == "Polygon"
+                     else g["coordinates"] if g.get("type") == "MultiPolygon" else [])
+            if polys and title:
+                areas.setdefault(title, []).extend(
+                    [[[c[:2] for c in ring] for ring in poly] for poly in polys])
+    return areas
 
 
 def poly_filter(polygon) -> str:
@@ -253,12 +268,11 @@ def feature(title, lines, *, color, description, ways, width=DEFAULT_WIDTH, patt
 
 # -- areas ------------------------------------------------------------------
 
-def sync_area(area: dict) -> list[dict]:
-    polygons = load_polygons(TOOLS_DIR / area["polygon"])
-    include = area.get("include", ["nordic"])
+def sync_area(area_name: str, polygons: list, area: dict) -> list[dict]:
+    include = area.get("include", DEFAULT_INCLUDE)
     unknown = [k for k in include if k not in INCLUDE]
     if unknown:
-        raise SystemExit(f"{area['name']}: unknown include {unknown}; use {sorted(INCLUDE)}")
+        raise SystemExit(f"{area_name}: unknown include {unknown}; use {sorted(INCLUDE)}")
 
     parts = [q.replace("{poly}", poly_filter(p)) for p in polygons for k in include for q in INCLUDE[k]]
     # Fetch the matches, then the member ways of any matching relations.
@@ -279,9 +293,11 @@ def sync_area(area: dict) -> list[dict]:
     exclude = {name_key(n) for n in area.get("exclude", []) if isinstance(n, str)}
     exclude_ids = {n for n in area.get("exclude", []) if isinstance(n, int)}
     colors = {name_key(k): v for k, v in area.get("colors", {}).items()}
+    notes = {name_key(k): v for k, v in area.get("notes", {}).items()}
 
     groups: dict[str, dict] = {}
-    skipped = 0
+    skipped = skipped_short = 0
+    seen = set()
     for wid, w in ways.items():
         if wid in exclude_ids or "geometry" not in w:
             continue
@@ -292,6 +308,7 @@ def sync_area(area: dict) -> list[dict]:
             skipped += 1
             continue
         key = name_key(name)
+        seen.add(key)
         if key in exclude:
             continue
         pieces = clip_way({"nodes": w["nodes"], "coords": way_coords(w)}, polygons)
@@ -305,19 +322,30 @@ def sync_area(area: dict) -> list[dict]:
             g["tags"].setdefault(k, v)
 
     features = []
+    min_m = area.get("min_length_m", MIN_LENGTH_M)
     for key, g in sorted(groups.items()):
         # Most common spelling; on a tie, the one with an apostrophe.
         title = max(g["names"], key=lambda n: (g["names"][n], "'" in n))
         difficulty = PISTE_DIFFICULTY.get(g["tags"].get("piste:difficulty", ""))
         color = colors.get(key) or difficulty or area.get("color")
-        lines = stitch(g["pieces"])
-        features.append(feature(title, lines, color=color, description=describe(g["tags"]), ways=g["ways"],
-                                # Ungroomed reads as dashed, as on printed trail maps.
-                                pattern="dash" if ungroomed(g["tags"]) else "solid"))
+        lines = [c for c in stitch(g["pieces"]) if length_m(c) >= min_m]
+        if not lines:
+            skipped_short += 1
+            continue
+        description = "\n\n".join(t for t in (notes.get(key, ""), describe(g["tags"])) if t)
+        f = feature(title, lines, color=color, description=description, ways=g["ways"],
+                    # Ungroomed reads as dashed, as on printed trail maps.
+                    pattern="dash" if ungroomed(g["tags"]) else "solid")
+        f["properties"]["area"] = area_name
+        features.append(f)
         miles = sum(length_m(c) for c in lines) / 1609.344
         print(f"    {title}: {miles:.1f} mi ({len(g['ways'])} ways)")
     note = f", {skipped} unnamed ways skipped" if skipped else ""
-    print(f"  ✓ {area['name']}: {len(features)} trails{note}")
+    note += f", {skipped_short} slivers under {min_m} m dropped" if skipped_short else ""
+    unused = [n for n in area.get("exclude", []) if isinstance(n, str) and name_key(n) not in seen]
+    if unused:
+        print(f"  ! {area_name}: exclude entries matched nothing: {unused}")
+    print(f"  ✓ {area_name}: {len(features)} trails{note}")
     return features
 
 
@@ -363,12 +391,12 @@ def base_key(title: str) -> str:
 
 
 def other_trail_names() -> set[str]:
-    """Names already used by CalTopo files, to warn about accidental merges."""
+    """Names already used by CalTopo lines, to warn about accidental merges."""
     names = set()
-    for path in (SITE_DIR / "trails").glob("*.*json"):
-        if path.name in (OUTPUT.name, "index.json"):
-            continue
+    for path in caltopo_files():
         for f in json.loads(path.read_text(encoding="utf-8")).get("features", []):
+            if not (f.get("geometry") or {}).get("type", "").endswith("LineString"):
+                continue
             names.add(base_key((f.get("properties") or {}).get("title") or ""))
     return names
 
@@ -379,10 +407,15 @@ def main() -> int:
     except (OSError, ValueError) as err:
         raise SystemExit(f"{MANIFEST.relative_to(ROOT)}: {err}")
 
+    config = manifest.get("areas", {})
+    areas = find_areas()
+    for name in config:
+        if name not in areas:
+            print(f"! tools/osm-trails.json configures \"{name}\", but no CalTopo polygon has that title")
     features = []
-    for area in manifest.get("areas", []):
-        print(f"area: {area['name']}")
-        features += sync_area(area)
+    for name, polygons in areas.items():
+        print(f"area: {name}")
+        features += sync_area(name, polygons, config.get(name, {}))
     trail_features, problems = sync_trails(manifest.get("trails", []))
     features += trail_features
 

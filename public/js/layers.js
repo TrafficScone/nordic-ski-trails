@@ -28,13 +28,23 @@ export const HIT_LAYERS = ['marker-dot', 'trail-hit', 'area-fill'];
 /** Layers for the trail source, in draw order (bottom first). */
 export function trailLayers(source) {
   return [
+    // Areas (CalTopo polygons) say "here's a place to ski": a tint that's
+    // strongest zoomed out and fades as the trails take over.
     {
       id: 'area-fill', type: 'fill', source, filter: IS_AREA,
-      paint: { 'fill-color': ['get', '_color'], 'fill-opacity': ['get', '_fillOpacity'] },
+      paint: {
+        'fill-color': ['get', '_color'],
+        'fill-opacity': ['interpolate', ['linear'], ['zoom'], 9, 0.18, 12, 0.08, 14, 0.03],
+      },
     },
     {
       id: 'area-outline', type: 'line', source, filter: IS_AREA,
-      paint: { 'line-color': ['get', '_color'], 'line-width': ['get', '_width'], 'line-opacity': ['get', '_opacity'] },
+      layout: { 'line-join': 'round' },
+      paint: {
+        'line-color': ['get', '_color'], 'line-dasharray': [3, 2],
+        'line-width': ['interpolate', ['linear'], ['zoom'], 9, 1.5, 14, 2],
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 9, 0.9, 14, 0.5],
+      },
     },
     // White casing so trails stand out against the basemap.
     {
@@ -74,6 +84,15 @@ export function trailLayers(source) {
     {
       id: 'trail-hit', type: 'line', source, filter: IS_LINE,
       paint: { 'line-color': '#000000', 'line-opacity': 0, 'line-width': 22 },
+    },
+    {
+      id: 'area-label', type: 'symbol', source, maxzoom: 12.5, filter: IS_AREA,
+      layout: {
+        'text-field': ['get', '_section'], 'text-font': LABEL_FONT,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 8, 12, 12, 15],
+        'text-max-width': 8, 'text-letter-spacing': 0.02,
+      },
+      paint: { 'text-color': '#0c3d54', 'text-halo-color': '#ffffff', 'text-halo-width': 2 },
     },
     // Markers: a disc in the CalTopo marker colour with a one-letter glyph
     // for its symbol (P for parking…) — drawn with the map font, so no icon
