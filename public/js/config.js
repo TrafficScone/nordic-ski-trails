@@ -8,7 +8,30 @@
 // this placeholder (see netlify.toml). It still reaches visitors' browsers —
 // tiles can't load without it — so MapTiler's allowed-origin restriction and
 // usage limits are what protect it.
-export const MAPTILER_KEY = '__MAPTILER_KEY__';
+const BUILT_KEY = '__MAPTILER_KEY__';
+
+// Local development only: the placeholder is never replaced on localhost, so
+// open http://localhost:8000/?maptiler_key=<key from .env> once; the key is
+// remembered in this browser and dropped from the address bar. (Checking for
+// the leading "__" rather than the placeholder text, because the build's sed
+// rewrites every copy of the placeholder in this file.)
+const IS_LOCAL = /^(localhost|127\.0\.0\.1)$/.test(globalThis.location?.hostname ?? '');
+export const MAPTILER_KEY = BUILT_KEY.startsWith('__') && IS_LOCAL ? localKey() : BUILT_KEY;
+
+function localKey() {
+  const url = new URL(location.href);
+  const given = url.searchParams.get('maptiler_key');
+  try {
+    if (given) {
+      localStorage.setItem('maptiler-key', given);
+      url.searchParams.delete('maptiler_key');
+      history.replaceState(null, '', url);
+    }
+    return given || localStorage.getItem('maptiler-key') || '';
+  } catch {
+    return given || '';
+  }
+}
 
 // Terrain-RGB elevation tiles, used to compute slope-angle shading.
 export const DEM_TILES = `https://api.maptiler.com/tiles/terrain-rgb-v2/{z}/{x}/{y}.webp?key=${MAPTILER_KEY}`;

@@ -152,6 +152,16 @@ if that isn't set. Locally the key lives in `.env` (git-ignored):
 MAPTILER_KEY=your-key
 ```
 
+For local development, open the site once with the key in the URL; it's
+remembered in that browser and removed from the address bar:
+
+```bash
+echo "http://localhost:8000/?maptiler_key=$(sed -n 's/^MAPTILER_KEY=//p' .env)"
+```
+
+(This only works on `localhost`/`127.0.0.1`, and only while the key allows
+`localhost` in the MapTiler dashboard — remove that before launch.)
+
 The key still reaches visitors' browsers — map tiles can't load without it —
 so restrict it in the MapTiler dashboard (Allowed HTTP origins:
 `bnc.worthgentry.com`, `bncmap.netlify.app`, `localhost`), keep an eye on

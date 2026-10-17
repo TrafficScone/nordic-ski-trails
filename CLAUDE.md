@@ -80,7 +80,11 @@ Application → Service workers → Unregister, or use a private window.
 - No secrets in the repo. The MapTiler key lives in `.env` (git-ignored) and the
   Netlify `MAPTILER_KEY` env var; `public/js/config.js` holds the placeholder
   `__MAPTILER_KEY__`, which the Netlify build command replaces with `sed`.
-  Never commit a config.js with a real key (`check.mjs` fails if you do). The
+  Never commit a config.js with a real key (`check.mjs` fails if you do).
+  Locally the placeholder stays, so config.js falls back to a key passed once
+  as `?maptiler_key=` and kept in localStorage — localhost/127.0.0.1 only.
+  Its test is `startsWith('__')`, not the placeholder text, because the
+  build's sed rewrites every copy of the placeholder in the file. The
   key still reaches browsers, so MapTiler origin restrictions and usage limits
   are its real protection.
 - MapLibre rejects `zoom` expressions nested inside arithmetic — write out a
