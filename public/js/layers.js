@@ -5,11 +5,19 @@
 // spec without a browser (see tools/check.mjs) — a bad expression otherwise
 // fails silently at runtime.
 //
-// Layers read the `_color`, `_width`, `_opacity`, `_dashed`, `_fillOpacity`
+// Layers read the `_color`, `_width`, `_opacity`, `_dashed`, `_fillOpacity`, `_glyph`
 // and `_name` properties that app.js derives from CalTopo's own styling.
 // ---------------------------------------------------------------------------
 
 const LABEL_FONT = ['Inter SemiBold', 'Noto Sans Bold'];
+const GLYPH_FONT = ['Inter Bold', 'Noto Sans Bold'];
+
+// CalTopo widths are in its own pixels (2 is typical) and look hairline-thin
+// here at low zoom and timid up close, so scale them with zoom. Each stop is
+// written out: MapLibre rejects a zoom expression nested inside arithmetic.
+const w = (k, add) => ['+', ['*', ['get', '_width'], k], add];
+const WIDTH = ['interpolate', ['linear'], ['zoom'], 10, w(0.6, 0.6), 14, w(1, 1), 17, w(1.5, 2)];
+const CASING = ['interpolate', ['linear'], ['zoom'], 10, w(0.6, 2.6), 14, w(1, 4), 17, w(1.5, 5.5)];
 
 const IS_LINE = ['in', ['geometry-type'], ['literal', ['LineString', 'MultiLineString']]];
 const IS_AREA = ['in', ['geometry-type'], ['literal', ['Polygon', 'MultiPolygon']]];
@@ -32,13 +40,13 @@ export function trailLayers(source) {
     {
       id: 'trail-casing', type: 'line', source, filter: IS_LINE,
       layout: { 'line-cap': 'round', 'line-join': 'round' },
-      paint: { 'line-color': 'rgba(255,255,255,0.85)', 'line-width': ['+', ['get', '_width'], 3] },
+      paint: { 'line-color': 'rgba(255,255,255,0.9)', 'line-width': CASING },
     },
     {
       id: 'trail-line', type: 'line', source,
       filter: ['all', IS_LINE, ['!=', ['get', '_dashed'], true]],
       layout: { 'line-cap': 'round', 'line-join': 'round' },
-      paint: { 'line-color': ['get', '_color'], 'line-width': ['get', '_width'], 'line-opacity': ['get', '_opacity'] },
+      paint: { 'line-color': ['get', '_color'], 'line-width': WIDTH, 'line-opacity': ['get', '_opacity'] },
     },
     // CalTopo's non-solid patterns all render as one dash style.
     {
@@ -46,7 +54,7 @@ export function trailLayers(source) {
       filter: ['all', IS_LINE, ['==', ['get', '_dashed'], true]],
       layout: { 'line-cap': 'butt', 'line-join': 'round' },
       paint: {
-        'line-color': ['get', '_color'], 'line-width': ['get', '_width'], 'line-opacity': ['get', '_opacity'],
+        'line-color': ['get', '_color'], 'line-width': WIDTH, 'line-opacity': ['get', '_opacity'],
         'line-dasharray': [2, 1.5],
       },
     },
@@ -67,19 +75,32 @@ export function trailLayers(source) {
       id: 'trail-hit', type: 'line', source, filter: IS_LINE,
       paint: { 'line-color': '#000000', 'line-opacity': 0, 'line-width': 22 },
     },
+    // Markers: a disc in the CalTopo marker colour with a one-letter glyph
+    // for its symbol (P for parking…) — drawn with the map font, so no icon
+    // sprite is needed.
     {
       id: 'marker-dot', type: 'circle', source, filter: IS_POINT,
       paint: {
-        'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 4, 15, 7],
+        'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 5, 13, 10, 16, 12],
         'circle-color': ['get', '_color'],
         'circle-stroke-color': '#ffffff', 'circle-stroke-width': 2,
       },
     },
     {
+      id: 'marker-glyph', type: 'symbol', source, minzoom: 12, filter: IS_POINT,
+      layout: {
+        'text-field': ['get', '_glyph'], 'text-font': GLYPH_FONT,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 12, 10, 16, 13],
+        'text-allow-overlap': true, 'text-ignore-placement': true,
+      },
+      paint: { 'text-color': '#ffffff' },
+    },
+    {
       id: 'marker-label', type: 'symbol', source, minzoom: 11, filter: IS_POINT,
       layout: {
         'text-field': ['get', '_name'], 'text-font': LABEL_FONT,
-        'text-size': 11, 'text-offset': [0, 0.9], 'text-anchor': 'top', 'text-padding': 3,
+        'text-size': 12, 'text-offset': [0, 1.2], 'text-anchor': 'top', 'text-padding': 3,
+        'text-max-width': 9,
       },
       paint: { 'text-color': '#1f2937', 'text-halo-color': '#ffffff', 'text-halo-width': 1.6 },
     },

@@ -38,7 +38,10 @@ to catch one.
 Layer specs live in `public/js/layers.js` (trails) and `public/js/basemap.js`
 (the whole basemap style) as plain data precisely so they can be validated
 without a browser. Add new layers there, not inline in `app.js`. Basemap colours
-come from `PALETTE` in `basemap.js`; the design rules are in its header comment.
+come from `PALETTE` in `basemap.js`; the design rules and their sources are in
+`docs/cartography.md` — update it when a design decision changes. Slope shading
+is a custom `slope://` protocol (`public/js/slope.js`) that turns terrain-RGB
+tiles into a coloured raster in the browser.
 Symbol layers later in the style win label collisions, so trail labels (added
 last) beat basemap labels.
 

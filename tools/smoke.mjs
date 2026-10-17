@@ -32,6 +32,7 @@ class FakeMap {
     this.canvas = { style: {} };
     this.fitted = null;
     this.queryResult = [];
+    for (const layer of opts.style?.layers ?? []) this.addLayer(structuredClone(layer));
   }
   on(type, a, b) { this.handlers.push(b ? { type, layer: a, fn: b } : { type, fn: a }); }
   addControl() {}
@@ -40,6 +41,8 @@ class FakeMap {
   addLayer(spec) { this.layers.set(spec.id, spec); }
   getLayer(id) { return this.layers.get(id); }
   getCanvas() { return this.canvas; }
+  setLayoutProperty(id, key, value) { (this.layers.get(id).layout ??= {})[key] = value; }
+  flyTo() {}
   fitBounds(bb) { this.fitted = bb; }
   queryRenderedFeatures() { return this.queryResult; }
   async fire(type, event = {}) {
@@ -64,7 +67,9 @@ globalThis.window = window;
 globalThis.document = window.document;
 
 let created;
+const protocols = new Map();
 globalThis.maplibregl = {
+  addProtocol: (name, fn) => protocols.set(name, fn),
   Map: class { constructor(o) { created = new FakeMap(o); return created; } },
   NavigationControl: noopCtrl, GeolocateControl: noopCtrl,
   ScaleControl: noopCtrl, FullscreenControl: noopCtrl,
@@ -83,6 +88,7 @@ globalThis.fetch = async (url) => {
 console.log('\nBoot');
 await import(path.join(SITE, 'js/app.js'));
 const map = created;
+check('slope protocol registered', protocols.has('slope'));
 check('map constructed with the basemap style', map.opts.style?.layers?.length > 0 && map.opts.style.glyphs.includes('api.maptiler.com'));
 await map.fire('load');
 
@@ -103,12 +109,29 @@ check('lines have a length', lines.every((f) => f.properties._length > 0));
 console.log('\nUI');
 const $ = (s) => window.document.querySelector(s);
 const items = [...window.document.querySelectorAll('#list .item')];
+const names = items.map((el) => el.querySelector('.name').textContent);
 check('trail list rendered', items.length > 0, `${items.length} items`);
+check('sections of one trail share a row', names.filter((n) => n === "Devil's Thumb Trail").length === 1, names.join(', '));
+check('places get their own section', [...window.document.querySelectorAll('.list-head')].some((h) => h.textContent === 'Places'));
+const parking = fc.features.find((f) => f.properties['marker-symbol'] === 'parked-car');
+check('parking marker gets a P', parking?.properties._glyph === 'P');
 
 const first = lines[0];
 map.queryResult = [first];
 await map.fire('click', { point: { x: 1, y: 1 }, lngLat: { lng: 0, lat: 0 } });
 check('clicking a trail opens its popup', popupContent?.querySelector('h3')?.textContent === first.properties._name);
+
+const devil = fc.features.find((f) => f.properties._section === "Devil's Thumb Trail_2");
+map.queryResult = [devil];
+await map.fire('click', { point: { x: 1, y: 1 }, lngLat: { lng: 0, lat: 0 } });
+check('a section opens the whole trail', popupContent?.querySelector('h3')?.textContent === "Devil's Thumb Trail"
+  && popupContent.querySelectorAll('p').length === 2);
+
+const toggle = $('#slope-toggle');
+toggle.checked = true;
+toggle.dispatchEvent(new window.Event('change'));
+check('slope toggle shows the layer and legend',
+  map.getLayer('slope').layout.visibility === 'visible' && !$('#slope-legend').hidden);
 
 $('#btn-list').click();
 check('list collapses', $('#panel').classList.contains('is-collapsed'));

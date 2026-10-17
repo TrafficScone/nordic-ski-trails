@@ -18,6 +18,11 @@
 //    places upright and dark, water italic blue, terrain italic brown-grey,
 //    roads small and grey. Halos everywhere, sized for phones in glare.
 //  • Feet and miles: the audience is American, and USGS quads are in feet.
+//  • Slope-angle shading is optional (off by default) and sits above the
+//    relief but under everything else, half-transparent, so contours and
+//    forest still read through it.
+//
+// Sources and the reasoning behind each rule: docs/cartography.md.
 // ---------------------------------------------------------------------------
 
 /** Every colour in the basemap. Change the palette here, not in the layers. */
@@ -75,6 +80,8 @@ export function basemapStyle(key) {
       outdoor: { type: 'vector', url: tiles('outdoor') },
       contours: { type: 'vector', url: tiles('contours-v2') },
       dem: { type: 'raster-dem', url: tiles('terrain-rgb-v2') },
+      // Computed in the browser from the same DEM — see js/slope.js.
+      slope: { type: 'raster', tiles: ['slope://{z}/{x}/{y}'], tileSize: 512, minzoom: 9, maxzoom: 14 },
     },
     layers: basemapLayers(),
   };
@@ -121,6 +128,11 @@ export function basemapLayers() {
         'hillshade-highlight-color': P.highlight,
         'hillshade-exaggeration': z(6, 0.25, 11, 0.32, 15, 0.25),
       },
+    },
+    {
+      id: 'slope', type: 'raster', source: 'slope', minzoom: 10,
+      layout: { visibility: 'none' },
+      paint: { 'raster-opacity': z(10, 0.4, 14, 0.5) },
     },
     {
       id: 'contour', type: 'line', source: 'contours', 'source-layer': 'contour_ft', minzoom: 12,

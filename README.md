@@ -8,8 +8,10 @@ description.
 The basemap ("Corduroy", `public/js/basemap.js`) is a light winter style built
 on MapTiler's vector tiles: snow-white ground, forest tinted so treeline reads
 at a glance, soft relief with 40 ft contours, and Inter labels to match the
-club site. Its design rules are written at the top of that file, and every
-colour lives in its `PALETTE`.
+club site. A panel toggle adds slope-angle shading (CalTopo's classes, computed
+in the browser). The design principles and their sources are in
+[docs/cartography.md](docs/cartography.md); every basemap colour lives in
+`PALETTE` in `basemap.js`.
 
 No build step and no framework. Just HTML, CSS, and ES modules.
 
@@ -24,7 +26,9 @@ No build step and no framework. Just HTML, CSS, and ES modules.
 
 What comes across from CalTopo: line colour, width, opacity, solid vs. dashed
 (every non-solid pattern shows as one dash style), titles, descriptions,
-markers (as coloured dots), and polygons (as tinted areas).
+markers (a coloured disc with a letter for the symbol, such as `P` for
+parking), and polygons (as tinted areas). Sections named `Trail_1`, `Trail_2`…
+are shown as one trail with a combined length.
 
 ## Run it locally
 
@@ -64,10 +68,12 @@ public/                 ← the only folder Netlify deploys
   css/app.css           styling
   js/config.js          MapTiler key, opening view, units
   js/basemap.js         the winter basemap style (palette + layers)
+  js/slope.js           slope-angle shading, computed from elevation tiles
   js/layers.js          trail layer specs
   js/app.js             loads trails, list, popups
   trails/*.geojson      CalTopo exports
   trails/index.json     generated list of the above
+docs/cartography.md     design principles and sources
 tools/                  dev only — index script, checks
 netlify.toml            static hosting config
 ```

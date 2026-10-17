@@ -7,6 +7,9 @@
 // the MapTiler dashboard under "Allowed origins".
 export const MAPTILER_KEY = 'S4gR7zmBTb2rOCbaTlBy';
 
+// Terrain-RGB elevation tiles, used to compute slope-angle shading.
+export const DEM_TILES = `https://api.maptiler.com/tiles/terrain-rgb-v2/{z}/{x}/{y}.webp?key=${MAPTILER_KEY}`;
+
 // Where the map opens before the trails load (Nederland, CO). Once they load,
 // the map fits itself to all of them.
 export const DEFAULT_VIEW = { center: [-105.51, 39.96], zoom: 11 };

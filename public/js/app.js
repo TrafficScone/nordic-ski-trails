@@ -3,14 +3,29 @@
 //
 // Loads every file listed in trails/index.json, styles each feature the way
 // CalTopo exported it, and shows a list plus a popup on click.
+//
+// A trail drawn in sections ("Devil's Thumb Trail_1", "…_2", usually one per
+// difficulty colour) is treated as one trail: one list row, one popup.
 // ---------------------------------------------------------------------------
 
 import { basemapStyle } from './basemap.js';
-import { DEFAULT_VIEW, FALLBACK_COLOR, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
+import { DEFAULT_VIEW, DEM_TILES, FALLBACK_COLOR, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
 import { HIT_LAYERS, trailLayers } from './layers.js';
+import { SLOPE_CLASSES, registerSlopeProtocol } from './slope.js';
 
 const SRC = 'trails';
 const $ = (sel) => document.querySelector(sel);
+
+// CalTopo marker symbols -> the letter drawn on the marker disc.
+const MARKER_GLYPHS = {
+  'parked-car': 'P', parking: 'P', car: 'P',
+  toilet: 'WC', restroom: 'WC',
+  info: 'i', information: 'i',
+  danger: '!', caution: '!', warning: '!', hazard: '!',
+  cabin: 'H', hut: 'H', shelter: 'H', building: 'H', yurt: 'H',
+};
+
+registerSlopeProtocol(DEM_TILES);
 
 const map = new maplibregl.Map({
   container: 'map',
@@ -35,11 +50,13 @@ map.on('load', async () => {
   const bb = bboxOf(fc.features);
   if (bb) map.fitBounds(bb, { padding: 60, maxZoom: 15, duration: 0 });
 
-  renderList(fc.features);
+  groups = groupFeatures(fc.features);
+  renderList();
+  renderSlopeLegend();
 
   map.on('click', (e) => {
     const [hit] = map.queryRenderedFeatures(e.point, { layers: HIT_LAYERS });
-    if (hit) showPopup(hit.properties, e.lngLat);
+    if (hit) showPopup(groups.get(hit.properties._group), e.lngLat);
   });
   for (const id of HIT_LAYERS) {
     map.on('mouseenter', id, () => { map.getCanvas().style.cursor = 'pointer'; });
@@ -48,6 +65,13 @@ map.on('load', async () => {
 });
 
 $('#btn-list').onclick = () => $('#panel').classList.toggle('is-collapsed');
+$('#slope-toggle').onchange = (e) => {
+  map.setLayoutProperty('slope', 'visibility', e.target.checked ? 'visible' : 'none');
+  $('#slope-legend').hidden = !e.target.checked;
+};
+
+/** @type {Map<string, {name: string, kind: 'trail'|'place', features: object[], length: number}>} */
+let groups = new Map();
 
 // ===========================================================================
 // Data
@@ -83,13 +107,19 @@ async function getJSON(url) {
 function styled(f) {
   const p = f.properties ?? {};
   const isPoint = f.geometry.type.endsWith('Point');
+  const title = String(p.title || p.name || '').trim();
+  // "Devil's Thumb Trail_2" is section 2 of "Devil's Thumb Trail".
+  const name = title.replace(/[\s_-]+\d+$/, '') || title;
   const num = (v, fallback) => (Number.isFinite(Number(v)) && v !== '' && v != null ? Number(v) : fallback);
   return {
     type: 'Feature',
     geometry: f.geometry,
     properties: {
       ...p,
-      _name: p.title || p.name || '',
+      _name: name,
+      _section: title,
+      _group: `${isPoint ? 'place' : 'trail'}:${name || Math.random()}`,
+      _glyph: MARKER_GLYPHS[p['marker-symbol']] ?? '',
       _color: color(isPoint ? p['marker-color'] : p.stroke),
       _width: num(p['stroke-width'], 3),
       _opacity: num(p['stroke-opacity'], 1),
@@ -110,50 +140,104 @@ function color(c) {
 // UI
 // ===========================================================================
 
-function renderList(features) {
-  const named = features
-    .filter((f) => f.properties._name)
-    .sort((a, b) => a.properties._name.localeCompare(b.properties._name));
+/** Collect sections that share a name into one trail (or place). */
+function groupFeatures(features) {
+  const out = new Map();
+  for (const f of features) {
+    const p = f.properties;
+    const g = out.get(p._group) ?? { name: p._name, kind: p._group.startsWith('place') ? 'place' : 'trail', features: [], length: 0 };
+    g.features.push(f);
+    g.length += p._length;
+    out.set(p._group, g);
+  }
+  return out;
+}
+
+function renderList() {
   const list = $('#list');
   list.replaceChildren();
+  const named = [...groups.values()].filter((g) => g.name).sort((a, b) => a.name.localeCompare(b.name));
   if (!named.length) { list.textContent = 'No trails yet.'; return; }
 
-  for (const f of named) {
-    const btn = document.createElement('button');
-    btn.className = 'item';
-    btn.innerHTML = `<span class="swatch"></span><span class="name"></span><span class="len"></span>`;
-    btn.querySelector('.swatch').style.background = f.properties._color;
-    btn.querySelector('.name').textContent = f.properties._name;
-    btn.querySelector('.len').textContent = f.properties._length ? formatDistance(f.properties._length) : '';
-    btn.onclick = () => {
-      const bb = bboxOf([f]);
-      map.fitBounds(bb, { padding: 80, maxZoom: 15 });
-      showPopup(f.properties, centerOf(f.geometry));
-      if (window.matchMedia('(max-width: 640px)').matches) $('#panel').classList.add('is-collapsed');
-    };
-    list.append(btn);
+  for (const kind of ['trail', 'place']) {
+    const items = named.filter((g) => g.kind === kind);
+    if (!items.length) continue;
+    const h = document.createElement('h2');
+    h.className = 'list-head';
+    h.textContent = kind === 'trail' ? 'Trails' : 'Places';
+    list.append(h);
+    for (const g of items) list.append(listItem(g));
   }
 }
 
-function showPopup(p, lngLat) {
+function listItem(g) {
+  const btn = document.createElement('button');
+  btn.className = 'item';
+  btn.append(swatches(g), span('name', g.name), span('len', g.length ? formatDistance(g.length) : ''));
+  btn.onclick = () => {
+    const bb = bboxOf(g.features);
+    if (g.kind === 'place') map.flyTo({ center: bb[0], zoom: Math.max(map.getZoom(), 14) });
+    else map.fitBounds(bb, { padding: 80, maxZoom: 15 });
+    showPopup(g, centerOf(g.features[0].geometry));
+    if (window.matchMedia('(max-width: 640px)').matches) $('#panel').classList.add('is-collapsed');
+  };
+  return btn;
+}
+
+/** One colour chip per distinct section colour — e.g. green, blue, black. */
+function swatches(g) {
+  const box = span(g.kind === 'place' ? 'swatches is-place' : 'swatches', '');
+  for (const c of new Set(g.features.map((f) => f.properties._color))) {
+    const chip = span('swatch', g.kind === 'place' ? g.features[0].properties._glyph : '');
+    chip.style.background = c;
+    box.append(chip);
+  }
+  return box;
+}
+
+function showPopup(g, lngLat) {
+  if (!g) return;
   const el = document.createElement('div');
   el.className = 'pop';
   const h = document.createElement('h3');
-  h.textContent = p._name || 'Untitled';
+  h.textContent = g.name || 'Untitled';
   el.append(h);
-  const len = Number(p._length);
-  if (len) {
-    const m = document.createElement('div');
-    m.className = 'meta';
-    m.textContent = formatDistance(len);
-    el.append(m);
-  }
-  if (p.description) {
-    const d = document.createElement('p');
-    d.textContent = p.description;
-    el.append(d);
+  if (g.length) el.append(span('meta', formatDistance(g.length)));
+
+  // One line per section that has something to say, keyed by its colour.
+  for (const f of g.features) {
+    const p = f.properties;
+    if (!p.description) continue;
+    const row = document.createElement('p');
+    if (g.features.length > 1) {
+      const chip = span('swatch', '');
+      chip.style.background = p._color;
+      row.append(chip);
+    }
+    row.append(document.createTextNode(p.description));
+    el.append(row);
   }
   popup.setLngLat(lngLat).setDOMContent(el).addTo(map);
+}
+
+function renderSlopeLegend() {
+  const legend = $('#slope-legend');
+  legend.replaceChildren();
+  SLOPE_CLASSES.forEach(([deg, hex], i) => {
+    const next = SLOPE_CLASSES[i + 1]?.[0];
+    const row = span('legend-row', '');
+    const chip = span('swatch', '');
+    chip.style.background = hex;
+    row.append(chip, document.createTextNode(next ? `${deg}–${next - 1}°` : `${deg}°+`));
+    legend.append(row);
+  });
+}
+
+function span(cls, text) {
+  const el = document.createElement('span');
+  el.className = cls;
+  el.textContent = text;
+  return el;
 }
 
 // ===========================================================================
