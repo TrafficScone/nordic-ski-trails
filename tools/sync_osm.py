@@ -241,8 +241,6 @@ def describe(tags: dict) -> str:
         bits.append("Groomed: " + " and ".join(kinds))
     if tags.get("piste:difficulty"):
         bits.append(f"Difficulty: {tags['piste:difficulty']}")
-    if tags.get("ref"):
-        bits.append(f"Ref: {tags['ref']}")
     return "\n".join(bits)
 
 
@@ -253,7 +251,8 @@ def grooming_of(tags: dict) -> str:
     return "groomed" if tags.get("piste:grooming") else "unknown"
 
 
-def feature(title, lines, *, color, description, ways, width=DEFAULT_WIDTH, pattern="solid", grooming="unknown"):
+def feature(title, lines, *, color, description, ways, width=DEFAULT_WIDTH, pattern="solid", grooming="unknown",
+            ref=""):
     geometry = ({"type": "LineString", "coordinates": lines[0]} if len(lines) == 1
                 else {"type": "MultiLineString", "coordinates": lines})
     return {
@@ -268,6 +267,8 @@ def feature(title, lines, *, color, description, ways, width=DEFAULT_WIDTH, patt
             "stroke-opacity": 1,
             "pattern": pattern,
             "grooming": grooming,
+            # Agency trail/road number(s) — shown small at the foot of the popup.
+            "ref": ref.replace(";", ", "),
             "source": "OpenStreetMap",
             "osm_ways": sorted(set(ways)),
         },
@@ -276,7 +277,7 @@ def feature(title, lines, *, color, description, ways, width=DEFAULT_WIDTH, patt
 
 # -- areas ------------------------------------------------------------------
 
-def sync_area(area_name: str, polygons: list, area: dict) -> list[dict]:
+def sync_area(area_name: str, polygons: list, area: dict, curated: set[str] = frozenset()) -> list[dict]:
     include = area.get("include", DEFAULT_INCLUDE)
     unknown = [k for k in include if k not in INCLUDE]
     if unknown:
@@ -306,6 +307,7 @@ def sync_area(area_name: str, polygons: list, area: dict) -> list[dict]:
     groups: dict[str, dict] = {}
     skipped = skipped_short = 0
     seen = set()
+    replaced = set()
     for wid, w in ways.items():
         if wid in exclude_ids or "geometry" not in w:
             continue
@@ -318,6 +320,9 @@ def sync_area(area_name: str, polygons: list, area: dict) -> list[dict]:
         key = name_key(name)
         seen.add(key)
         if key in exclude:
+            continue
+        if key in curated:  # drawn in CalTopo: the hand-drawn version wins
+            replaced.add(name)
             continue
         pieces = clip_way({"nodes": w["nodes"], "coords": way_coords(w)}, polygons)
         if not pieces:
@@ -343,13 +348,15 @@ def sync_area(area_name: str, polygons: list, area: dict) -> list[dict]:
         description = "\n\n".join(t for t in (notes.get(key, ""), describe(g["tags"])) if t)
         f = feature(title, lines, color=color, description=description, ways=g["ways"],
                     # Ungroomed reads as dashed, as on printed trail maps.
-                    pattern="dash" if ungroomed(g["tags"]) else "solid", grooming=grooming_of(g["tags"]))
+                    pattern="dash" if ungroomed(g["tags"]) else "solid", grooming=grooming_of(g["tags"]),
+                    ref=g["tags"].get("ref", ""))
         f["properties"]["area"] = area_name
         features.append(f)
         miles = sum(length_m(c) for c in lines) / 1609.344
         print(f"    {title}: {miles:.1f} mi ({len(g['ways'])} ways)")
     note = f", {skipped} unnamed ways skipped" if skipped else ""
     note += f", {skipped_short} slivers under {min_m} m dropped" if skipped_short else ""
+    note += f", left to CalTopo: {', '.join(sorted(replaced))}" if replaced else ""
     unused = [n for n in area.get("exclude", []) if isinstance(n, str) and name_key(n) not in seen]
     if unused:
         print(f"  ! {area_name}: exclude entries matched nothing: {unused}")
@@ -420,18 +427,17 @@ def main() -> int:
     for name in config:
         if name not in areas:
             print(f"! tools/osm-trails.json configures \"{name}\", but no CalTopo polygon has that title")
+    curated = other_trail_names()
     features = []
     for name, polygons in areas.items():
         print(f"area: {name}")
-        features += sync_area(name, polygons, config.get(name, {}))
+        features += sync_area(name, polygons, config.get(name, {}), curated)
     trail_features, problems = sync_trails(manifest.get("trails", []))
     features += trail_features
 
-    taken = other_trail_names()
-    for f in features:
-        if base_key(f["properties"]["title"]) in taken:
-            print(f"  ! \"{f['properties']['title']}\" is also a CalTopo trail — the map will show them as one."
-                  " Add it to the area's \"exclude\" list if the CalTopo version should win.")
+    for f in trail_features:
+        if base_key(f["properties"]["title"]) in curated:
+            print(f"  ! \"{f['properties']['title']}\" is also a CalTopo trail — the map will show them as one.")
 
     OUTPUT.write_text(json.dumps({
         "type": "FeatureCollection",

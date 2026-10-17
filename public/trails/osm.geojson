@@ -590,6 +590,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254021414,
@@ -706,6 +707,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      127153000
@@ -873,6 +875,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254093187
@@ -968,6 +971,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      1315812443
@@ -1071,6 +1075,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254093688
@@ -1778,6 +1783,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254021418
@@ -1882,13 +1888,14 @@
    },
    "properties": {
     "title": "Cheater's Corner",
-    "description": "Groomed: classic and skate\nDifficulty: intermediate\nRef: TR 808",
+    "description": "Groomed: classic and skate\nDifficulty: intermediate",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "TR 808",
     "source": "OpenStreetMap",
     "osm_ways": [
      253870963,
@@ -2034,6 +2041,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254093689,
@@ -2290,6 +2298,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254093186,
@@ -2667,13 +2676,14 @@
    },
    "properties": {
     "title": "Eldora Ski Road",
-    "description": "Ref: CR 140",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "CR 140",
     "source": "OpenStreetMap",
     "osm_ways": [
      17022813,
@@ -3095,13 +3105,14 @@
    },
    "properties": {
     "title": "Eldora Spur",
-    "description": "Ref: FS 502.1",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 502.1",
     "source": "OpenStreetMap",
     "osm_ways": [
      99660389,
@@ -3259,6 +3270,7 @@
     "stroke-opacity": 1,
     "pattern": "dash",
     "grooming": "ungroomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254294965
@@ -3462,6 +3474,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254021416
@@ -3581,6 +3594,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254094243,
@@ -3665,6 +3679,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      253870965
@@ -3944,6 +3959,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      1202820939,
@@ -4378,13 +4394,14 @@
    },
    "properties": {
     "title": "Jenny Creek Trail",
-    "description": "Ref: TR 808",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "TR 808",
     "source": "OpenStreetMap",
     "osm_ways": [
      17016156,
@@ -4906,6 +4923,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      1210284839
@@ -5541,6 +5559,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      227092411,
@@ -5917,6 +5936,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      253870968,
@@ -6066,6 +6086,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254093184,
@@ -6362,6 +6383,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254093185,
@@ -6638,6 +6660,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      253870972,
@@ -7158,6 +7181,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      253862951
@@ -7801,6 +7825,7 @@
     "stroke-opacity": 1,
     "pattern": "dash",
     "grooming": "ungroomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254294964
@@ -7960,6 +7985,7 @@
     "stroke-opacity": 1,
     "pattern": "dash",
     "grooming": "ungroomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254021423
@@ -8191,6 +8217,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254021419,
@@ -8244,6 +8271,7 @@
     "stroke-opacity": 1,
     "pattern": "dash",
     "grooming": "ungroomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254021421
@@ -8295,6 +8323,7 @@
     "stroke-opacity": 1,
     "pattern": "dash",
     "grooming": "ungroomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254021420
@@ -8422,6 +8451,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254093190,
@@ -8786,6 +8816,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      253870976
@@ -8989,6 +9020,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254021417
@@ -9348,6 +9380,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "groomed",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      254093690,
@@ -10142,13 +10175,14 @@
    },
    "properties": {
     "title": "Aspen Alley Trail",
-    "description": "Ref: FS 926B",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 926B",
     "source": "OpenStreetMap",
     "osm_ways": [
      126581124,
@@ -10690,13 +10724,14 @@
    },
    "properties": {
     "title": "Buckeye Mountain Road",
-    "description": "Ref: FS 512.1",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 512.1",
     "source": "OpenStreetMap",
     "osm_ways": [
      547791396,
@@ -10886,13 +10921,14 @@
    },
    "properties": {
     "title": "Clear Cut Trail",
-    "description": "Ref: FS 342",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 342",
     "source": "OpenStreetMap",
     "osm_ways": [
      852203012
@@ -10969,13 +11005,14 @@
    },
    "properties": {
     "title": "Cutacross Trail",
-    "description": "Ref: FR 355.1I",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FR 355.1I",
     "source": "OpenStreetMap",
     "osm_ways": [
      116560126
@@ -11140,13 +11177,14 @@
    },
    "properties": {
     "title": "Forest Service Camp Road",
-    "description": "Ref: FS 105.1",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 105.1",
     "source": "OpenStreetMap",
     "osm_ways": [
      581401866
@@ -11218,6 +11256,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      577334021
@@ -11346,13 +11385,14 @@
    },
    "properties": {
     "title": "Handshake Trail",
-    "description": "Ref: FS 342",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 342",
     "source": "OpenStreetMap",
     "osm_ways": [
      530332838,
@@ -11638,13 +11678,14 @@
    },
    "properties": {
     "title": "Haul Road",
-    "description": "Ref: CR 132W",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "CR 132W",
     "source": "OpenStreetMap",
     "osm_ways": [
      17021405
@@ -13977,13 +14018,14 @@
    },
    "properties": {
     "title": "Hobbit",
-    "description": "Ref: FS 355.1G",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 355.1G",
     "source": "OpenStreetMap",
     "osm_ways": [
      127152991,
@@ -14292,13 +14334,14 @@
    },
    "properties": {
     "title": "Hobbit 3",
-    "description": "Ref: FS 355.1G",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 355.1G",
     "source": "OpenStreetMap",
     "osm_ways": [
      1073557602,
@@ -14684,13 +14727,14 @@
    },
    "properties": {
     "title": "Hobbit 3.5",
-    "description": "Ref: FS 355.1H",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 355.1H",
     "source": "OpenStreetMap",
     "osm_ways": [
      226040769
@@ -14758,6 +14802,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      1299840958
@@ -15191,6 +15236,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      1210284839
@@ -15695,13 +15741,14 @@
    },
    "properties": {
     "title": "Lookout Trail",
-    "description": "Ref: FS 926 E",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 926 E",
     "source": "OpenStreetMap",
     "osm_ways": [
      127136310
@@ -15874,13 +15921,14 @@
    },
    "properties": {
     "title": "Los Logos",
-    "description": "Ref: FS 429.1",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 429.1",
     "source": "OpenStreetMap",
     "osm_ways": [
      831922718
@@ -16221,13 +16269,14 @@
    },
    "properties": {
     "title": "Lost Meadow Trail",
-    "description": "Ref: FS 355.1I",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 355.1I",
     "source": "OpenStreetMap",
     "osm_ways": [
      127152994
@@ -17675,6 +17724,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      854354497,
@@ -17813,13 +17863,14 @@
    },
    "properties": {
     "title": "North Observatory Spur Trail",
-    "description": "Ref: FR 342.1B",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FR 342.1B",
     "source": "OpenStreetMap",
     "osm_ways": [
      127143822
@@ -18000,13 +18051,14 @@
    },
    "properties": {
     "title": "Nw Haul Road Trails",
-    "description": "Ref: FS 926.1D",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 926.1D",
     "source": "OpenStreetMap",
     "osm_ways": [
      530335622,
@@ -18676,13 +18728,14 @@
    },
    "properties": {
     "title": "Observatory",
-    "description": "Ref: FR 355.1A",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FR 355.1A",
     "source": "OpenStreetMap",
     "osm_ways": [
      116560022,
@@ -18808,13 +18861,14 @@
    },
    "properties": {
     "title": "Observatory Spur",
-    "description": "Ref: FS 355.1E",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 355.1E",
     "source": "OpenStreetMap",
     "osm_ways": [
      530332844,
@@ -19138,6 +19192,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      724649865
@@ -19377,6 +19432,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      723260078,
@@ -20506,13 +20562,14 @@
    },
    "properties": {
     "title": "Re-Root",
-    "description": "Ref: FS 927.1",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 927.1",
     "source": "OpenStreetMap",
     "osm_ways": [
      226034326,
@@ -21363,13 +21420,14 @@
    },
    "properties": {
     "title": "Rocks and Roots",
-    "description": "Ref: FS 355.1I",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 355.1I",
     "source": "OpenStreetMap",
     "osm_ways": [
      288230933,
@@ -22200,13 +22258,14 @@
    },
    "properties": {
     "title": "Rollinsville",
-    "description": "Ref: FS 105.1",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 105.1",
     "source": "OpenStreetMap",
     "osm_ways": [
      581401867
@@ -22623,13 +22682,14 @@
    },
    "properties": {
     "title": "Rollinsville Spur",
-    "description": "Ref: FS 105.1",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 105.1",
     "source": "OpenStreetMap",
     "osm_ways": [
      127153023,
@@ -22717,6 +22777,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      1530408019
@@ -24297,13 +24358,14 @@
    },
    "properties": {
     "title": "Schoolbus Trail",
-    "description": "Ref: FS 109.1A",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 109.1A",
     "source": "OpenStreetMap",
     "osm_ways": [
      127152986,
@@ -24495,6 +24557,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      852174125
@@ -24970,6 +25033,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      227086229
@@ -25377,6 +25441,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      370663667
@@ -25896,6 +25961,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      227086226
@@ -26303,6 +26369,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      370663670
@@ -26390,6 +26457,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      530335621
@@ -26465,6 +26533,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      1422295369
@@ -26548,6 +26617,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      1566675789
@@ -26687,6 +26757,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      1545888655
@@ -26914,6 +26985,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      1566675788
@@ -27042,13 +27114,14 @@
    },
    "properties": {
     "title": "South Tennessee Mountain Spur",
-    "description": "Ref: FS 109.1B",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 109.1B",
     "source": "OpenStreetMap",
     "osm_ways": [
      227088603,
@@ -27690,13 +27763,14 @@
    },
    "properties": {
     "title": "Sugar Magnolia",
-    "description": "Ref: FS 343.1",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 343.1",
     "source": "OpenStreetMap",
     "osm_ways": [
      530335625
@@ -28136,6 +28210,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      728886972
@@ -28500,13 +28575,14 @@
    },
    "properties": {
     "title": "Tennessee Mountain",
-    "description": "Ref: FS 109.1",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 109.1",
     "source": "OpenStreetMap",
     "osm_ways": [
      370767217
@@ -28650,6 +28726,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      632653161,
@@ -29111,13 +29188,14 @@
    },
    "properties": {
     "title": "Whoopp-Di-Doos",
-    "description": "Ref: FS 925",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 925",
     "source": "OpenStreetMap",
     "osm_ways": [
      116560024
@@ -29289,6 +29367,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      127143814
@@ -29385,13 +29464,14 @@
    },
    "properties": {
     "title": "Beaver Creek Trail",
-    "description": "Ref: FS 911",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 911",
     "source": "OpenStreetMap",
     "osm_ways": [
      1305831661
@@ -29640,13 +29720,14 @@
    },
    "properties": {
     "title": "Brainard Lake Cutoff Trail",
-    "description": "Ref: FS 909.1",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 909.1",
     "source": "OpenStreetMap",
     "osm_ways": [
      1330123384
@@ -29747,13 +29828,14 @@
    },
    "properties": {
     "title": "Brainard Lake O/l",
-    "description": "Ref: FS 112F",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 112F",
     "source": "OpenStreetMap",
     "osm_ways": [
      431562697,
@@ -30330,54 +30412,19 @@
      [
       -105.5343243,
       40.0803329
-     ],
-     [
-      -105.534211,
-      40.080134
-     ],
-     [
-      -105.5340806,
-      40.0799216
-     ],
-     [
-      -105.5339371,
-      40.0797108
-     ],
-     [
-      -105.5338074,
-      40.0796008
-     ],
-     [
-      -105.533697,
-      40.0795317
-     ],
-     [
-      -105.533558,
-      40.0794904
-     ],
-     [
-      -105.5330426,
-      40.0794075
-     ],
-     [
-      -105.5325264,
-      40.0793045
-     ],
-     [
-      -105.5319187,
-      40.0791263
      ]
     ]
    },
    "properties": {
     "title": "Brainard Lake Road",
-    "description": "Ref: CR 102",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "CR 102",
     "source": "OpenStreetMap",
     "osm_ways": [
      17026752,
@@ -30479,6 +30526,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      89169526
@@ -30534,6 +30582,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      437902855
@@ -30930,13 +30979,14 @@
    },
    "properties": {
     "title": "Isabell Glacier Trail",
-    "description": "Ref: FS 908",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 908",
     "source": "OpenStreetMap",
     "osm_ways": [
      51324416
@@ -31749,13 +31799,14 @@
    },
    "properties": {
     "title": "Jean Lunning Trail",
-    "description": "Ref: FS 907.1A",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 907.1A",
     "source": "OpenStreetMap",
     "osm_ways": [
      51324391,
@@ -32200,6 +32251,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      17027172,
@@ -32422,6 +32474,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      370620108
@@ -33622,13 +33675,14 @@
    },
    "properties": {
     "title": "Little Raven Trail",
-    "description": "Ref: FS 802",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 802",
     "source": "OpenStreetMap",
     "osm_ways": [
      39508947,
@@ -34001,6 +34055,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      609842520
@@ -34108,6 +34163,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      17017154
@@ -34243,6 +34299,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      17020774
@@ -35031,13 +35088,14 @@
    },
    "properties": {
     "title": "Mitchell Lake Trail",
-    "description": "Ref: FS 912",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 912",
     "source": "OpenStreetMap",
     "osm_ways": [
      51352492,
@@ -35262,13 +35320,14 @@
    },
    "properties": {
     "title": "Mitchell Lake Trailhead Connector Trail",
-    "description": "Ref: FS 909.3",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 909.3",
     "source": "OpenStreetMap",
     "osm_ways": [
      370619469
@@ -35340,6 +35399,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      697502164
@@ -35680,13 +35740,14 @@
    },
    "properties": {
     "title": "Niwot Cutoff Trail",
-    "description": "Ref: FS 907.2",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 907.2",
     "source": "OpenStreetMap",
     "osm_ways": [
      177692979
@@ -35842,6 +35903,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      452965189
@@ -36958,13 +37020,14 @@
    },
    "properties": {
     "title": "Niwot Ridge Trail",
-    "description": "Ref: FS 906",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 906",
     "source": "OpenStreetMap",
     "osm_ways": [
      320715868,
@@ -37096,13 +37159,14 @@
    },
    "properties": {
     "title": "Pawnee Campground Loop B - Tent Camp",
-    "description": "Ref: FS 112B",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 112B",
     "source": "OpenStreetMap",
     "osm_ways": [
      437898519,
@@ -37185,13 +37249,14 @@
    },
    "properties": {
     "title": "Pawnee Campground Loop C",
-    "description": "Ref: FS 112",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 112",
     "source": "OpenStreetMap",
     "osm_ways": [
      143784735
@@ -37292,13 +37357,14 @@
    },
    "properties": {
     "title": "Pawnee Campground Loop D",
-    "description": "Ref: FS 112D",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 112D",
     "source": "OpenStreetMap",
     "osm_ways": [
      339282682
@@ -37443,13 +37509,14 @@
    },
    "properties": {
     "title": "Pawnee Pass",
-    "description": "Ref: FS 907",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 907",
     "source": "OpenStreetMap",
     "osm_ways": [
      51324408
@@ -38458,13 +38525,14 @@
    },
    "properties": {
     "title": "Pawnee Pass Trail",
-    "description": "Ref: FS 907",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 907",
     "source": "OpenStreetMap",
     "osm_ways": [
      51324388,
@@ -38533,13 +38601,14 @@
    },
    "properties": {
     "title": "Red Rock Lake Spur Trail",
-    "description": "Ref: FS 814.1",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 814.1",
     "source": "OpenStreetMap",
     "osm_ways": [
      446754007
@@ -38916,13 +38985,14 @@
    },
    "properties": {
     "title": "Snowshoe Trail",
-    "description": "Not groomed\nRef: FS 909.2",
+    "description": "Not groomed",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "dash",
     "grooming": "ungroomed",
+    "ref": "FS 909.2",
     "source": "OpenStreetMap",
     "osm_ways": [
      89170061,
@@ -39660,13 +39730,14 @@
    },
    "properties": {
     "title": "Sourdough Trail",
-    "description": "Ref: FS 835",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 835",
     "source": "OpenStreetMap",
     "osm_ways": [
      437139351,
@@ -40307,13 +40378,14 @@
    },
    "properties": {
     "title": "South Saint Vrain",
-    "description": "Ref: FS 909",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 909",
     "source": "OpenStreetMap",
     "osm_ways": [
      437139352
@@ -40706,13 +40778,14 @@
    },
    "properties": {
     "title": "South Saint Vrain Trail",
-    "description": "Ref: FS 909",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 909",
     "source": "OpenStreetMap",
     "osm_ways": [
      86973635
@@ -41216,6 +41289,7 @@
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
      1457570860
@@ -42115,22 +42189,19 @@
      [
       -105.5333628,
       40.0803047
-     ],
-     [
-      -105.5333779,
-      40.0802061
      ]
     ]
    },
    "properties": {
     "title": "Waldrop Trail",
-    "description": "Ref: FS 814.1",
+    "description": "",
     "class": "Shape",
     "stroke": "#0000ff",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
     "grooming": "unknown",
+    "ref": "FS 814.1",
     "source": "OpenStreetMap",
     "osm_ways": [
      91978152,
@@ -42139,6 +42210,5096 @@
      1548213363
     ],
     "area": "Brainard Lake Area"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.6585075,
+      40.0104046
+     ],
+     [
+      -105.6585096,
+      40.010442
+     ],
+     [
+      -105.6585538,
+      40.0105406
+     ],
+     [
+      -105.6585887,
+      40.0106382
+     ],
+     [
+      -105.6585832,
+      40.0107167
+     ],
+     [
+      -105.658472,
+      40.0109844
+     ],
+     [
+      -105.6583765,
+      40.0110803
+     ],
+     [
+      -105.658356,
+      40.0111009
+     ],
+     [
+      -105.6582997,
+      40.0111333
+     ],
+     [
+      -105.6582298,
+      40.0111411
+     ],
+     [
+      -105.6581428,
+      40.011197
+     ],
+     [
+      -105.6580657,
+      40.0111523
+     ],
+     [
+      -105.6579651,
+      40.0111261
+     ],
+     [
+      -105.6578182,
+      40.0111867
+     ],
+     [
+      -105.6576701,
+      40.011236
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Arapaho Glacier Trail",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "FS 905",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     228027744
+    ],
+    "area": "Hessie Trail Area"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.6342913,
+      39.9951732
+     ],
+     [
+      -105.6341921,
+      39.9952781
+     ],
+     [
+      -105.6339877,
+      39.995363
+     ],
+     [
+      -105.6337371,
+      39.995365
+     ],
+     [
+      -105.6335367,
+      39.9953553
+     ],
+     [
+      -105.6336689,
+      39.9955299
+     ],
+     [
+      -105.633983,
+      39.9956822
+     ],
+     [
+      -105.6342293,
+      39.9958772
+     ],
+     [
+      -105.6342656,
+      39.9960092
+     ],
+     [
+      -105.6346079,
+      39.9962541
+     ],
+     [
+      -105.6348444,
+      39.9963414
+     ],
+     [
+      -105.6348972,
+      39.9964381
+     ],
+     [
+      -105.6353479,
+      39.9965368
+     ],
+     [
+      -105.6354678,
+      39.9969036
+     ],
+     [
+      -105.6356885,
+      39.9971818
+     ],
+     [
+      -105.6358792,
+      39.9977019
+     ],
+     [
+      -105.636018,
+      39.9977691
+     ],
+     [
+      -105.6361099,
+      39.9979149
+     ],
+     [
+      -105.6363238,
+      39.998022
+     ],
+     [
+      -105.6366,
+      39.9982572
+     ],
+     [
+      -105.6369564,
+      39.9984773
+     ],
+     [
+      -105.6370626,
+      39.9987308
+     ],
+     [
+      -105.6372646,
+      39.998904
+     ],
+     [
+      -105.6373828,
+      39.999038
+     ],
+     [
+      -105.637963,
+      39.9995618
+     ],
+     [
+      -105.63836,
+      39.9998165
+     ],
+     [
+      -105.6387569,
+      40.0001124
+     ],
+     [
+      -105.6390359,
+      40.0004165
+     ],
+     [
+      -105.6391325,
+      40.0005644
+     ],
+     [
+      -105.6389445,
+      40.0004868
+     ],
+     [
+      -105.6386278,
+      40.0003682
+     ],
+     [
+      -105.6382659,
+      40.0002896
+     ],
+     [
+      -105.6379683,
+      40.0001782
+     ],
+     [
+      -105.6380208,
+      40.0002591
+     ],
+     [
+      -105.6390818,
+      40.0010715
+     ],
+     [
+      -105.6396024,
+      40.0014337
+     ],
+     [
+      -105.640208,
+      40.0017475
+     ],
+     [
+      -105.640451,
+      40.0018347
+     ],
+     [
+      -105.6407143,
+      40.0020357
+     ],
+     [
+      -105.6410665,
+      40.0022176
+     ],
+     [
+      -105.6415143,
+      40.0025513
+     ],
+     [
+      -105.6418817,
+      40.0026433
+     ],
+     [
+      -105.6424691,
+      40.0027752
+     ],
+     [
+      -105.6429238,
+      40.0029833
+     ],
+     [
+      -105.643319,
+      40.0030643
+     ],
+     [
+      -105.643663,
+      40.0032649
+     ],
+     [
+      -105.643889,
+      40.0032578
+     ],
+     [
+      -105.6445661,
+      40.0034979
+     ],
+     [
+      -105.6451607,
+      40.0036027
+     ],
+     [
+      -105.6457226,
+      40.0038843
+     ],
+     [
+      -105.6462564,
+      40.0040655
+     ],
+     [
+      -105.645908,
+      40.0041208
+     ],
+     [
+      -105.6457092,
+      40.0041559
+     ],
+     [
+      -105.645914,
+      40.0042431
+     ],
+     [
+      -105.6462215,
+      40.0043446
+     ],
+     [
+      -105.6466883,
+      40.0045371
+     ],
+     [
+      -105.6471831,
+      40.004794
+     ],
+     [
+      -105.648014,
+      40.0051933
+     ],
+     [
+      -105.6492104,
+      40.0057327
+     ],
+     [
+      -105.6506472,
+      40.00621
+     ],
+     [
+      -105.6509664,
+      40.0064981
+     ],
+     [
+      -105.6512695,
+      40.00681
+     ],
+     [
+      -105.6516235,
+      40.0069414
+     ],
+     [
+      -105.6516959,
+      40.0070651
+     ],
+     [
+      -105.6519776,
+      40.0071387
+     ],
+     [
+      -105.6530504,
+      40.0073195
+     ],
+     [
+      -105.6536486,
+      40.0075089
+     ],
+     [
+      -105.6538444,
+      40.007755
+     ],
+     [
+      -105.654045,
+      40.0078059
+     ],
+     [
+      -105.6547858,
+      40.0079937
+     ],
+     [
+      -105.6551184,
+      40.0081745
+     ],
+     [
+      -105.6553759,
+      40.0083225
+     ],
+     [
+      -105.6555368,
+      40.0086019
+     ],
+     [
+      -105.6557756,
+      40.0088233
+     ],
+     [
+      -105.6560974,
+      40.0089219
+     ],
+     [
+      -105.656245,
+      40.0091031
+     ],
+     [
+      -105.6566419,
+      40.0094483
+     ],
+     [
+      -105.6570738,
+      40.0095958
+     ],
+     [
+      -105.6573178,
+      40.0096866
+     ],
+     [
+      -105.6576638,
+      40.0098587
+     ],
+     [
+      -105.6580367,
+      40.0100317
+     ],
+     [
+      -105.6583191,
+      40.0102868
+     ],
+     [
+      -105.6585075,
+      40.0104046
+     ],
+     [
+      -105.6588091,
+      40.0104837
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Arapaho Pass Trail",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "FR 904",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     206202875
+    ],
+    "area": "Hessie Trail Area"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.6216409,
+      39.9567374
+     ],
+     [
+      -105.6214353,
+      39.9566545
+     ],
+     [
+      -105.6210017,
+      39.9564937
+     ],
+     [
+      -105.6202538,
+      39.956103
+     ],
+     [
+      -105.6197418,
+      39.9560371
+     ],
+     [
+      -105.6190724,
+      39.9560215
+     ],
+     [
+      -105.6185675,
+      39.9557676
+     ],
+     [
+      -105.61809,
+      39.9556804
+     ],
+     [
+      -105.6177315,
+      39.9555443
+     ],
+     [
+      -105.6172826,
+      39.9554693
+     ],
+     [
+      -105.616679,
+      39.955481
+     ],
+     [
+      -105.6161311,
+      39.955435
+     ],
+     [
+      -105.6158265,
+      39.9552927
+     ],
+     [
+      -105.6153947,
+      39.954944
+     ],
+     [
+      -105.6150746,
+      39.9548453
+     ],
+     [
+      -105.6142249,
+      39.9550006
+     ],
+     [
+      -105.6138076,
+      39.9551637
+     ],
+     [
+      -105.6135589,
+      39.9551462
+     ],
+     [
+      -105.6132613,
+      39.955319
+     ],
+     [
+      -105.613033,
+      39.9555265
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Devils Thumb Bypass",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "FS 902.1",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     723297656
+    ],
+    "area": "Hessie Trail Area"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.6322697,
+      39.9640866
+     ],
+     [
+      -105.6322406,
+      39.9640444
+     ],
+     [
+      -105.6315225,
+      39.9634022
+     ],
+     [
+      -105.6311557,
+      39.963302
+     ],
+     [
+      -105.6306924,
+      39.9628591
+     ],
+     [
+      -105.6303844,
+      39.9627866
+     ],
+     [
+      -105.629757,
+      39.9620708
+     ],
+     [
+      -105.629372,
+      39.9617621
+     ],
+     [
+      -105.6285276,
+      39.9611982
+     ],
+     [
+      -105.6281205,
+      39.9610618
+     ],
+     [
+      -105.6280053,
+      39.9606293
+     ],
+     [
+      -105.6279133,
+      39.9605206
+     ],
+     [
+      -105.6275475,
+      39.9604493
+     ],
+     [
+      -105.6273687,
+      39.9603707
+     ],
+     [
+      -105.6269189,
+      39.9597607
+     ],
+     [
+      -105.6266206,
+      39.9595129
+     ],
+     [
+      -105.6259152,
+      39.9591798
+     ],
+     [
+      -105.6252599,
+      39.9587
+     ],
+     [
+      -105.623785,
+      39.957823
+     ],
+     [
+      -105.6236109,
+      39.957563
+     ],
+     [
+      -105.6230594,
+      39.9571352
+     ],
+     [
+      -105.6228111,
+      39.9570451
+     ],
+     [
+      -105.6219237,
+      39.9568702
+     ],
+     [
+      -105.6216409,
+      39.9567374
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Devil's Thumb Bypass Trail",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "FR 902.1",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     631780308
+    ],
+    "area": "Hessie Trail Area"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.6462564,
+      40.0040655
+     ],
+     [
+      -105.6463925,
+      40.004148
+     ],
+     [
+      -105.6465555,
+      40.0041768
+     ],
+     [
+      -105.6468218,
+      40.0041895
+     ],
+     [
+      -105.6469988,
+      40.0041818
+     ],
+     [
+      -105.6473636,
+      40.0042247
+     ],
+     [
+      -105.6476942,
+      40.0043543
+     ],
+     [
+      -105.6479666,
+      40.0042801
+     ],
+     [
+      -105.6482648,
+      40.0041604
+     ],
+     [
+      -105.6483507,
+      40.0041818
+     ],
+     [
+      -105.648458,
+      40.0042033
+     ],
+     [
+      -105.6488452,
+      40.0042951
+     ],
+     [
+      -105.6490967,
+      40.0044842
+     ],
+     [
+      -105.64934,
+      40.0044117
+     ],
+     [
+      -105.6496656,
+      40.0045157
+     ],
+     [
+      -105.6498247,
+      40.0045863
+     ],
+     [
+      -105.6500362,
+      40.0046547
+     ],
+     [
+      -105.6503335,
+      40.004786
+     ],
+     [
+      -105.650475,
+      40.0047826
+     ],
+     [
+      -105.6507968,
+      40.0049328
+     ],
+     [
+      -105.6510147,
+      40.0050222
+     ],
+     [
+      -105.6512272,
+      40.0051289
+     ],
+     [
+      -105.6514944,
+      40.0051375
+     ],
+     [
+      -105.6516604,
+      40.0050128
+     ],
+     [
+      -105.6519296,
+      40.0049218
+     ],
+     [
+      -105.6519494,
+      40.0048507
+     ],
+     [
+      -105.6520359,
+      40.0047668
+     ],
+     [
+      -105.6522125,
+      40.0047926
+     ],
+     [
+      -105.652372,
+      40.0047827
+     ],
+     [
+      -105.6525186,
+      40.0048199
+     ],
+     [
+      -105.6527782,
+      40.0048139
+     ],
+     [
+      -105.6530108,
+      40.0048277
+     ],
+     [
+      -105.6532001,
+      40.0046539
+     ],
+     [
+      -105.6532936,
+      40.0045998
+     ],
+     [
+      -105.6533853,
+      40.0043176
+     ],
+     [
+      -105.653535,
+      40.0042292
+     ],
+     [
+      -105.6537097,
+      40.0041342
+     ],
+     [
+      -105.6536674,
+      40.0040257
+     ],
+     [
+      -105.6537051,
+      40.0039479
+     ],
+     [
+      -105.6537536,
+      40.003899
+     ],
+     [
+      -105.6537921,
+      40.0038121
+     ],
+     [
+      -105.6537399,
+      40.0037462
+     ],
+     [
+      -105.6537311,
+      40.0037031
+     ],
+     [
+      -105.6536936,
+      40.0036454
+     ],
+     [
+      -105.6536936,
+      40.0035595
+     ],
+     [
+      -105.65383,
+      40.0033511
+     ],
+     [
+      -105.653929,
+      40.0032938
+     ],
+     [
+      -105.6539161,
+      40.0031154
+     ],
+     [
+      -105.6539132,
+      40.0030747
+     ],
+     [
+      -105.6538416,
+      40.0029963
+     ],
+     [
+      -105.6537474,
+      40.0029026
+     ],
+     [
+      -105.6534368,
+      40.0028391
+     ],
+     [
+      -105.6531858,
+      40.0028504
+     ],
+     [
+      -105.6529088,
+      40.0027012
+     ],
+     [
+      -105.653011,
+      40.0024846
+     ],
+     [
+      -105.6529005,
+      40.002358
+     ],
+     [
+      -105.6525966,
+      40.0021972
+     ],
+     [
+      -105.6525088,
+      40.0020202
+     ],
+     [
+      -105.6523479,
+      40.0018961
+     ],
+     [
+      -105.65235,
+      40.001642
+     ],
+     [
+      -105.6521429,
+      40.0013771
+     ],
+     [
+      -105.6520103,
+      40.0010158
+     ],
+     [
+      -105.652022,
+      40.0008009
+     ],
+     [
+      -105.6517474,
+      40.0005598
+     ],
+     [
+      -105.6513804,
+      40.000371
+     ],
+     [
+      -105.6511402,
+      39.9999761
+     ],
+     [
+      -105.6509041,
+      39.9998259
+     ],
+     [
+      -105.6508398,
+      39.9997615
+     ],
+     [
+      -105.6506681,
+      39.9995899
+     ],
+     [
+      -105.6506252,
+      39.9995255
+     ],
+     [
+      -105.6505179,
+      39.9994397
+     ],
+     [
+      -105.6504106,
+      39.9994611
+     ],
+     [
+      -105.6502431,
+      39.9993553
+     ],
+     [
+      -105.650196,
+      39.9992251
+     ],
+     [
+      -105.6502915,
+      39.999114
+     ],
+     [
+      -105.6504443,
+      39.9991072
+     ],
+     [
+      -105.6506252,
+      39.999032
+     ],
+     [
+      -105.6506503,
+      39.9989354
+     ],
+     [
+      -105.6505305,
+      39.9987829
+     ],
+     [
+      -105.650475,
+      39.9986243
+     ],
+     [
+      -105.6504321,
+      39.9985599
+     ],
+     [
+      -105.6502389,
+      39.9984955
+     ],
+     [
+      -105.6499112,
+      39.9984575
+     ],
+     [
+      -105.6497116,
+      39.9983203
+     ],
+     [
+      -105.6497645,
+      39.9982153
+     ],
+     [
+      -105.6497953,
+      39.9981424
+     ],
+     [
+      -105.6499119,
+      39.9982142
+     ],
+     [
+      -105.6500436,
+      39.9981918
+     ],
+     [
+      -105.6500433,
+      39.9980488
+     ],
+     [
+      -105.6498999,
+      39.9978845
+     ],
+     [
+      -105.6498312,
+      39.9977445
+     ],
+     [
+      -105.6495523,
+      39.9976158
+     ],
+     [
+      -105.649445,
+      39.9975299
+     ],
+     [
+      -105.6495353,
+      39.9974095
+     ],
+     [
+      -105.6497114,
+      39.9973643
+     ],
+     [
+      -105.6498702,
+      39.9973785
+     ],
+     [
+      -105.6499687,
+      39.9973421
+     ],
+     [
+      -105.6499576,
+      39.9972392
+     ],
+     [
+      -105.6499674,
+      39.9971347
+     ],
+     [
+      -105.6499886,
+      39.9969847
+     ],
+     [
+      -105.6498836,
+      39.9969252
+     ],
+     [
+      -105.6498504,
+      39.9968118
+     ],
+     [
+      -105.6498527,
+      39.9967575
+     ],
+     [
+      -105.6498527,
+      39.9966931
+     ],
+     [
+      -105.6498527,
+      39.9965643
+     ],
+     [
+      -105.6497999,
+      39.996456
+     ],
+     [
+      -105.6497669,
+      39.9963712
+     ],
+     [
+      -105.6496537,
+      39.9962091
+     ],
+     [
+      -105.6496026,
+      39.9960824
+     ],
+     [
+      -105.6495308,
+      39.995985
+     ],
+     [
+      -105.6492506,
+      39.9959077
+     ],
+     [
+      -105.6491794,
+      39.9957007
+     ],
+     [
+      -105.6487833,
+      39.9955954
+     ],
+     [
+      -105.6485009,
+      39.9954056
+     ],
+     [
+      -105.6484365,
+      39.9953413
+     ],
+     [
+      -105.6483078,
+      39.9952263
+     ],
+     [
+      -105.6482434,
+      39.9950623
+     ],
+     [
+      -105.648293,
+      39.9949552
+     ],
+     [
+      -105.648179,
+      39.9949336
+     ],
+     [
+      -105.647943,
+      39.9948048
+     ],
+     [
+      -105.6479215,
+      39.994719
+     ],
+     [
+      -105.6478142,
+      39.9946761
+     ],
+     [
+      -105.6476426,
+      39.9946117
+     ],
+     [
+      -105.6474494,
+      39.9945044
+     ],
+     [
+      -105.647149,
+      39.9943971
+     ],
+     [
+      -105.6470847,
+      39.9943542
+     ],
+     [
+      -105.6469988,
+      39.9942469
+     ],
+     [
+      -105.6470847,
+      39.9941611
+     ],
+     [
+      -105.6471276,
+      39.9940538
+     ],
+     [
+      -105.6472349,
+      39.9939894
+     ],
+     [
+      -105.6472349,
+      39.993925
+     ],
+     [
+      -105.6472778,
+      39.9938821
+     ],
+     [
+      -105.6472134,
+      39.9938178
+     ],
+     [
+      -105.6471276,
+      39.9938607
+     ],
+     [
+      -105.6469946,
+      39.9939059
+     ],
+     [
+      -105.6469024,
+      39.9938976
+     ],
+     [
+      -105.6468205,
+      39.9939089
+     ],
+     [
+      -105.6467199,
+      39.9939036
+     ],
+     [
+      -105.6465053,
+      39.9938821
+     ],
+     [
+      -105.6464195,
+      39.9938905
+     ],
+     [
+      -105.6462693,
+      39.9938821
+     ],
+     [
+      -105.6461834,
+      39.9938607
+     ],
+     [
+      -105.6459181,
+      39.993776
+     ],
+     [
+      -105.6457515,
+      39.993776
+     ],
+     [
+      -105.6453251,
+      39.9938488
+     ],
+     [
+      -105.6451889,
+      39.9938392
+     ],
+     [
+      -105.6449283,
+      39.9937426
+     ],
+     [
+      -105.6447458,
+      39.9937319
+     ],
+     [
+      -105.6445956,
+      39.9937534
+     ],
+     [
+      -105.6444239,
+      39.9938392
+     ],
+     [
+      -105.6443166,
+      39.9938392
+     ],
+     [
+      -105.6442308,
+      39.9938392
+     ],
+     [
+      -105.6440763,
+      39.9937797
+     ],
+     [
+      -105.6440151,
+      39.9937272
+     ],
+     [
+      -105.6440182,
+      39.9936365
+     ],
+     [
+      -105.6440162,
+      39.9935817
+     ],
+     [
+      -105.6439733,
+      39.9934744
+     ],
+     [
+      -105.6437587,
+      39.9933242
+     ],
+     [
+      -105.6436944,
+      39.9932599
+     ],
+     [
+      -105.6435012,
+      39.9932169
+     ],
+     [
+      -105.6433296,
+      39.9931955
+     ],
+     [
+      -105.6430935,
+      39.9930238
+     ],
+     [
+      -105.6430292,
+      39.9928951
+     ],
+     [
+      -105.6430721,
+      39.9928307
+     ],
+     [
+      -105.6431579,
+      39.9927449
+     ],
+     [
+      -105.6432652,
+      39.9927449
+     ],
+     [
+      -105.643351,
+      39.9926805
+     ],
+     [
+      -105.6433296,
+      39.9926161
+     ],
+     [
+      -105.6432437,
+      39.9925303
+     ],
+     [
+      -105.6433081,
+      39.992423
+     ],
+     [
+      -105.6430721,
+      39.9923157
+     ],
+     [
+      -105.6428575,
+      39.9922728
+     ],
+     [
+      -105.6427931,
+      39.9922299
+     ],
+     [
+      -105.642836,
+      39.9920368
+     ],
+     [
+      -105.6429004,
+      39.9918866
+     ],
+     [
+      -105.6429004,
+      39.9916505
+     ],
+     [
+      -105.6429004,
+      39.9915862
+     ],
+     [
+      -105.6429433,
+      39.9915432
+     ],
+     [
+      -105.642879,
+      39.991436
+     ],
+     [
+      -105.6427717,
+      39.9912643
+     ],
+     [
+      -105.6427073,
+      39.9911785
+     ],
+     [
+      -105.6425356,
+      39.9910497
+     ],
+     [
+      -105.6424283,
+      39.9908995
+     ],
+     [
+      -105.6423854,
+      39.9908137
+     ],
+     [
+      -105.6421709,
+      39.9907064
+     ],
+     [
+      -105.6421065,
+      39.9905991
+     ],
+     [
+      -105.6420207,
+      39.9904704
+     ],
+     [
+      -105.6419992,
+      39.9903845
+     ],
+     [
+      -105.6419563,
+      39.99017
+     ],
+     [
+      -105.6418919,
+      39.9899554
+     ],
+     [
+      -105.6417632,
+      39.9898052
+     ],
+     [
+      -105.6417417,
+      39.9896335
+     ],
+     [
+      -105.6416344,
+      39.9895691
+     ],
+     [
+      -105.64157,
+      39.9895262
+     ],
+     [
+      -105.6413769,
+      39.9894404
+     ],
+     [
+      -105.6412267,
+      39.9893546
+     ],
+     [
+      -105.6411194,
+      39.9893331
+     ],
+     [
+      -105.6409907,
+      39.9892902
+     ],
+     [
+      -105.6408405,
+      39.9890756
+     ],
+     [
+      -105.6408619,
+      39.9890112
+     ],
+     [
+      -105.6408834,
+      39.9888396
+     ],
+     [
+      -105.640819,
+      39.9887323
+     ],
+     [
+      -105.6407976,
+      39.988625
+     ],
+     [
+      -105.640819,
+      39.9885177
+     ],
+     [
+      -105.6407332,
+      39.9884104
+     ],
+     [
+      -105.640583,
+      39.9883461
+     ],
+     [
+      -105.6405186,
+      39.9883031
+     ],
+     [
+      -105.6404757,
+      39.9882602
+     ],
+     [
+      -105.6404328,
+      39.9881529
+     ],
+     [
+      -105.6404325,
+      39.987911
+     ],
+     [
+      -105.6404757,
+      39.9877882
+     ],
+     [
+      -105.6405186,
+      39.9877452
+     ],
+     [
+      -105.640583,
+      39.9876594
+     ],
+     [
+      -105.6406688,
+      39.9875521
+     ],
+     [
+      -105.6407976,
+      39.9876165
+     ],
+     [
+      -105.6409049,
+      39.9876165
+     ],
+     [
+      -105.6409478,
+      39.9875736
+     ],
+     [
+      -105.6410765,
+      39.9874448
+     ],
+     [
+      -105.6412482,
+      39.9874019
+     ],
+     [
+      -105.6414842,
+      39.9874019
+     ],
+     [
+      -105.641613,
+      39.9874019
+     ],
+     [
+      -105.6417417,
+      39.9873805
+     ],
+     [
+      -105.6418369,
+      39.9873686
+     ],
+     [
+      -105.641993,
+      39.9873948
+     ],
+     [
+      -105.6421923,
+      39.987359
+     ],
+     [
+      -105.642364,
+      39.9872088
+     ],
+     [
+      -105.6424713,
+      39.9871659
+     ],
+     [
+      -105.6425356,
+      39.98708
+     ],
+     [
+      -105.6426,
+      39.9870371
+     ],
+     [
+      -105.6426644,
+      39.9869728
+     ],
+     [
+      -105.6427717,
+      39.9868869
+     ],
+     [
+      -105.642879,
+      39.986844
+     ],
+     [
+      -105.6430721,
+      39.9868011
+     ],
+     [
+      -105.643115,
+      39.9867367
+     ],
+     [
+      -105.6432223,
+      39.9866938
+     ],
+     [
+      -105.643351,
+      39.9866724
+     ],
+     [
+      -105.6434798,
+      39.9865865
+     ],
+     [
+      -105.6436085,
+      39.9864578
+     ],
+     [
+      -105.6436514,
+      39.9863719
+     ],
+     [
+      -105.6436514,
+      39.9862432
+     ],
+     [
+      -105.6437194,
+      39.986155
+     ],
+     [
+      -105.6437615,
+      39.9860136
+     ],
+     [
+      -105.643749,
+      39.9859138
+     ],
+     [
+      -105.6436386,
+      39.9858104
+     ],
+     [
+      -105.6435656,
+      39.9857068
+     ],
+     [
+      -105.6435587,
+      39.9856688
+     ],
+     [
+      -105.6435871,
+      39.9855995
+     ],
+     [
+      -105.6435656,
+      39.9855351
+     ],
+     [
+      -105.6435227,
+      39.9854922
+     ],
+     [
+      -105.6434583,
+      39.9853849
+     ],
+     [
+      -105.6434583,
+      39.9852561
+     ],
+     [
+      -105.6433296,
+      39.9851274
+     ],
+     [
+      -105.6433296,
+      39.9849772
+     ],
+     [
+      -105.6433296,
+      39.9848914
+     ],
+     [
+      -105.6433296,
+      39.9848055
+     ],
+     [
+      -105.6433296,
+      39.9847412
+     ],
+     [
+      -105.6433296,
+      39.9846553
+     ],
+     [
+      -105.6432867,
+      39.9845266
+     ],
+     [
+      -105.6433081,
+      39.984312
+     ],
+     [
+      -105.643351,
+      39.9842476
+     ],
+     [
+      -105.6434583,
+      39.9842047
+     ],
+     [
+      -105.6435507,
+      39.9840756
+     ],
+     [
+      -105.6436954,
+      39.9839746
+     ],
+     [
+      -105.6438552,
+      39.9839101
+     ],
+     [
+      -105.6439956,
+      39.9838455
+     ],
+     [
+      -105.6441835,
+      39.9837512
+     ],
+     [
+      -105.6446155,
+      39.9834649
+     ],
+     [
+      -105.6450086,
+      39.9831455
+     ],
+     [
+      -105.6454254,
+      39.9827086
+     ],
+     [
+      -105.6457688,
+      39.9824736
+     ],
+     [
+      -105.6460086,
+      39.982318
+     ],
+     [
+      -105.6461339,
+      39.982136
+     ],
+     [
+      -105.6463887,
+      39.981939
+     ],
+     [
+      -105.6465637,
+      39.9817735
+     ],
+     [
+      -105.6466587,
+      39.9816858
+     ],
+     [
+      -105.6467062,
+      39.9816097
+     ],
+     [
+      -105.6467386,
+      39.9815385
+     ],
+     [
+      -105.6468293,
+      39.9814442
+     ],
+     [
+      -105.6468985,
+      39.9813333
+     ],
+     [
+      -105.6469589,
+      39.9812373
+     ],
+     [
+      -105.6469868,
+      39.9811747
+     ],
+     [
+      -105.6469761,
+      39.981128
+     ],
+     [
+      -105.6468789,
+      39.9810206
+     ],
+     [
+      -105.6467602,
+      39.9809013
+     ],
+     [
+      -105.6466965,
+      39.9808181
+     ],
+     [
+      -105.6466576,
+      39.9807565
+     ],
+     [
+      -105.6466073,
+      39.9807149
+     ],
+     [
+      -105.6465221,
+      39.9806845
+     ],
+     [
+      -105.6464362,
+      39.9806547
+     ],
+     [
+      -105.6463002,
+      39.9806001
+     ],
+     [
+      -105.646203,
+      39.9805703
+     ],
+     [
+      -105.6458972,
+      39.9804333
+     ],
+     [
+      -105.6456504,
+      39.9803377
+     ],
+     [
+      -105.645447,
+      39.9802608
+     ],
+     [
+      -105.6453714,
+      39.9802244
+     ],
+     [
+      -105.6453165,
+      39.9801625
+     ],
+     [
+      -105.6452601,
+      39.9801327
+     ],
+     [
+      -105.6451931,
+      39.980089
+     ],
+     [
+      -105.6451079,
+      39.9800523
+     ],
+     [
+      -105.6450308,
+      39.9800156
+     ],
+     [
+      -105.6449785,
+      39.9799395
+     ],
+     [
+      -105.6449611,
+      39.9798398
+     ],
+     [
+      -105.6449638,
+      39.9797016
+     ],
+     [
+      -105.6449517,
+      39.9795819
+     ],
+     [
+      -105.64492,
+      39.9794714
+     ],
+     [
+      -105.6448229,
+      39.9793327
+     ],
+     [
+      -105.644776,
+      39.9792525
+     ],
+     [
+      -105.6447391,
+      39.9791955
+     ],
+     [
+      -105.6447019,
+      39.9791139
+     ],
+     [
+      -105.6446875,
+      39.9790172
+     ],
+     [
+      -105.6446929,
+      39.9789596
+     ],
+     [
+      -105.6446566,
+      39.97886
+     ],
+     [
+      -105.6446593,
+      39.978807
+     ],
+     [
+      -105.6446861,
+      39.9787536
+     ],
+     [
+      -105.6447299,
+      39.9787018
+     ],
+     [
+      -105.6447646,
+      39.9786611
+     ],
+     [
+      -105.6447867,
+      39.9785809
+     ],
+     [
+      -105.6447901,
+      39.9785141
+     ],
+     [
+      -105.6448075,
+      39.978453
+     ],
+     [
+      -105.6448377,
+      39.9783888
+     ],
+     [
+      -105.6448853,
+      39.9783245
+     ],
+     [
+      -105.6449765,
+      39.9782382
+     ],
+     [
+      -105.6450617,
+      39.9781735
+     ],
+     [
+      -105.6451508,
+      39.9780779
+     ],
+     [
+      -105.6452454,
+      39.9780003
+     ],
+     [
+      -105.645293,
+      39.9779104
+     ],
+     [
+      -105.6452756,
+      39.9778313
+     ],
+     [
+      -105.6452112,
+      39.9777973
+     ],
+     [
+      -105.6450932,
+      39.9777732
+     ],
+     [
+      -105.6450563,
+      39.9777573
+     ],
+     [
+      -105.644953,
+      39.9776905
+     ],
+     [
+      -105.6448866,
+      39.9776401
+     ],
+     [
+      -105.6448424,
+      39.9776047
+     ],
+     [
+      -105.6448055,
+      39.9775599
+     ],
+     [
+      -105.6448223,
+      39.9775029
+     ],
+     [
+      -105.6448645,
+      39.9774402
+     ],
+     [
+      -105.6448893,
+      39.9773899
+     ],
+     [
+      -105.6448703,
+      39.9773165
+     ],
+     [
+      -105.644711,
+      39.9770497
+     ],
+     [
+      -105.6446037,
+      39.9768868
+     ],
+     [
+      -105.6445205,
+      39.9767316
+     ],
+     [
+      -105.6445158,
+      39.9766412
+     ],
+     [
+      -105.6445427,
+      39.9765888
+     ],
+     [
+      -105.6451059,
+      39.9763581
+     ],
+     [
+      -105.6452957,
+      39.976301
+     ],
+     [
+      -105.6454747,
+      39.976264
+     ],
+     [
+      -105.6459106,
+      39.9760431
+     ],
+     [
+      -105.6461943,
+      39.9759179
+     ],
+     [
+      -105.6465248,
+      39.9757904
+     ],
+     [
+      -105.6466663,
+      39.9756998
+     ],
+     [
+      -105.646785,
+      39.9756551
+     ],
+     [
+      -105.6469271,
+      39.9756212
+     ],
+     [
+      -105.6471457,
+      39.9756145
+     ],
+     [
+      -105.6473831,
+      39.9755965
+     ],
+     [
+      -105.6478149,
+      39.9755863
+     ],
+     [
+      -105.6482535,
+      39.9756068
+     ],
+     [
+      -105.6485807,
+      39.9756227
+     ],
+     [
+      -105.6487034,
+      39.9756407
+     ],
+     [
+      -105.6488422,
+      39.9756489
+     ],
+     [
+      -105.6490108,
+      39.9756398
+     ],
+     [
+      -105.6491577,
+      39.9756067
+     ],
+     [
+      -105.6493344,
+      39.9755904
+     ],
+     [
+      -105.6495376,
+      39.9755976
+     ],
+     [
+      -105.6497622,
+      39.9756099
+     ],
+     [
+      -105.6500843,
+      39.9755488
+     ],
+     [
+      -105.6502631,
+      39.9755056
+     ],
+     [
+      -105.6504207,
+      39.9754547
+     ],
+     [
+      -105.6505374,
+      39.9754115
+     ],
+     [
+      -105.6506608,
+      39.9753668
+     ],
+     [
+      -105.6506842,
+      39.9753442
+     ],
+     [
+      -105.6506809,
+      39.9753144
+     ],
+     [
+      -105.6506339,
+      39.9752476
+     ],
+     [
+      -105.6505716,
+      39.9751937
+     ],
+     [
+      -105.650475,
+      39.975113
+     ],
+     [
+      -105.6504777,
+      39.9750852
+     ],
+     [
+      -105.6504978,
+      39.9750637
+     ],
+     [
+      -105.6505991,
+      39.9750328
+     ],
+     [
+      -105.6507915,
+      39.9749948
+     ],
+     [
+      -105.651041,
+      39.9749414
+     ],
+     [
+      -105.6512032,
+      39.9749126
+     ],
+     [
+      -105.6513347,
+      39.9749403
+     ],
+     [
+      -105.6514098,
+      39.9749259
+     ],
+     [
+      -105.6514838,
+      39.9748503
+     ],
+     [
+      -105.6515465,
+      39.9747643
+     ],
+     [
+      -105.6516394,
+      39.9746666
+     ],
+     [
+      -105.6517166,
+      39.9745778
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Diamond Lake Trail",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "FS 975",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     206203593,
+     320485672,
+     320485676,
+     320485677
+    ],
+    "area": "Hessie Trail Area"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.6776379,
+      39.9440401
+     ],
+     [
+      -105.6773003,
+      39.9440606
+     ],
+     [
+      -105.6771136,
+      39.9439082
+     ],
+     [
+      -105.6768727,
+      39.9438325
+     ],
+     [
+      -105.6766355,
+      39.9438491
+     ],
+     [
+      -105.6761256,
+      39.9440415
+     ],
+     [
+      -105.6753737,
+      39.9440646
+     ],
+     [
+      -105.6749557,
+      39.9442571
+     ],
+     [
+      -105.6745977,
+      39.9442656
+     ],
+     [
+      -105.6739191,
+      39.9444281
+     ],
+     [
+      -105.6737032,
+      39.9445303
+     ],
+     [
+      -105.673136,
+      39.944573
+     ],
+     [
+      -105.6726826,
+      39.9448065
+     ],
+     [
+      -105.6718118,
+      39.9450729
+     ],
+     [
+      -105.6714939,
+      39.9452524
+     ],
+     [
+      -105.6712047,
+      39.9453411
+     ],
+     [
+      -105.6710411,
+      39.9452949
+     ],
+     [
+      -105.669919,
+      39.9453414
+     ],
+     [
+      -105.6690301,
+      39.9456816
+     ],
+     [
+      -105.6687347,
+      39.9457147
+     ],
+     [
+      -105.668398,
+      39.9459
+     ],
+     [
+      -105.6679169,
+      39.9459308
+     ],
+     [
+      -105.6673956,
+      39.9460876
+     ],
+     [
+      -105.6669747,
+      39.9461318
+     ],
+     [
+      -105.666612,
+      39.9461169
+     ],
+     [
+      -105.664987,
+      39.9465263
+     ],
+     [
+      -105.6646453,
+      39.9466345
+     ],
+     [
+      -105.66341,
+      39.9472387
+     ],
+     [
+      -105.6629624,
+      39.9475327
+     ],
+     [
+      -105.6627582,
+      39.9475912
+     ],
+     [
+      -105.6610684,
+      39.9477738
+     ],
+     [
+      -105.6588644,
+      39.9475095
+     ],
+     [
+      -105.6583983,
+      39.9475889
+     ],
+     [
+      -105.6566897,
+      39.9471903
+     ],
+     [
+      -105.656268,
+      39.9473083
+     ],
+     [
+      -105.6560136,
+      39.9472599
+     ],
+     [
+      -105.6551692,
+      39.947221
+     ],
+     [
+      -105.6549277,
+      39.9472637
+     ],
+     [
+      -105.6545148,
+      39.9471996
+     ],
+     [
+      -105.6538843,
+      39.9474344
+     ],
+     [
+      -105.6534525,
+      39.9475043
+     ],
+     [
+      -105.6531162,
+      39.9476477
+     ],
+     [
+      -105.6527738,
+      39.9476972
+     ],
+     [
+      -105.6522849,
+      39.9479788
+     ],
+     [
+      -105.6519105,
+      39.9480778
+     ],
+     [
+      -105.6514979,
+      39.9481239
+     ],
+     [
+      -105.6508717,
+      39.9483797
+     ],
+     [
+      -105.6502343,
+      39.9485109
+     ],
+     [
+      -105.6491426,
+      39.9486288
+     ],
+     [
+      -105.6485914,
+      39.9487946
+     ],
+     [
+      -105.6480639,
+      39.9488347
+     ],
+     [
+      -105.6464469,
+      39.9490926
+     ],
+     [
+      -105.6460533,
+      39.9492958
+     ],
+     [
+      -105.6450504,
+      39.9493643
+     ],
+     [
+      -105.6445404,
+      39.949453
+     ],
+     [
+      -105.6438886,
+      39.9493156
+     ],
+     [
+      -105.643539,
+      39.9493221
+     ],
+     [
+      -105.6431662,
+      39.9495133
+     ],
+     [
+      -105.6426657,
+      39.9495581
+     ],
+     [
+      -105.6420229,
+      39.9494092
+     ],
+     [
+      -105.6412412,
+      39.9494711
+     ],
+     [
+      -105.6401981,
+      39.9493088
+     ],
+     [
+      -105.639828,
+      39.9494584
+     ],
+     [
+      -105.6394808,
+      39.9496963
+     ],
+     [
+      -105.6391336,
+      39.9498288
+     ],
+     [
+      -105.6376769,
+      39.9498856
+     ],
+     [
+      -105.636703,
+      39.9504221
+     ],
+     [
+      -105.6364812,
+      39.9504324
+     ],
+     [
+      -105.636257,
+      39.9505437
+     ],
+     [
+      -105.6357878,
+      39.9508829
+     ],
+     [
+      -105.6347121,
+      39.9513066
+     ],
+     [
+      -105.6345229,
+      39.9515233
+     ],
+     [
+      -105.6340145,
+      39.951625
+     ],
+     [
+      -105.6321235,
+      39.9522829
+     ],
+     [
+      -105.6317801,
+      39.9523707
+     ],
+     [
+      -105.6312429,
+      39.9523777
+     ],
+     [
+      -105.6306269,
+      39.9524659
+     ],
+     [
+      -105.6300549,
+      39.9526658
+     ],
+     [
+      -105.6291238,
+      39.9526376
+     ],
+     [
+      -105.628105,
+      39.953133
+     ],
+     [
+      -105.6276853,
+      39.953214
+     ],
+     [
+      -105.6274023,
+      39.9533186
+     ],
+     [
+      -105.626872,
+      39.9533826
+     ],
+     [
+      -105.6265043,
+      39.9532658
+     ],
+     [
+      -105.6260583,
+      39.953206
+     ],
+     [
+      -105.6249808,
+      39.9534014
+     ],
+     [
+      -105.6243731,
+      39.9535771
+     ],
+     [
+      -105.6235786,
+      39.9535613
+     ],
+     [
+      -105.6233038,
+      39.9535452
+     ],
+     [
+      -105.6225573,
+      39.9535049
+     ],
+     [
+      -105.6221457,
+      39.9535679
+     ],
+     [
+      -105.6216629,
+      39.953603
+     ],
+     [
+      -105.6209916,
+      39.9537992
+     ],
+     [
+      -105.6206674,
+      39.9539003
+     ],
+     [
+      -105.6200798,
+      39.9540584
+     ],
+     [
+      -105.6198426,
+      39.9540915
+     ]
+    ]
+   },
+   "properties": {
+    "title": "King Lake",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "FS 901",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     360089418,
+     723297657
+    ],
+    "area": "Hessie Trail Area"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.6166233,
+      39.9544369
+     ],
+     [
+      -105.6169655,
+      39.9542554
+     ],
+     [
+      -105.6170741,
+      39.9540965
+     ],
+     [
+      -105.6168569,
+      39.953703
+     ],
+     [
+      -105.6168105,
+      39.9534282
+     ],
+     [
+      -105.6167483,
+      39.9530597
+     ],
+     [
+      -105.6167016,
+      39.9530338
+     ],
+     [
+      -105.6165706,
+      39.9529613
+     ],
+     [
+      -105.6168953,
+      39.9523762
+     ],
+     [
+      -105.6169202,
+      39.9522316
+     ],
+     [
+      -105.6172956,
+      39.9519677
+     ],
+     [
+      -105.6174033,
+      39.9518846
+     ],
+     [
+      -105.6174315,
+      39.9517846
+     ],
+     [
+      -105.6173706,
+      39.9517349
+     ],
+     [
+      -105.6172904,
+      39.9517525
+     ],
+     [
+      -105.617254,
+      39.9517094
+     ],
+     [
+      -105.6173097,
+      39.9516066
+     ],
+     [
+      -105.6173724,
+      39.9515127
+     ],
+     [
+      -105.6173615,
+      39.9513152
+     ],
+     [
+      -105.6173273,
+      39.9512611
+     ],
+     [
+      -105.617145,
+      39.9512507
+     ],
+     [
+      -105.617044,
+      39.9512383
+     ],
+     [
+      -105.6169332,
+      39.9512287
+     ],
+     [
+      -105.6168391,
+      39.9511815
+     ],
+     [
+      -105.6167479,
+      39.9511548
+     ],
+     [
+      -105.6166567,
+      39.9511178
+     ],
+     [
+      -105.6165521,
+      39.9510767
+     ],
+     [
+      -105.6164501,
+      39.9510253
+     ],
+     [
+      -105.6163321,
+      39.9509574
+     ],
+     [
+      -105.6162816,
+      39.9509132
+     ],
+     [
+      -105.616257,
+      39.9508916
+     ],
+     [
+      -105.616198,
+      39.9508587
+     ],
+     [
+      -105.6160773,
+      39.9507785
+     ],
+     [
+      -105.6159968,
+      39.950721
+     ],
+     [
+      -105.6159137,
+      39.9506696
+     ],
+     [
+      -105.6157682,
+      39.9505842
+     ],
+     [
+      -105.6156769,
+      39.9505434
+     ],
+     [
+      -105.6155781,
+      39.9504813
+     ],
+     [
+      -105.6155173,
+      39.9504075
+     ],
+     [
+      -105.6154692,
+      39.9503628
+     ],
+     [
+      -105.6154387,
+      39.950322
+     ],
+     [
+      -105.6153768,
+      39.9501613
+     ],
+     [
+      -105.6153526,
+      39.9500624
+     ],
+     [
+      -105.6152883,
+      39.9498968
+     ],
+     [
+      -105.6152185,
+      39.9497982
+     ],
+     [
+      -105.6151314,
+      39.9496933
+     ],
+     [
+      -105.6150509,
+      39.9495812
+     ],
+     [
+      -105.6149624,
+      39.9495082
+     ],
+     [
+      -105.6148819,
+      39.9494404
+     ],
+     [
+      -105.6148336,
+      39.9493921
+     ],
+     [
+      -105.6147813,
+      39.9493211
+     ],
+     [
+      -105.6147693,
+      39.9492841
+     ],
+     [
+      -105.614784,
+      39.9492173
+     ],
+     [
+      -105.6148859,
+      39.9491134
+     ],
+     [
+      -105.6149811,
+      39.9490374
+     ],
+     [
+      -105.6150884,
+      39.9489273
+     ],
+     [
+      -105.6151139,
+      39.9488132
+     ],
+     [
+      -105.6151086,
+      39.9487443
+     ],
+     [
+      -105.6150656,
+      39.9485325
+     ],
+     [
+      -105.6150482,
+      39.9484719
+     ],
+     [
+      -105.6150402,
+      39.9483824
+     ],
+     [
+      -105.6150683,
+      39.9483331
+     ],
+     [
+      -105.6150992,
+      39.9482817
+     ],
+     [
+      -105.6151515,
+      39.9482159
+     ],
+     [
+      -105.615244,
+      39.9481439
+     ],
+     [
+      -105.6153178,
+      39.9480565
+     ],
+     [
+      -105.6153513,
+      39.9479876
+     ],
+     [
+      -105.6153339,
+      39.9479301
+     ],
+     [
+      -105.6152038,
+      39.9478653
+     ],
+     [
+      -105.6151086,
+      39.9478201
+     ],
+     [
+      -105.6150308,
+      39.9477676
+     ],
+     [
+      -105.6149557,
+      39.9477203
+     ],
+     [
+      -105.614894,
+      39.9476833
+     ],
+     [
+      -105.6146459,
+      39.9475383
+     ],
+     [
+      -105.6144702,
+      39.9474006
+     ],
+     [
+      -105.6144206,
+      39.9473245
+     ],
+     [
+      -105.6143963,
+      39.9473103
+     ],
+     [
+      -105.614324,
+      39.9472679
+     ],
+     [
+      -105.6141886,
+      39.9472361
+     ],
+     [
+      -105.6140088,
+      39.9471795
+     ],
+     [
+      -105.613923,
+      39.9471322
+     ],
+     [
+      -105.6138653,
+      39.9471065
+     ],
+     [
+      -105.6138479,
+      39.947051
+     ],
+     [
+      -105.6138399,
+      39.946978
+     ],
+     [
+      -105.6138117,
+      39.9469204
+     ],
+     [
+      -105.6137259,
+      39.9468988
+     ],
+     [
+      -105.6136695,
+      39.9469307
+     ],
+     [
+      -105.6135998,
+      39.9469955
+     ],
+     [
+      -105.6135207,
+      39.9470654
+     ],
+     [
+      -105.6134053,
+      39.9470479
+     ],
+     [
+      -105.6133168,
+      39.9470932
+     ],
+     [
+      -105.6132337,
+      39.9471435
+     ],
+     [
+      -105.6131867,
+      39.9471795
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Lost Lake Trail",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "FS 813",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     358562511
+    ],
+    "area": "Hessie Trail Area"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.6009556,
+      39.9577278
+     ],
+     [
+      -105.6010065,
+      39.9578055
+     ],
+     [
+      -105.6010228,
+      39.9578942
+     ],
+     [
+      -105.6010605,
+      39.9579887
+     ],
+     [
+      -105.6009914,
+      39.9580581
+     ],
+     [
+      -105.6009654,
+      39.958137
+     ],
+     [
+      -105.6009576,
+      39.9582443
+     ],
+     [
+      -105.6009702,
+      39.9583921
+     ],
+     [
+      -105.6011326,
+      39.9588107
+     ],
+     [
+      -105.6010468,
+      39.9591314
+     ],
+     [
+      -105.6008298,
+      39.9593315
+     ],
+     [
+      -105.6007622,
+      39.9594004
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Plants and Animals",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     440275337
+    ],
+    "area": "Hessie Trail Area"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.6327499,
+      39.9628708
+     ],
+     [
+      -105.6329812,
+      39.9630261
+     ],
+     [
+      -105.6334446,
+      39.9630456
+     ],
+     [
+      -105.6338684,
+      39.9632018
+     ],
+     [
+      -105.6346945,
+      39.9634074
+     ],
+     [
+      -105.6348608,
+      39.9633129
+     ],
+     [
+      -105.6351452,
+      39.9633622
+     ],
+     [
+      -105.6353275,
+      39.9633293
+     ],
+     [
+      -105.6361537,
+      39.9628277
+     ],
+     [
+      -105.6366043,
+      39.9627948
+     ],
+     [
+      -105.6371836,
+      39.9628359
+     ],
+     [
+      -105.637527,
+      39.9630456
+     ],
+     [
+      -105.6377093,
+      39.9630867
+     ],
+     [
+      -105.6381761,
+      39.9629593
+     ],
+     [
+      -105.6384765,
+      39.9628277
+     ],
+     [
+      -105.6388668,
+      39.9626354
+     ],
+     [
+      -105.6395477,
+      39.9622067
+     ],
+     [
+      -105.6396952,
+      39.9621656
+     ],
+     [
+      -105.6400439,
+      39.9622601
+     ],
+     [
+      -105.6401807,
+      39.9622499
+     ],
+     [
+      -105.64017,
+      39.9621409
+     ],
+     [
+      -105.6402628,
+      39.9619478
+     ],
+     [
+      -105.6405418,
+      39.9619684
+     ],
+     [
+      -105.6406598,
+      39.9620424
+     ],
+     [
+      -105.6409334,
+      39.9620917
+     ],
+     [
+      -105.6410353,
+      39.962067
+     ],
+     [
+      -105.6410327,
+      39.9622212
+     ],
+     [
+      -105.6411812,
+      39.9622581
+     ],
+     [
+      -105.6413626,
+      39.9622233
+     ],
+     [
+      -105.6414226,
+      39.9622684
+     ],
+     [
+      -105.6414537,
+      39.9623713
+     ],
+     [
+      -105.6417059,
+      39.9623384
+     ],
+     [
+      -105.6418962,
+      39.9620176
+     ],
+     [
+      -105.6419419,
+      39.9617515
+     ],
+     [
+      -105.6417193,
+      39.9614944
+     ],
+     [
+      -105.6418078,
+      39.9613732
+     ],
+     [
+      -105.6419204,
+      39.9612745
+     ],
+     [
+      -105.6420894,
+      39.9609846
+     ],
+     [
+      -105.642937,
+      39.9607945
+     ],
+     [
+      -105.6431623,
+      39.9606053
+     ],
+     [
+      -105.6436022,
+      39.9604326
+     ],
+     [
+      -105.6438275,
+      39.9602435
+     ],
+     [
+      -105.6440099,
+      39.9598816
+     ],
+     [
+      -105.6441279,
+      39.9594951
+     ],
+     [
+      -105.6440528,
+      39.9591004
+     ],
+     [
+      -105.6444723,
+      39.9585657
+     ],
+     [
+      -105.6450559,
+      39.9583335
+     ],
+     [
+      -105.6455441,
+      39.9582513
+     ],
+     [
+      -105.6459518,
+      39.9581937
+     ],
+     [
+      -105.6462683,
+      39.9581937
+     ],
+     [
+      -105.6467564,
+      39.9580005
+     ],
+     [
+      -105.6473573,
+      39.9578895
+     ],
+     [
+      -105.6476201,
+      39.957799
+     ],
+     [
+      -105.6478883,
+      39.9578113
+     ],
+     [
+      -105.6480707,
+      39.9578319
+     ],
+     [
+      -105.648296,
+      39.9576962
+     ],
+     [
+      -105.6487252,
+      39.9575646
+     ],
+     [
+      -105.6489612,
+      39.9574454
+     ],
+     [
+      -105.6490846,
+      39.9574371
+     ],
+     [
+      -105.6497444,
+      39.9575893
+     ],
+     [
+      -105.6502487,
+      39.9573672
+     ],
+     [
+      -105.6508602,
+      39.9572562
+     ],
+     [
+      -105.6511928,
+      39.9573138
+     ],
+     [
+      -105.6514288,
+      39.9574084
+     ],
+     [
+      -105.6517453,
+      39.9574454
+     ],
+     [
+      -105.6519599,
+      39.9573261
+     ],
+     [
+      -105.6522335,
+      39.9570383
+     ],
+     [
+      -105.6525286,
+      39.9568902
+     ],
+     [
+      -105.6527056,
+      39.9569437
+     ],
+     [
+      -105.6529577,
+      39.9569807
+     ],
+     [
+      -105.6532528,
+      39.9567381
+     ],
+     [
+      -105.6536873,
+      39.9565736
+     ],
+     [
+      -105.6542666,
+      39.9562118
+     ],
+     [
+      -105.6555004,
+      39.9558252
+     ],
+     [
+      -105.6556614,
+      39.9556937
+     ],
+     [
+      -105.6561174,
+      39.9557142
+     ],
+     [
+      -105.6565518,
+      39.9555538
+     ],
+     [
+      -105.6567879,
+      39.9555292
+     ],
+     [
+      -105.6579198,
+      39.955081
+     ],
+     [
+      -105.6582953,
+      39.9548507
+     ],
+     [
+      -105.6589766,
+      39.9547355
+     ],
+     [
+      -105.6608059,
+      39.9547273
+     ],
+     [
+      -105.6613798,
+      39.954678
+     ],
+     [
+      -105.6617178,
+      39.9547026
+     ],
+     [
+      -105.6622221,
+      39.9548178
+     ],
+     [
+      -105.6630482,
+      39.9551344
+     ],
+     [
+      -105.6634827,
+      39.9550563
+     ],
+     [
+      -105.6639601,
+      39.9552084
+     ],
+     [
+      -105.6646039,
+      39.9553071
+     ],
+     [
+      -105.6652476,
+      39.9553482
+     ],
+     [
+      -105.6659718,
+      39.9556073
+     ],
+     [
+      -105.666122,
+      39.9555127
+     ],
+     [
+      -105.6662722,
+      39.955595
+     ],
+     [
+      -105.6663634,
+      39.9555826
+     ],
+     [
+      -105.666535,
+      39.9556402
+     ],
+     [
+      -105.6669481,
+      39.9556073
+     ],
+     [
+      -105.6671734,
+      39.9556525
+     ],
+     [
+      -105.667506,
+      39.9557512
+     ],
+     [
+      -105.6678279,
+      39.9559568
+     ],
+     [
+      -105.6680103,
+      39.9560185
+     ],
+     [
+      -105.6682946,
+      39.9560185
+     ],
+     [
+      -105.6683965,
+      39.9560925
+     ],
+     [
+      -105.6688525,
+      39.9558746
+     ],
+     [
+      -105.6690992,
+      39.9559075
+     ],
+     [
+      -105.6692065,
+      39.9560555
+     ],
+     [
+      -105.6700541,
+      39.9558787
+     ],
+     [
+      -105.6702365,
+      39.9558252
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Woodland Lake Trail",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "FS 811",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     295892520
+    ],
+    "area": "Hessie Trail Area"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.287366,
+      40.0292473
+     ],
+     [
+      -105.286779,
+      40.0292479
+     ],
+     [
+      -105.286156,
+      40.0292485
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Dellwood Avenue",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     17021596
+    ],
+    "area": "North Boulder Park"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.2861841,
+      40.0289802
+     ],
+     [
+      -105.2860661,
+      40.0289987
+     ],
+     [
+      -105.2859239,
+      40.0289885
+     ],
+     [
+      -105.2859,
+      40.0289361
+     ],
+     [
+      -105.2858635,
+      40.0288585
+     ],
+     [
+      -105.2858703,
+      40.028816
+     ],
+     [
+      -105.2858877,
+      40.0287887
+     ],
+     [
+      -105.2859174,
+      40.0287471
+     ],
+     [
+      -105.2859682,
+      40.0286783
+     ],
+     [
+      -105.2860312,
+      40.0285992
+     ],
+     [
+      -105.2860929,
+      40.0285222
+     ],
+     [
+      -105.2861384,
+      40.0284648
+     ],
+     [
+      -105.2862002,
+      40.0283867
+     ],
+     [
+      -105.2862324,
+      40.0282902
+     ],
+     [
+      -105.2862716,
+      40.0282174
+     ],
+     [
+      -105.2863156,
+      40.0281452
+     ],
+     [
+      -105.2863663,
+      40.0280125
+     ],
+     [
+      -105.2864094,
+      40.0278886
+     ],
+     [
+      -105.286458,
+      40.0277826
+     ],
+     [
+      -105.2864711,
+      40.0277346
+     ],
+     [
+      -105.2864765,
+      40.0276853
+     ],
+     [
+      -105.2865019,
+      40.0276304
+     ],
+     [
+      -105.2865462,
+      40.027522
+     ],
+     [
+      -105.2865824,
+      40.0274193
+     ],
+     [
+      -105.2866915,
+      40.0272468
+     ],
+     [
+      -105.2867712,
+      40.027089
+     ],
+     [
+      -105.2868386,
+      40.0269891
+     ],
+     [
+      -105.286911,
+      40.026872
+     ],
+     [
+      -105.2869824,
+      40.0267866
+     ],
+     [
+      -105.2870236,
+      40.0266923
+     ],
+     [
+      -105.2870451,
+      40.0266183
+     ],
+     [
+      -105.2870363,
+      40.0265552
+     ],
+     [
+      -105.2869418,
+      40.0265177
+     ],
+     [
+      -105.2868533,
+      40.02653
+     ],
+     [
+      -105.2868076,
+      40.0266317
+     ],
+     [
+      -105.2867568,
+      40.0268062
+     ],
+     [
+      -105.2867143,
+      40.026939
+     ],
+     [
+      -105.2866669,
+      40.0270691
+     ],
+     [
+      -105.2866304,
+      40.0271519
+     ],
+     [
+      -105.2866012,
+      40.0272417
+     ],
+     [
+      -105.2865234,
+      40.0272981
+     ],
+     [
+      -105.2864,
+      40.0273351
+     ],
+     [
+      -105.2863196,
+      40.0273074
+     ],
+     [
+      -105.2862337,
+      40.0272653
+     ],
+     [
+      -105.2861854,
+      40.0271872
+     ],
+     [
+      -105.2861533,
+      40.0271338
+     ],
+     [
+      -105.2861425,
+      40.0270558
+     ],
+     [
+      -105.2861592,
+      40.0269675
+     ],
+     [
+      -105.2862042,
+      40.0268668
+     ],
+     [
+      -105.2862481,
+      40.0267945
+     ],
+     [
+      -105.2862955,
+      40.0267189
+     ],
+     [
+      -105.2863544,
+      40.0266311
+     ],
+     [
+      -105.2864084,
+      40.0265167
+     ],
+     [
+      -105.2864202,
+      40.0264242
+     ],
+     [
+      -105.286392,
+      40.0263842
+     ],
+     [
+      -105.2863571,
+      40.0263667
+     ],
+     [
+      -105.2863098,
+      40.0263673
+     ],
+     [
+      -105.2862426,
+      40.0263886
+     ],
+     [
+      -105.2861975,
+      40.0264088
+     ],
+     [
+      -105.2861519,
+      40.0264453
+     ],
+     [
+      -105.2861278,
+      40.0264899
+     ],
+     [
+      -105.2861111,
+      40.0265418
+     ],
+     [
+      -105.2860903,
+      40.0266008
+     ],
+     [
+      -105.2860702,
+      40.0266831
+     ],
+     [
+      -105.2860621,
+      40.0267508
+     ],
+     [
+      -105.2860383,
+      40.0268442
+     ],
+     [
+      -105.2860419,
+      40.0269336
+     ],
+     [
+      -105.2860326,
+      40.0270188
+     ],
+     [
+      -105.2860205,
+      40.0270896
+     ],
+     [
+      -105.2860189,
+      40.0271516
+     ],
+     [
+      -105.2860178,
+      40.0271985
+     ],
+     [
+      -105.2860175,
+      40.0272649
+     ],
+     [
+      -105.2860251,
+      40.027348
+     ],
+     [
+      -105.2860339,
+      40.0274119
+     ],
+     [
+      -105.2860634,
+      40.0275405
+     ],
+     [
+      -105.286062,
+      40.0276335
+     ],
+     [
+      -105.286062,
+      40.0277207
+     ],
+     [
+      -105.2860574,
+      40.0277931
+     ],
+     [
+      -105.286042,
+      40.0278707
+     ],
+     [
+      -105.2860071,
+      40.0279975
+     ],
+     [
+      -105.285987,
+      40.0280817
+     ],
+     [
+      -105.2859794,
+      40.0281252
+     ],
+     [
+      -105.2859694,
+      40.028157
+     ],
+     [
+      -105.2860151,
+      40.028209
+     ],
+     [
+      -105.2860661,
+      40.0282973
+     ],
+     [
+      -105.2860634,
+      40.0283569
+     ],
+     [
+      -105.2860272,
+      40.028435
+     ],
+     [
+      -105.2859306,
+      40.0284925
+     ],
+     [
+      -105.285822,
+      40.0285695
+     ],
+     [
+      -105.2857745,
+      40.0286055
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Inner Loop",
+    "description": "Groomed: classic and skate\nDifficulty: easy",
+    "class": "Shape",
+    "stroke": "#00cd00",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "groomed",
+    "ref": "",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     386120843,
+     386284156,
+     1210804904,
+     1219562019
+    ],
+    "area": "North Boulder Park"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.2862002,
+      40.0283867
+     ],
+     [
+      -105.28617,
+      40.0284688
+     ],
+     [
+      -105.2861278,
+      40.0285376
+     ],
+     [
+      -105.2860661,
+      40.0286403
+     ],
+     [
+      -105.2860299,
+      40.0287245
+     ],
+     [
+      -105.28601,
+      40.0287913
+     ],
+     [
+      -105.2860795,
+      40.0289243
+     ],
+     [
+      -105.2861063,
+      40.0289535
+     ],
+     [
+      -105.2861841,
+      40.0289802
+     ],
+     [
+      -105.2862661,
+      40.0289854
+     ],
+     [
+      -105.2863507,
+      40.0289846
+     ],
+     [
+      -105.2864268,
+      40.0289895
+     ],
+     [
+      -105.2864886,
+      40.0289895
+     ],
+     [
+      -105.2865703,
+      40.0289926
+     ],
+     [
+      -105.2866886,
+      40.0289965
+     ],
+     [
+      -105.2867568,
+      40.0290069
+     ],
+     [
+      -105.2868061,
+      40.0290294
+     ],
+     [
+      -105.2868325,
+      40.0290321
+     ],
+     [
+      -105.286854,
+      40.0290401
+     ],
+     [
+      -105.286863,
+      40.0290452
+     ],
+     [
+      -105.2868661,
+      40.0290539
+     ],
+     [
+      -105.2868681,
+      40.0290713
+     ],
+     [
+      -105.2868637,
+      40.0290886
+     ],
+     [
+      -105.2868533,
+      40.0291045
+     ],
+     [
+      -105.2868369,
+      40.0291178
+     ],
+     [
+      -105.2868144,
+      40.0291266
+     ],
+     [
+      -105.2866994,
+      40.0291434
+     ],
+     [
+      -105.2865663,
+      40.0291466
+     ],
+     [
+      -105.2864431,
+      40.0291491
+     ],
+     [
+      -105.2863048,
+      40.0291497
+     ],
+     [
+      -105.2861845,
+      40.0291499
+     ],
+     [
+      -105.2860916,
+      40.0291415
+     ],
+     [
+      -105.2860219,
+      40.0291283
+     ],
+     [
+      -105.2859749,
+      40.0291117
+     ],
+     [
+      -105.285928,
+      40.0290922
+     ],
+     [
+      -105.2858737,
+      40.029066
+     ],
+     [
+      -105.2858381,
+      40.0290296
+     ],
+     [
+      -105.2858093,
+      40.02899
+     ],
+     [
+      -105.285786,
+      40.0289526
+     ],
+     [
+      -105.2857699,
+      40.0289218
+     ],
+     [
+      -105.2857636,
+      40.0288781
+     ],
+     [
+      -105.2857664,
+      40.0287916
+     ],
+     [
+      -105.2857637,
+      40.0287307
+     ],
+     [
+      -105.285767,
+      40.0286547
+     ],
+     [
+      -105.2857745,
+      40.0286055
+     ],
+     [
+      -105.2857831,
+      40.0285566
+     ],
+     [
+      -105.2858005,
+      40.0284966
+     ],
+     [
+      -105.2858199,
+      40.0284437
+     ],
+     [
+      -105.2858562,
+      40.0283657
+     ],
+     [
+      -105.2858783,
+      40.0283143
+     ],
+     [
+      -105.2859013,
+      40.0282624
+     ],
+     [
+      -105.2859266,
+      40.0282285
+     ],
+     [
+      -105.2859492,
+      40.0281898
+     ],
+     [
+      -105.2859694,
+      40.028157
+     ],
+     [
+      -105.2859466,
+      40.0281133
+     ],
+     [
+      -105.2859293,
+      40.0280622
+     ],
+     [
+      -105.2859119,
+      40.0280047
+     ],
+     [
+      -105.2858984,
+      40.0279554
+     ],
+     [
+      -105.2858743,
+      40.0278743
+     ],
+     [
+      -105.2858609,
+      40.0278096
+     ],
+     [
+      -105.285873,
+      40.0277593
+     ],
+     [
+      -105.2859159,
+      40.0276832
+     ],
+     [
+      -105.2859521,
+      40.0276104
+     ],
+     [
+      -105.285944,
+      40.0275271
+     ],
+     [
+      -105.2859293,
+      40.0274563
+     ],
+     [
+      -105.2859145,
+      40.0273793
+     ],
+     [
+      -105.2858958,
+      40.027292
+     ],
+     [
+      -105.2858904,
+      40.0272098
+     ],
+     [
+      -105.2858847,
+      40.0271279
+     ],
+     [
+      -105.285877,
+      40.0270671
+     ],
+     [
+      -105.285877,
+      40.0269911
+     ],
+     [
+      -105.2858722,
+      40.0268911
+     ],
+     [
+      -105.2858676,
+      40.0268134
+     ],
+     [
+      -105.2858743,
+      40.0267508
+     ],
+     [
+      -105.2858729,
+      40.026681
+     ],
+     [
+      -105.285877,
+      40.0266265
+     ],
+     [
+      -105.2859027,
+      40.0265692
+     ],
+     [
+      -105.285928,
+      40.0265033
+     ],
+     [
+      -105.2859566,
+      40.0264367
+     ],
+     [
+      -105.2859896,
+      40.0263615
+     ],
+     [
+      -105.2860306,
+      40.0262735
+     ],
+     [
+      -105.2860768,
+      40.0262106
+     ],
+     [
+      -105.2861372,
+      40.0261552
+     ],
+     [
+      -105.2861868,
+      40.0261275
+     ],
+     [
+      -105.2862562,
+      40.0261132
+     ],
+     [
+      -105.2863882,
+      40.0261068
+     ],
+     [
+      -105.2864845,
+      40.0261161
+     ],
+     [
+      -105.2865274,
+      40.0261202
+     ],
+     [
+      -105.2866119,
+      40.0261387
+     ],
+     [
+      -105.2866927,
+      40.0261536
+     ],
+     [
+      -105.2868225,
+      40.026186
+     ],
+     [
+      -105.2869366,
+      40.026206
+     ],
+     [
+      -105.2870384,
+      40.026226
+     ],
+     [
+      -105.28714,
+      40.0262476
+     ],
+     [
+      -105.2872113,
+      40.0263335
+     ],
+     [
+      -105.2872664,
+      40.0264109
+     ],
+     [
+      -105.2872638,
+      40.0265395
+     ],
+     [
+      -105.287181,
+      40.0266719
+     ],
+     [
+      -105.2871175,
+      40.0267744
+     ],
+     [
+      -105.2870585,
+      40.0268833
+     ],
+     [
+      -105.2870089,
+      40.0269495
+     ],
+     [
+      -105.2869928,
+      40.0270394
+     ],
+     [
+      -105.286974,
+      40.0271174
+     ],
+     [
+      -105.2869404,
+      40.027215
+     ],
+     [
+      -105.286913,
+      40.0272971
+     ],
+     [
+      -105.286848,
+      40.0273875
+     ],
+     [
+      -105.286773,
+      40.0274593
+     ],
+     [
+      -105.2867208,
+      40.0275076
+     ],
+     [
+      -105.2866615,
+      40.027555
+     ],
+     [
+      -105.2866266,
+      40.027597
+     ],
+     [
+      -105.2865556,
+      40.0276791
+     ],
+     [
+      -105.286458,
+      40.0277826
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Outside Loop",
+    "description": "Groomed: classic and skate\nDifficulty: easy",
+    "class": "Shape",
+    "stroke": "#00cd00",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "groomed",
+    "ref": "",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     377022862,
+     377022864,
+     377022866
+    ],
+    "area": "North Boulder Park"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.5337183,
+      39.9943707
+     ],
+     [
+      -105.5335388,
+      39.9944185
+     ],
+     [
+      -105.5332384,
+      39.9945254
+     ],
+     [
+      -105.5330828,
+      39.9947062
+     ],
+     [
+      -105.5328063,
+      39.9946542
+     ],
+     [
+      -105.532246,
+      39.994961
+     ],
+     [
+      -105.5317763,
+      39.9947734
+     ],
+     [
+      -105.5315028,
+      39.994572
+     ],
+     [
+      -105.5312935,
+      39.9945433
+     ],
+     [
+      -105.531157,
+      39.9945788
+     ],
+     [
+      -105.5311433,
+      39.9946583
+     ],
+     [
+      -105.5305401,
+      39.9945213
+     ],
+     [
+      -105.5304406,
+      39.994646
+     ],
+     [
+      -105.5296603,
+      39.994698
+     ],
+     [
+      -105.5297462,
+      39.9946117
+     ],
+     [
+      -105.5297891,
+      39.9943857
+     ],
+     [
+      -105.5297301,
+      39.9940857
+     ],
+     [
+      -105.5296603,
+      39.9940733
+     ],
+     [
+      -105.5299178,
+      39.9935596
+     ],
+     [
+      -105.5299042,
+      39.9932076
+     ],
+     [
+      -105.5301777,
+      39.9926651
+     ],
+     [
+      -105.5301807,
+      39.9925404
+     ],
+     [
+      -105.5303279,
+      39.9923281
+     ],
+     [
+      -105.5302797,
+      39.9921678
+     ],
+     [
+      -105.5298237,
+      39.9917609
+     ],
+     [
+      -105.5298398,
+      39.991539
+     ],
+     [
+      -105.5299417,
+      39.9913294
+     ],
+     [
+      -105.5297969,
+      39.9912225
+     ],
+     [
+      -105.5296628,
+      39.9908814
+     ],
+     [
+      -105.5298112,
+      39.9906406
+     ],
+     [
+      -105.5302636,
+      39.9906924
+     ],
+     [
+      -105.5307118,
+      39.9909293
+     ],
+     [
+      -105.5310497,
+      39.9909211
+     ],
+     [
+      -105.5313257,
+      39.9911403
+     ],
+     [
+      -105.5318407,
+      39.9910951
+     ],
+     [
+      -105.5324952,
+      39.9911321
+     ],
+     [
+      -105.5331178,
+      39.9910917
+     ],
+     [
+      -105.5331579,
+      39.9910095
+     ],
+     [
+      -105.533045,
+      39.9908691
+     ],
+     [
+      -105.5329058,
+      39.9906925
+     ],
+     [
+      -105.5328921,
+      39.9905793
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Blue Bird Loop",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     299291316
+    ],
+    "area": "Caribou Ranch"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.5328921,
+      39.9905793
+     ],
+     [
+      -105.5331687,
+      39.9906128
+     ],
+     [
+      -105.5333787,
+      39.9905855
+     ],
+     [
+      -105.5334852,
+      39.9905717
+     ],
+     [
+      -105.5336592,
+      39.9904828
+     ],
+     [
+      -105.5337158,
+      39.9903868
+     ],
+     [
+      -105.5336592,
+      39.9901375
+     ],
+     [
+      -105.5336271,
+      39.9899361
+     ],
+     [
+      -105.5336432,
+      39.9896895
+     ],
+     [
+      -105.5336675,
+      39.9894554
+     ],
+     [
+      -105.5338017,
+      39.9892771
+     ],
+     [
+      -105.5341219,
+      39.9890408
+     ],
+     [
+      -105.5341474,
+      39.9887648
+     ],
+     [
+      -105.5341879,
+      39.9885291
+     ],
+     [
+      -105.5342601,
+      39.9883044
+     ],
+     [
+      -105.534483,
+      39.9879301
+     ],
+     [
+      -105.5346088,
+      39.988025
+     ],
+     [
+      -105.5349253,
+      39.9881647
+     ],
+     [
+      -105.5353276,
+      39.9882592
+     ],
+     [
+      -105.5360655,
+      39.9883688
+     ],
+     [
+      -105.5364463,
+      39.9884263
+     ],
+     [
+      -105.5368457,
+      39.9884483
+     ],
+     [
+      -105.537232,
+      39.9884524
+     ],
+     [
+      -105.5377899,
+      39.9884606
+     ],
+     [
+      -105.538219,
+      39.9884606
+     ],
+     [
+      -105.5388432,
+      39.9885202
+     ],
+     [
+      -105.53915,
+      39.9886688
+     ],
+     [
+      -105.5395118,
+      39.9889908
+     ],
+     [
+      -105.5396006,
+      39.9892113
+     ],
+     [
+      -105.5395899,
+      39.9894949
+     ],
+     [
+      -105.5395333,
+      39.9897676
+     ],
+     [
+      -105.5394075,
+      39.9899265
+     ],
+     [
+      -105.5391417,
+      39.9901992
+     ],
+     [
+      -105.5390856,
+      39.9903375
+     ],
+     [
+      -105.5387662,
+      39.9905608
+     ],
+     [
+      -105.5382557,
+      39.990863
+     ],
+     [
+      -105.5374841,
+      39.9914921
+     ],
+     [
+      -105.5373207,
+      39.9916362
+     ],
+     [
+      -105.5363736,
+      39.9922993
+     ],
+     [
+      -105.536006,
+      39.9925403
+     ],
+     [
+      -105.5355234,
+      39.992902
+     ],
+     [
+      -105.5350325,
+      39.9934049
+     ],
+     [
+      -105.5346761,
+      39.9935719
+     ],
+     [
+      -105.5343542,
+      39.9937856
+     ],
+     [
+      -105.5340991,
+      39.9940419
+     ],
+     [
+      -105.5337183,
+      39.9943707
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Blue Bird Loop Colorado and North Western R. R.",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     299291315,
+     583639975
+    ],
+    "area": "Caribou Ranch"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.519344,
+      39.9824171
+     ],
+     [
+      -105.5193401,
+      39.9826176
+     ],
+     [
+      -105.5193904,
+      39.9826987
+     ],
+     [
+      -105.5198198,
+      39.9828499
+     ],
+     [
+      -105.5201586,
+      39.9830221
+     ],
+     [
+      -105.5203624,
+      39.9830506
+     ],
+     [
+      -105.520773,
+      39.983275
+     ],
+     [
+      -105.521055,
+      39.983379
+     ],
+     [
+      -105.521489,
+      39.983513
+     ],
+     [
+      -105.521676,
+      39.983524
+     ],
+     [
+      -105.521891,
+      39.983465
+     ],
+     [
+      -105.521942,
+      39.983385
+     ],
+     [
+      -105.521929,
+      39.983153
+     ],
+     [
+      -105.52208,
+      39.982915
+     ],
+     [
+      -105.52248,
+      39.98274
+     ],
+     [
+      -105.523019,
+      39.982729
+     ],
+     [
+      -105.523737,
+      39.98289
+     ],
+     [
+      -105.524506,
+      39.982922
+     ],
+     [
+      -105.525875,
+      39.982699
+     ],
+     [
+      -105.526413,
+      39.982686
+     ],
+     [
+      -105.527119,
+      39.982499
+     ],
+     [
+      -105.527306,
+      39.982504
+     ],
+     [
+      -105.5275,
+      39.982599
+     ],
+     [
+      -105.527887,
+      39.983058
+     ],
+     [
+      -105.52782,
+      39.983263
+     ],
+     [
+      -105.527498,
+      39.983658
+     ],
+     [
+      -105.527529,
+      39.983919
+     ],
+     [
+      -105.527937,
+      39.984238
+     ],
+     [
+      -105.528193,
+      39.9847
+     ],
+     [
+      -105.528384,
+      39.984881
+     ],
+     [
+      -105.52906,
+      39.985008
+     ],
+     [
+      -105.529207,
+      39.985097
+     ],
+     [
+      -105.5295783,
+      39.9852
+     ]
+    ]
+   },
+   "properties": {
+    "title": "DeLonde Trail",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     307952515
+    ],
+    "area": "Caribou Ranch"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.5295783,
+      39.9852
+     ],
+     [
+      -105.529768,
+      39.9857094
+     ],
+     [
+      -105.5299306,
+      39.9867685
+     ],
+     [
+      -105.5300933,
+      39.9872046
+     ],
+     [
+      -105.5304348,
+      39.9875036
+     ],
+     [
+      -105.5310202,
+      39.9877404
+     ],
+     [
+      -105.5314918,
+      39.9878774
+     ],
+     [
+      -105.5321585,
+      39.9878899
+     ],
+     [
+      -105.5332968,
+      39.9876158
+     ],
+     [
+      -105.5338985,
+      39.9875161
+     ],
+     [
+      -105.5342888,
+      39.9877528
+     ],
+     [
+      -105.534483,
+      39.9879301
+     ]
+    ]
+   },
+   "properties": {
+    "title": "DeLonde Trail Colorado and North Western R. R.",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "unknown",
+    "ref": "",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     388785682
+    ],
+    "area": "Caribou Ranch"
    }
   }
  ]

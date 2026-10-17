@@ -28,15 +28,19 @@
   </button>
   <div id="filters" class="panel-filters"></div>
   <div id="list" class="list"></div>
-  <div class="panel-foot">
-    <details class="key">
-      <summary>Map key</summary>
-      <div id="legend"></div>
-    </details>
-    <label class="toggle"><input id="slope-toggle" type="checkbox" /> Slope angle shading</label>
-    <div id="slope-legend" class="legend" hidden></div>
-  </div>
 </aside>
+
+<!-- Map key: moved into a bottom-right map control by app.js. -->
+<section id="key" class="key" aria-label="Map key">
+  <div class="key-head">
+    <h2>Map key</h2>
+    <button id="key-hide" class="key-hide" type="button" title="Hide the map key">Hide</button>
+  </div>
+  <div id="legend"></div>
+  <label class="toggle"><input id="slope-toggle" type="checkbox" checked /> Slope angle shading</label>
+  <div id="slope-legend" class="legend"></div>
+</section>
+<button id="key-show" class="key-show" type="button" hidden>Map key</button>
 
 <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
 <script type="module" src="js/app.js"></script>

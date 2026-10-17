@@ -45,7 +45,7 @@ node tools/smoke.mjs    # headless boot: load, style, list, popup
 ```
 
 Module tests: `node tools/test_filters.mjs`, `node tools/test_gpx_share.mjs`,
-`node tools/test_conditions.mjs`, `node tools/test_sw.mjs`,
+`node tools/test_conditions.mjs`, `node tools/test_sw.mjs`, `node tools/test_live_conditions.mjs`,
 `python3 tools/test_sync_osm.py`.
 
 Dev deps install once with `npm install --prefix tools`. A bad MapLibre

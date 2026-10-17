@@ -1,4 +1,8 @@
 {
-  "areas": {},
+  "areas": {
+    "Hessie Trail Area": {
+      "exclude": ["4th of July Road"]
+    }
+  },
   "trails": []
 }

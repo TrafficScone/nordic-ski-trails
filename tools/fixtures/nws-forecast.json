@@ -1,0 +1,129 @@
+{
+ "@context": [
+  "https://geojson.org/geojson-ld/geojson-context.jsonld",
+  {
+   "@version": "1.1",
+   "wx": "https://api.weather.gov/ontology#",
+   "geo": "http://www.opengis.net/ont/geosparql#",
+   "unit": "http://codes.wmo.int/common/unit/",
+   "@vocab": "https://api.weather.gov/ontology#"
+  }
+ ],
+ "type": "Feature",
+ "geometry": {
+  "type": "Polygon",
+  "coordinates": [
+   [
+    [
+     -105.5702,
+     39.9264
+    ],
+    [
+     -105.5724,
+     39.9483
+    ],
+    [
+     -105.601,
+     39.9466
+    ],
+    [
+     -105.5988,
+     39.9247
+    ],
+    [
+     -105.5702,
+     39.9264
+    ]
+   ]
+  ]
+ },
+ "properties": {
+  "units": "us",
+  "forecastGenerator": "BaselineForecastGenerator",
+  "generatedAt": "2026-10-17T20:03:33+00:00",
+  "updateTime": "2026-10-17T18:46:08+00:00",
+  "validTimes": "2026-10-17T12:00:00+00:00/P7DT13H",
+  "elevation": {
+   "unitCode": "wmoUnit:m",
+   "value": 2902.0008
+  },
+  "periods": [
+   {
+    "number": 1,
+    "name": "This Afternoon",
+    "startTime": "2026-10-17T14:00:00-06:00",
+    "endTime": "2026-10-17T18:00:00-06:00",
+    "isDaytime": true,
+    "temperature": 58,
+    "temperatureUnit": "F",
+    "temperatureTrend": null,
+    "probabilityOfPrecipitation": {
+     "unitCode": "wmoUnit:percent",
+     "value": 0
+    },
+    "windSpeed": "7 mph",
+    "windDirection": "WNW",
+    "icon": "https://api.weather.gov/icons/land/day/skc?size=medium",
+    "shortForecast": "Sunny",
+    "detailedForecast": "Sunny. High near 58, with temperatures falling to around 51 in the afternoon. West northwest wind around 7 mph."
+   },
+   {
+    "number": 2,
+    "name": "Tonight",
+    "startTime": "2026-10-17T18:00:00-06:00",
+    "endTime": "2026-10-18T06:00:00-06:00",
+    "isDaytime": false,
+    "temperature": 32,
+    "temperatureUnit": "F",
+    "temperatureTrend": null,
+    "probabilityOfPrecipitation": {
+     "unitCode": "wmoUnit:percent",
+     "value": 0
+    },
+    "windSpeed": "5 to 10 mph",
+    "windDirection": "WNW",
+    "icon": "https://api.weather.gov/icons/land/night/skc?size=medium",
+    "shortForecast": "Clear",
+    "detailedForecast": "Clear, with a low around 32. West northwest wind 5 to 10 mph, with gusts as high as 16 mph."
+   },
+   {
+    "number": 3,
+    "name": "Sunday",
+    "startTime": "2026-10-18T06:00:00-06:00",
+    "endTime": "2026-10-18T18:00:00-06:00",
+    "isDaytime": true,
+    "temperature": 58,
+    "temperatureUnit": "F",
+    "temperatureTrend": null,
+    "probabilityOfPrecipitation": {
+     "unitCode": "wmoUnit:percent",
+     "value": 0
+    },
+    "windSpeed": "3 to 9 mph",
+    "windDirection": "N",
+    "icon": "https://api.weather.gov/icons/land/day/sct?size=medium",
+    "shortForecast": "Mostly Sunny",
+    "detailedForecast": "Mostly sunny. High near 58, with temperatures falling to around 52 in the afternoon. North wind 3 to 9 mph."
+   },
+   {
+    "number": 4,
+    "name": "Sunday Night",
+    "startTime": "2026-10-18T18:00:00-06:00",
+    "endTime": "2026-10-19T06:00:00-06:00",
+    "isDaytime": false,
+    "temperature": 34,
+    "temperatureUnit": "F",
+    "temperatureTrend": null,
+    "probabilityOfPrecipitation": {
+     "unitCode": "wmoUnit:percent",
+     "value": 3
+    },
+    "windSpeed": "2 mph",
+    "windDirection": "NNE",
+    "icon": "https://api.weather.gov/icons/land/night/sct?size=medium",
+    "shortForecast": "Partly Cloudy",
+    "detailedForecast": "Partly cloudy, with a low around 34. North northeast wind around 2 mph."
+   }
+  ]
+ }
+}

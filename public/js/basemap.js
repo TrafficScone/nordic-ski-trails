@@ -18,7 +18,7 @@
 //    places upright and dark, water italic blue, terrain italic brown-grey,
 //    roads small and grey. Halos everywhere, sized for phones in glare.
 //  • Feet and miles: the audience is American, and USGS quads are in feet.
-//  • Slope-angle shading is optional (off by default) and sits above the
+//  • Slope-angle shading is on by default (toggle in the map key) and sits above the
 //    relief but under everything else, half-transparent, so contours and
 //    forest still read through it.
 //
@@ -131,8 +131,10 @@ export function basemapLayers() {
     },
     {
       id: 'slope', type: 'raster', source: 'slope', minzoom: 10,
-      layout: { visibility: 'none' },
-      paint: { 'raster-opacity': z(10, 0.4, 14, 0.5) },
+      layout: { visibility: 'visible' }, // on by default; the map key toggles it
+      // Lighter than CalTopo's: it's on by default and starts at 18°, so it
+      // covers a lot of ground and mustn't drown the basemap.
+      paint: { 'raster-opacity': z(10, 0.28, 14, 0.36) },
     },
     {
       id: 'contour', type: 'line', source: 'contours', 'source-layer': 'contour_ft', minzoom: 12,

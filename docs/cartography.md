@@ -75,21 +75,22 @@ Sources: [Terrain cartography (Wikipedia)][wiki-terrain];
 Sources: [Locus Map — winter maps][locus-winter];
 [MapTiler — contours schema][maptiler-contours].
 
-### Slope-angle shading (optional, off by default)
+### Slope-angle shading (on by default)
 
-The toggle in the panel shades slopes of 27° and steeper. The classes are
-CalTopo's fixed-step scheme, so they read the same as the tool the club already
-plans in:
+Shading is on when the map opens and toggled from the map key. The classes are
+the club's own, chosen for nordic skiing rather than copied from CalTopo's
+avalanche-focused scheme (which starts at 27°):
 
 | Slope | Colour | Why it matters |
 |---|---|---|
-| < 27° | none | rarely steep enough to avalanche |
-| 27–29° | yellow | approaching avalanche terrain |
-| 30–31° | light orange | avalanche terrain begins (~30°) |
-| 32–34° | dark orange | |
-| 35–45° | red | where most slab avalanches start; peak frequency ~38° |
-| 46–50° | purple | steep; often sluffs rather than slabs |
-| 51°+ | blue | very steep; usually holds little snow |
+| < 18° | none | comfortable on nordic gear |
+| 18–25° | yellow | steep for skinny skis: sustained climbs, fast descents |
+| 25–30° | orange | approaching avalanche terrain |
+| 30–40° | red | avalanche terrain; most slab avalanches start 30–45°, peaking near 38° |
+| 40°+ | purple | very steep |
+
+Because it's on by default and starts at 18°, it covers a lot of mountain
+terrain, so it's drawn lighter (28–36 % opacity) than CalTopo draws its own.
 
 Fixed steps are used rather than a smooth gradient on purpose: small changes
 in angle matter, and a stepped scale makes the 30° and 35° thresholds visible.
@@ -167,6 +168,27 @@ Sources: [Ordnance Survey — text on maps][os-text];
   symbol (`P` for `parked-car`, `WC`, `i`, `!`, `H` for huts). The letter is
   drawn with the map font, so no icon sprite is needed.
 - Dashed CalTopo patterns all render as one dash style.
+- **The selected trail** gets a white halo with a navy edge, and the other
+  trails fade to 30 %. The halo avoids yellow/orange/red/purple (slope
+  shading) and green/blue/black (difficulty). Navy **S** and **E** markers sit
+  at its ends ("S/E" for a loop), and the same badges sit at the ends of the
+  elevation chart. Scrubbing the chart moves a matching dot along the trail.
+
+## 6b. Conditions
+
+Popups show conditions as an always-visible two-column grid of linked cards
+with icons, not a list. Three cards fill in live readings, fetched straight
+from the browser (all three APIs allow cross-origin requests and need no key):
+
+| Card | Source | Live reading |
+|---|---|---|
+| Avalanche | avalanche.org map layer (CAIC zone) | danger rating, in the North American danger-scale colours |
+| Weather | NWS API (`api.weather.gov`) | current period: temperature and short forecast |
+| Snow | NRCS AWDB REST API, nearest SNOTEL | snow depth and 24 h change |
+
+Area cards (Eldora grooming report, Brainard road status, CMC cabin…) are plain
+links, edited in `AREA_LINKS` in `public/js/conditions.js`. Agency reference
+numbers (`FS 902`) sit small and grey at the foot of the popup.
 
 ## 7. Using it outdoors
 

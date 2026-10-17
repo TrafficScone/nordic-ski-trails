@@ -6,8 +6,9 @@
 // every pixel (Horn's method, the same one GIS tools use), and returns a PNG
 // coloured by the classes below. The basemap shows it as a plain raster layer.
 //
-// Classes follow CalTopo's fixed-step "slope angle shading" so they read the
-// same as the tool the club already plans in. Below 27° is left clear.
+// Classes are the club's own (see SLOPE_CLASSES): they start at 18° because on
+// nordic gear a sustained 18–25° pitch already matters, and red marks 30°+,
+// where avalanche terrain begins. Below 18° is left clear.
 // See docs/cartography.md for why these breaks.
 // ---------------------------------------------------------------------------
 
@@ -15,12 +16,10 @@ import { loadDemTile, tileLatitude } from './dem.js';
 
 /** [min degrees, colour] — each class runs up to the next one's minimum. */
 export const SLOPE_CLASSES = [
-  [27, '#f2e200'], // 27–29  yellow
-  [30, '#f7b500'], // 30–31  light orange
-  [32, '#f07d00'], // 32–34  dark orange
-  [35, '#e3000f'], // 35–45  red: where most avalanches start (peak ~38°)
-  [46, '#a01fb0'], // 46–50  purple
-  [51, '#1f4fd8'], // 51+    blue
+  [18, '#f2e200'], // 18–25  yellow: steep for nordic skis — climbs and descents to respect
+  [25, '#f39200'], // 25–30  orange: approaching avalanche terrain
+  [30, '#e3000f'], // 30–40  red: avalanche terrain; most avalanches start 30–45° (peak ~38°)
+  [40, '#8e24aa'], // 40°+   purple: very steep
 ];
 
 export const SLOPE_PROTOCOL = 'slope';

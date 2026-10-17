@@ -25,7 +25,7 @@ export async function profileOf(parts, demUrl) {
   for (const line of parts) {
     const samples = resample(line);
     const elevs = smooth(await Promise.all(samples.map(({ p }) => elevationAt(p, demUrl))));
-    out.push(samples.map(({ d }, i) => ({ d: offset + d, e: elevs[i] })));
+    out.push(samples.map(({ d, p }, i) => ({ d: offset + d, e: elevs[i], p })));
     offset += samples.at(-1).d;
   }
 
@@ -92,9 +92,12 @@ function haversine([lng1, lat1], [lng2, lat2]) {
 
 /**
  * An SVG elevation chart. Separate parts are drawn with a break between them.
+ * S and E badges mark the ends, matching the map's start/end markers. Moving
+ * a pointer (or finger) along it calls `onHover(sample)` with the nearest
+ * sample ({d, e, p: [lng, lat]}), and `onHover(null)` when it leaves.
  * @returns {SVGSVGElement}
  */
-export function profileSvg(profile, { width = 260, height = 72, color = '#005daa', feet = true } = {}) {
+export function profileSvg(profile, { width = 260, height = 72, color = '#005daa', feet = true, onHover } = {}) {
   const NS = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(NS, 'svg');
   svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
@@ -126,5 +129,66 @@ export function profileSvg(profile, { width = 260, height = 72, color = '#005daa
   const title = document.createElementNS(NS, 'title');
   title.textContent = `Elevation ${Math.round(profile.min * unit)}–${Math.round(profile.max * unit)} ${feet ? 'ft' : 'm'}`;
   svg.prepend(title);
+
+  const first = profile.parts[0][0];
+  const last = profile.parts.at(-1).at(-1);
+  const badge = (sample, letter) => {
+    const g = document.createElementNS(NS, 'g');
+    const x = Math.min(width - 8, Math.max(8, sx(sample.d)));
+    const y = Math.min(height - 8, Math.max(8, sy(sample.e)));
+    const c = document.createElementNS(NS, 'circle');
+    Object.entries({ cx: x, cy: y, r: 7, fill: '#0c3d54', stroke: '#fff', 'stroke-width': 1.5 })
+      .forEach(([k, v]) => c.setAttribute(k, v));
+    const t = document.createElementNS(NS, 'text');
+    Object.entries({ x, y: y + 3.5, 'text-anchor': 'middle', 'font-size': 9, 'font-weight': 700, fill: '#fff' })
+      .forEach(([k, v]) => t.setAttribute(k, v));
+    t.textContent = letter;
+    g.append(c, t);
+    return g;
+  };
+  svg.append(badge(first, 'S'), badge(last, 'E'));
+
+  if (onHover) {
+    const samples = profile.parts.flat();
+    const guide = document.createElementNS(NS, 'line');
+    guide.setAttribute('class', 'profile-guide');
+    Object.entries({ y1: 0, y2: height, stroke: '#0c3d54', 'stroke-width': 1, visibility: 'hidden' })
+      .forEach(([k, v]) => guide.setAttribute(k, v));
+    const readout = document.createElementNS(NS, 'text');
+    readout.setAttribute('class', 'profile-readout');
+    Object.entries({ y: 10, 'font-size': 10, fill: '#0c3d54', visibility: 'hidden' })
+      .forEach(([k, v]) => readout.setAttribute(k, v));
+    svg.append(guide, readout);
+
+    const at = (evt) => {
+      const box = svg.getBoundingClientRect();
+      const d = ((evt.clientX - box.left) / box.width) * profile.distance;
+      let best = samples[0];
+      for (const s of samples) if (Math.abs(s.d - d) < Math.abs(best.d - d)) best = s;
+      return best;
+    };
+    const move = (evt) => {
+      const s = at(evt);
+      const x = sx(s.d);
+      guide.setAttribute('x1', x);
+      guide.setAttribute('x2', x);
+      guide.setAttribute('visibility', 'visible');
+      const miles = s.d / 1609.344;
+      readout.textContent = `${feet ? `${miles.toFixed(1)} mi` : `${(s.d / 1000).toFixed(1)} km`} · ${Math.round(s.e * unit).toLocaleString()} ${feet ? 'ft' : 'm'}`;
+      readout.setAttribute('x', x > width / 2 ? x - 4 : x + 4);
+      readout.setAttribute('text-anchor', x > width / 2 ? 'end' : 'start');
+      readout.setAttribute('visibility', 'visible');
+      onHover(s);
+    };
+    const leave = () => {
+      guide.setAttribute('visibility', 'hidden');
+      readout.setAttribute('visibility', 'hidden');
+      onHover(null);
+    };
+    svg.addEventListener('pointermove', move);
+    svg.addEventListener('pointerdown', move);
+    svg.addEventListener('pointerleave', leave);
+    svg.style.touchAction = 'none'; // let a finger scrub without scrolling the page
+  }
   return svg;
 }

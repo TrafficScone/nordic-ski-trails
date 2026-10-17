@@ -12,8 +12,10 @@
 
 import { basemapStyle } from './basemap.js';
 import { DEFAULT_VIEW, DEM_TILES, FALLBACK_COLOR, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
-import { HIT_LAYERS, trailLayers } from './layers.js';
+import { HIT_LAYERS, selectionGlowLayers, selectionMarkerLayers, trailLayers, trailOpacity } from './layers.js';
 import { conditionLinksFor } from './conditions.js';
+import { icon, iconForUrl } from './icons.js';
+import { liveConditions } from './live-conditions.js';
 import { defaultFilterState, difficultyOf, lineFilter, matchesFilter, renderFilters, renderLegend } from './filters.js';
 import { downloadGpx } from './gpx.js';
 import { profileOf, profileSvg } from './profile.js';
@@ -21,6 +23,8 @@ import { clearHash, findGroup, parseHash, setHash, shareLink } from './share.js'
 import { SLOPE_CLASSES, registerSlopeProtocol } from './slope.js';
 
 const SRC = 'trails';
+const SEL = 'selection';
+const EMPTY = { type: 'FeatureCollection', features: [] };
 const $ = (sel) => document.querySelector(sel);
 
 // CalTopo marker symbols -> the letter drawn on the marker disc.
@@ -46,8 +50,12 @@ map.addControl(new maplibregl.GeolocateControl({ trackUserLocation: true }), 'to
 map.addControl(new maplibregl.FullscreenControl(), 'top-right');
 map.addControl(new maplibregl.ScaleControl({ unit: UNITS === 'mi' ? 'imperial' : 'metric' }), 'bottom-right');
 
-const popup = new maplibregl.Popup({ offset: 10, maxWidth: '300px' });
-popup.on('close', () => { if (!switchingPopup) clearHash(); });
+const popup = new maplibregl.Popup({ offset: 10, maxWidth: '320px' });
+popup.on('close', () => {
+  if (switchingPopup) return;
+  clearHash();
+  select(null);
+});
 let switchingPopup = false;
 const dataReady = loadTrails();
 
@@ -59,7 +67,10 @@ const filterState = defaultFilterState();
 map.on('load', async () => {
   const fc = await dataReady;
   map.addSource(SRC, { type: 'geojson', data: fc });
+  map.addSource(SEL, { type: 'geojson', data: EMPTY });
   for (const layer of trailLayers(SRC)) map.addLayer(layer);
+  for (const layer of selectionGlowLayers(SEL)) map.addLayer(layer, 'trail-casing');
+  for (const layer of selectionMarkerLayers(SEL)) map.addLayer(layer);
 
   assignAreas(fc.features);
   groups = groupFeatures(fc.features);
@@ -67,6 +78,7 @@ map.on('load', async () => {
   renderSlopeLegend();
   renderFilters($('#filters'), filterState, applyFilters);
   renderLegend($('#legend'));
+  setupKey();
 
   // A shared link (#trail/devils-thumb-trail) opens that trail; otherwise
   // show everything.
@@ -96,6 +108,36 @@ $('#slope-toggle').onchange = (e) => {
   map.setLayoutProperty('slope', 'visibility', e.target.checked ? 'visible' : 'none');
   $('#slope-legend').hidden = !e.target.checked;
 };
+
+/**
+ * The map key floats bottom-right as a MapLibre control, so it stacks above
+ * the scale bar and attribution. It starts open; "Hide" collapses it to a
+ * small button, remembered per browser.
+ */
+function setupKey() {
+  const KEY = 'bnc-key-hidden';
+  const box = $('#key');
+  const reopen = $('#key-show');
+  const setHidden = (hidden) => {
+    box.hidden = hidden;
+    reopen.hidden = !hidden;
+    try { localStorage.setItem(KEY, hidden ? '1' : ''); } catch { /* private mode */ }
+  };
+  map.addControl({
+    onAdd: () => {
+      const wrap = document.createElement('div');
+      wrap.className = 'maplibregl-ctrl key-ctrl';
+      wrap.append(box, reopen);
+      return wrap;
+    },
+    onRemove: () => {},
+  }, 'bottom-right');
+  $('#key-hide').onclick = () => setHidden(true);
+  reopen.onclick = () => setHidden(false);
+  let hidden = false;
+  try { hidden = localStorage.getItem(KEY) === '1'; } catch { /* private mode */ }
+  setHidden(hidden);
+}
 
 /** @type {Map<string, {name: string, kind: 'trail'|'place'|'area', area: string, features: object[], length: number}>} */
 let groups = new Map();
@@ -229,11 +271,14 @@ function renderList() {
 
   const loose = byKind(all.filter((g) => g.kind !== 'area' && !groups.has(`area:${g.area}`)));
   if (loose.length) {
-    const h = document.createElement('h2');
-    h.className = 'list-head';
-    h.textContent = all.some((g) => g.kind === 'area') ? 'Other trails & places' : 'Trails & places';
-    list.append(h);
-    for (const g of loose) list.append(listItem(g));
+    const section = document.createElement('details');
+    section.className = 'area';
+    const summary = document.createElement('summary');
+    const title = all.some((g) => g.kind === 'area') ? 'Other trails & places' : 'Trails & places';
+    summary.append(span('area-name', title), span('len', `${loose.length}`));
+    section.append(summary);
+    for (const g of loose) section.append(listItem(g));
+    list.append(section);
   }
 }
 
@@ -293,37 +338,103 @@ function showPopup(g, lngLat) {
   }
   el.append(conditionsBlock(g), popupActions(g));
 
+  // Agency trail/road numbers, quietly, at the very bottom.
+  const refs = [...new Set(g.features.map((f) => f.properties.ref).filter(Boolean))];
+  if (refs.length) el.append(span('pop-ref', `Ref ${refs.join(', ')}`));
+
   switchingPopup = true; // replacing one popup with another isn't a "close"
   popup.setLngLat(lngLat).setDOMContent(el).addTo(map);
   switchingPopup = false;
   setHash(g);
+  select(g);
 }
 
-/** "Conditions" links: avalanche, weather, nearest snow station, area pages. */
+/**
+ * Highlight a trail: glow beneath it, other trails faded, and S/E markers at
+ * its ends (one "S/E" marker for a loop). null clears it.
+ */
+function select(g) {
+  if (!map.getSource(SEL)) return;
+  const trail = g?.kind === 'trail' ? g : null;
+  for (const id of ['trail-line', 'trail-dashed']) {
+    map.setPaintProperty(id, 'line-opacity', trailOpacity(trail ? `trail:${trail.name}` : ''));
+  }
+  if (!trail) { map.getSource(SEL).setData(EMPTY); return; }
+  const parts = travelOrder(trail);
+  const start = parts[0][0];
+  const end = parts.at(-1).at(-1);
+  const loop = haversine(start, end) < 50;
+  const point = (c, role) => ({ type: 'Feature', geometry: { type: 'Point', coordinates: c.slice(0, 2) }, properties: { role } });
+  selection = [
+    { type: 'Feature', geometry: { type: 'MultiLineString', coordinates: parts }, properties: { role: 'line' } },
+    ...(loop ? [point(start, 'loop')] : [point(start, 'start'), point(end, 'end')]),
+  ];
+  map.getSource(SEL).setData({ type: 'FeatureCollection', features: selection });
+}
+let selection = [];
+
+/** Move the yellow dot along the selected trail as the profile is scrubbed. */
+function showCursor(sample) {
+  const cursor = sample
+    ? [{ type: 'Feature', geometry: { type: 'Point', coordinates: sample.p }, properties: { role: 'cursor' } }]
+    : [];
+  map.getSource(SEL)?.setData({ type: 'FeatureCollection', features: [...selection, ...cursor] });
+}
+
+/**
+ * Conditions, always shown as a two-column grid of linked cards: avalanche,
+ * weather and snow get live readings filled in when they arrive; area pages
+ * (grooming report, road status) are plain links.
+ */
 function conditionsBlock(g) {
   const bb = bboxOf(g.features);
   const center = g.kind === 'area'
     ? [(bb[0][0] + bb[1][0]) / 2, (bb[0][1] + bb[1][1]) / 2]
     : centerOf(g.features[0].geometry);
-  const links = conditionLinksFor(g, center);
-  const box = document.createElement('details');
+  const box = document.createElement('section');
   box.className = 'pop-conditions';
-  const summary = document.createElement('summary');
-  summary.textContent = 'Conditions';
-  const list = document.createElement('ul');
-  for (const { label, url, note } of links) {
-    const li = document.createElement('li');
+  const head = document.createElement('h4');
+  head.textContent = 'Conditions';
+  const grid = document.createElement('div');
+  grid.className = 'cond-grid';
+  const cards = {};
+  for (const { label, url, note } of conditionLinksFor(g, center)) {
+    const kind = iconForUrl(url);
     const a = document.createElement('a');
+    a.className = `cond-card cond-${kind}`;
     a.href = url;
     a.target = '_blank';
     a.rel = 'noopener';
-    a.textContent = label;
-    li.append(a);
-    if (note) li.append(span('note', ` · ${note}`));
-    list.append(li);
+    if (note) a.title = note;
+    const text = span('cond-text', '');
+    text.append(span('cond-label', label), span('cond-value', ''));
+    a.append(icon(kind), text);
+    grid.append(a);
+    cards[kind] ??= a.querySelector('.cond-value');
   }
-  box.append(summary, list);
+  box.append(head, grid);
+  fillLive(cards, center);
   return box;
+}
+
+/** Fill the weather / snow / avalanche cards with live readings, if any arrive. */
+async function fillLive(cards, center) {
+  const live = await liveConditions(center);
+  if (live.weather?.periods?.length && cards.weather) {
+    const [now] = live.weather.periods;
+    cards.weather.textContent = `${now.name}: ${now.temp}°${now.unit}, ${now.short}`;
+  }
+  if (live.snow && cards.snow) {
+    const change = live.snow.depthChange24hIn;
+    const delta = change ? ` (${change > 0 ? '+' : ''}${change} in / 24 h)` : '';
+    cards.snow.textContent = `${live.snow.depthIn ?? '–'} in on the ground${delta}`;
+  }
+  if (live.avalanche && cards.avalanche) {
+    const chip = span('danger-chip', live.avalanche.label);
+    chip.style.background = live.avalanche.color;
+    if (live.avalanche.danger >= 4) chip.style.color = '#fff';
+    cards.avalanche.replaceChildren(chip);
+  }
 }
 
 /** GPX download and share buttons. An area's GPX holds all its trails and places. */
@@ -380,7 +491,7 @@ async function addProfile(g, el, stats) {
     const ft = (m) => `${Math.round(m * 3.28084).toLocaleString()} ft`;
     stats.textContent = `${formatDistance(g.length)} · ↑ ${ft(profile.gain)} · ↓ ${ft(profile.loss)}`;
     const range = span('meta', `Elevation ${ft(profile.min)} – ${ft(profile.max)}`);
-    chart.replaceWith(profileSvg(profile), range);
+    chart.replaceWith(profileSvg(profile, { onHover: showCursor }), range);
   } catch (err) {
     console.error('Elevation profile failed:', err);
     chart.remove();
@@ -413,7 +524,7 @@ function renderSlopeLegend() {
     const row = span('legend-row', '');
     const chip = span('swatch', '');
     chip.style.background = hex;
-    row.append(chip, document.createTextNode(next ? `${deg}–${next - 1}°` : `${deg}°+`));
+    row.append(chip, document.createTextNode(next ? `${deg}–${next}°` : `${deg}°+`));
     legend.append(row);
   });
 }

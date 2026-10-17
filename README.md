@@ -6,10 +6,13 @@ styles you gave them in CalTopo; click one for its name, length, and
 description, along with distance, climb (↑ gain / ↓ loss) and an elevation
 profile computed from the elevation model. Each popup also has:
 
-- **Conditions** links: CAIC avalanche forecast, the NWS point forecast for
-  that spot, the nearest SNOTEL snow station, and area pages (Eldora's grooming
-  report, Brainard road status…). Edit the area links in `AREA_LINKS` in
+- **Conditions** cards: avalanche danger (avalanche.org / CAIC), the NWS
+  forecast for that spot, and snow depth at the nearest SNOTEL station, filled
+  in live from those services; plus area pages (Eldora's grooming report,
+  Brainard road status…). Edit the area links in `AREA_LINKS` in
   `public/js/conditions.js`.
+- The selected trail is highlighted with **S** / **E** markers at its ends;
+  scrubbing the elevation chart moves a dot along it.
 - **Download GPX**, for a watch or phone app. An area's popup downloads all of
   its trails and places in one file.
 - **Share link**: `…/#trail/devils-thumb-trail` opens the map on that trail.
@@ -30,8 +33,8 @@ counts as ungroomed), and a map key.
 The basemap ("Corduroy", `public/js/basemap.js`) is a light winter style built
 on MapTiler's vector tiles: snow-white ground, forest tinted so treeline reads
 at a glance, soft relief with 40 ft contours, and Inter labels to match the
-club site. A panel toggle adds slope-angle shading (CalTopo's classes, computed
-in the browser). The design principles and their sources are in
+club site. Slope-angle shading (18–25° yellow, 25–30° orange, 30–40° red, 40°+ purple,
+computed in the browser) is on by default; the map key in the corner toggles it. The design principles and their sources are in
 [docs/cartography.md](docs/cartography.md); every basemap colour lives in
 `PALETTE` in `basemap.js`.
 
@@ -101,8 +104,9 @@ polygon's CalTopo title, so it survives every re-export:
 `trails` takes exact way lists for when an area isn't the right tool:
 `{"name": "…", "sections": [{"ways": [123, 456], "color": "blue", "description": "…"}]}`.
 
-The sync warns when an OSM trail has the same name as a CalTopo line, because
-the map would merge them; exclude it to let the CalTopo version win. Re-run it
+An OSM trail with the same name as a CalTopo line is skipped automatically —
+the hand-drawn version wins. Differently spelled duplicates ("4th of July Road")
+still need an `exclude` entry. Re-run it
 whenever you want OSM's latest, and review before committing, since anyone can
 edit OSM. Trail data from OSM is © OpenStreetMap contributors (ODbL), credited
 in the map's attribution.
@@ -127,6 +131,7 @@ node tools/test_filters.mjs      # filter expressions validate and match the lis
 node tools/test_gpx_share.mjs    # GPX output, link slugs and hashes
 node tools/test_conditions.mjs   # condition links, nearest SNOTEL
 node tools/test_sw.mjs           # service worker routing and caching
+node tools/test_live_conditions.mjs  # live conditions parsing (fixtures in tools/fixtures/)
 ```
 
 Dev dependencies install once with `npm install --prefix tools`.
@@ -157,6 +162,8 @@ public/                 ← the only folder Netlify deploys
   js/conditions.js      condition links per trail and area (edit AREA_LINKS)
   js/gpx.js             GPX export
   js/share.js           shareable #kind/slug links
+  js/live-conditions.js live avalanche / weather / snow readings
+  js/icons.js           conditions card icons
   sw.js                 service worker: offline app + saved map tiles
   manifest.webmanifest  home-screen install (icons/ from tools/make_icons.py)
   js/layers.js          trail layer specs

@@ -36,12 +36,13 @@ class FakeMap {
   }
   on(type, a, b) { this.handlers.push(b ? { type, layer: a, fn: b } : { type, fn: a }); }
   addControl() {}
-  addSource(id, spec) { this.sources.set(id, spec); }
+  addSource(id, spec) { this.sources.set(id, { ...spec, setData(d) { this.data = d; } }); }
   getSource(id) { return this.sources.get(id); }
   addLayer(spec) { this.layers.set(spec.id, spec); }
   getLayer(id) { return this.layers.get(id); }
   getCanvas() { return this.canvas; }
   setFilter(id, filter) { this.layers.get(id).filter = filter; }
+  setPaintProperty(id, key, value) { (this.layers.get(id).paint ??= {})[key] = value; }
   setLayoutProperty(id, key, value) { (this.layers.get(id).layout ??= {})[key] = value; }
   flyTo() {}
   fitBounds(bb) { this.fitted = bb; }
@@ -163,6 +164,24 @@ const links = [...popupContent.querySelectorAll('.pop-conditions a')];
 check('popup lists condition links', links.length >= 3 && links.every((a) => a.href.startsWith('https://') && a.target === '_blank'),
   links.map((a) => a.textContent).join(' | '));
 
+const sel = map.getSource('selection').data.features.map((f) => f.properties.role);
+check('selected trail is highlighted with start and end markers', sel.includes('line') && sel.includes('start') && sel.includes('end'),
+  sel.join(', '));
+check('other trails fade while one is selected',
+  JSON.stringify(map.getLayer('trail-line').paint['line-opacity']).includes("trail:Devil's Thumb Trail"));
+check('conditions are always shown as cards, not a dropdown',
+  !popupContent.querySelector('details') && popupContent.querySelectorAll('.cond-card svg').length >= 3);
+const withRef = fc.features.find((f) => f.properties.ref);
+map.queryResult = [withRef];
+await map.fire('click', { point: { x: 1, y: 1 }, lngLat: { lng: 0, lat: 0 } });
+check('agency ref sits at the very bottom of the popup',
+  popupContent.lastElementChild?.className === 'pop-ref' && popupContent.lastElementChild.textContent.includes(withRef.properties.ref));
+// Trails outside every area go in a collapsible "Other trails & places"
+// section like the areas — so no list row should sit loose in the list.
+check('every list row is inside a collapsible section',
+  window.document.querySelectorAll('#list > .item').length === 0
+  && window.document.querySelectorAll('#list details.area .item').length > 0);
+
 console.log('\nFilters');
 const chips = [...window.document.querySelectorAll('#filters .flt-chip')];
 check('difficulty chips rendered', chips.length === 4);
@@ -179,11 +198,21 @@ check('…but never the places', map.getLayer('marker-dot').filter === undefined
 chips.find((c) => c.dataset.difficulty === 'easy').click();
 check('turning it back on restores them', greenRow?.hidden === false);
 
+console.log('\nMap key and slope');
 const toggle = $('#slope-toggle');
-toggle.checked = true;
+check('slope shading is on by default', toggle.checked && map.getLayer('slope').layout.visibility === 'visible'
+  && !$('#slope-legend').hidden);
+check('slope legend uses the club classes', /18–25°/.test($('#slope-legend').textContent)
+  && /40°\+/.test($('#slope-legend').textContent), $('#slope-legend').textContent);
+toggle.checked = false;
 toggle.dispatchEvent(new window.Event('change'));
-check('slope toggle shows the layer and legend',
-  map.getLayer('slope').layout.visibility === 'visible' && !$('#slope-legend').hidden);
+check('unticking hides slope shading and its legend',
+  map.getLayer('slope').layout.visibility === 'none' && $('#slope-legend').hidden);
+check('map key is visible by default', !$('#key').hidden && $('#key-show').hidden);
+$('#key-hide').click();
+check('Hide collapses the key to a button', $('#key').hidden && !$('#key-show').hidden);
+$('#key-show').click();
+check('…which brings it back', !$('#key').hidden);
 
 $('#btn-list').click();
 check('list collapses', $('#panel').classList.contains('is-collapsed'));

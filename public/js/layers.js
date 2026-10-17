@@ -125,3 +125,83 @@ export function trailLayers(source) {
     },
   ];
 }
+
+// ---------------------------------------------------------------------------
+// The selected trail: a glow under it, the other trails dimmed, start/end
+// markers, and a dot that follows the pointer along the elevation profile.
+// The `selection` source holds features with a `role`: 'line' (the trail),
+// 'start', 'end', 'loop' (start and end together) or 'cursor'.
+// ---------------------------------------------------------------------------
+
+const SELECT_INK = '#0c3d54';
+const ROLE = (r) => ['==', ['get', 'role'], r];
+
+/**
+ * Halo beneath the selected trail: a white band with a navy edge. Not yellow
+ * or any warm colour — those belong to slope shading — and not green/blue/
+ * black, which are trail difficulties. Add it before 'trail-casing'.
+ */
+export function selectionGlowLayers(source) {
+  const width = (k) => ['interpolate', ['linear'], ['zoom'], 10, 9 + k, 14, 14 + k, 17, 20 + k];
+  return [
+    {
+      id: 'sel-edge', type: 'line', source, filter: ROLE('line'),
+      layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: { 'line-color': SELECT_INK, 'line-width': width(3), 'line-opacity': 0.55 },
+    },
+    {
+      id: 'sel-glow', type: 'line', source, filter: ROLE('line'),
+      layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: { 'line-color': '#ffffff', 'line-width': width(0) },
+    },
+  ];
+}
+
+/** Start/end markers and the profile cursor, drawn above everything. */
+export function selectionMarkerLayers(source) {
+  const isEnd = ['in', ['get', 'role'], ['literal', ['start', 'end', 'loop']]];
+  return [
+    {
+      id: 'sel-end-disc', type: 'circle', source, filter: isEnd,
+      paint: {
+        'circle-radius': 11, 'circle-color': SELECT_INK,
+        'circle-stroke-color': '#ffffff', 'circle-stroke-width': 2.5,
+      },
+    },
+    {
+      id: 'sel-end-glyph', type: 'symbol', source, filter: isEnd,
+      layout: {
+        'text-field': ['match', ['get', 'role'], 'start', 'S', 'end', 'E', 'S/E'],
+        'text-font': ['Inter Bold', 'Noto Sans Bold'],
+        'text-size': ['match', ['get', 'role'], 'loop', 9, 12],
+        'text-allow-overlap': true, 'text-ignore-placement': true,
+      },
+      paint: { 'text-color': '#ffffff' },
+    },
+    {
+      id: 'sel-end-label', type: 'symbol', source, filter: isEnd, minzoom: 12,
+      layout: {
+        'text-field': ['match', ['get', 'role'], 'start', 'Start', 'end', 'End', 'Start · End'],
+        'text-font': ['Inter SemiBold', 'Noto Sans Bold'], 'text-size': 12,
+        'text-anchor': 'left', 'text-offset': [1.3, 0], 'text-allow-overlap': true,
+      },
+      paint: { 'text-color': SELECT_INK, 'text-halo-color': '#ffffff', 'text-halo-width': 2 },
+    },
+    {
+      id: 'sel-cursor', type: 'circle', source, filter: ROLE('cursor'),
+      paint: {
+        'circle-radius': 7, 'circle-color': '#ffffff',
+        'circle-stroke-color': SELECT_INK, 'circle-stroke-width': 3.5,
+      },
+    },
+  ];
+}
+
+/**
+ * line-opacity for the trail layers while a trail is selected: the selected
+ * one keeps its CalTopo opacity, the rest fade back. '' = nothing selected.
+ */
+export function trailOpacity(selectedGroup = '') {
+  if (!selectedGroup) return ['get', '_opacity'];
+  return ['case', ['==', ['get', '_group'], selectedGroup], ['get', '_opacity'], 0.3];
+}

@@ -1,0 +1,75 @@
+{
+ "@context": [
+  "https://geojson.org/geojson-ld/geojson-context.jsonld",
+  {
+   "@version": "1.1",
+   "wx": "https://api.weather.gov/ontology#",
+   "s": "https://schema.org/",
+   "geo": "http://www.opengis.net/ont/geosparql#",
+   "unit": "http://codes.wmo.int/common/unit/",
+   "@vocab": "https://api.weather.gov/ontology#",
+   "geometry": {
+    "@id": "s:GeoCoordinates",
+    "@type": "geo:wktLiteral"
+   },
+   "city": "s:addressLocality",
+   "state": "s:addressRegion",
+   "distance": {
+    "@id": "s:Distance",
+    "@type": "s:QuantitativeValue"
+   },
+   "bearing": {
+    "@type": "s:QuantitativeValue"
+   },
+   "value": {
+    "@id": "s:value"
+   },
+   "unitCode": {
+    "@id": "s:unitCode",
+    "@type": "@id"
+   },
+   "forecastOffice": {
+    "@type": "@id"
+   },
+   "forecastGridData": {
+    "@type": "@id"
+   },
+   "publicZone": {
+    "@type": "@id"
+   },
+   "county": {
+    "@type": "@id"
+   }
+  }
+ ],
+ "id": "https://api.weather.gov/points/39.937,-105.583",
+ "type": "Feature",
+ "properties": {
+  "gridId": "BOU",
+  "gridX": 43,
+  "gridY": 72,
+  "forecast": "https://api.weather.gov/gridpoints/BOU/43,72/forecast",
+  "relativeLocation": {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -105.5849796,
+     39.9582526
+    ]
+   },
+   "properties": {
+    "city": "Eldora",
+    "state": "CO",
+    "distance": {
+     "unitCode": "wmoUnit:m",
+     "value": 98.160071037959
+    },
+    "bearing": {
+     "unitCode": "wmoUnit:degree_(angle)",
+     "value": 175
+    }
+   }
+  }
+ }
+}

@@ -28,7 +28,8 @@ const bad = (msg) => { failures++; console.log(`  ✗ ${msg}`); };
 // -- 1. layer specs ---------------------------------------------------------
 
 console.log('\nMapLibre layer specs');
-const { trailLayers, HIT_LAYERS } = await import(path.join(SITE, 'js/layers.js'));
+const { trailLayers, HIT_LAYERS, selectionGlowLayers, selectionMarkerLayers, trailOpacity } =
+  await import(path.join(SITE, 'js/layers.js'));
 const { basemapStyle } = await import(path.join(SITE, 'js/basemap.js'));
 
 let validate = null;
@@ -42,8 +43,15 @@ const layers = trailLayers('trails');
 if (validate) {
   // The full style exactly as the browser builds it: basemap, then trails.
   const style = basemapStyle('KEY');
-  style.sources.trails = { type: 'geojson', data: { type: 'FeatureCollection', features: [] } };
-  style.layers = [...style.layers, ...layers];
+  const empty = { type: 'geojson', data: { type: 'FeatureCollection', features: [] } };
+  style.sources.trails = empty;
+  style.sources.selection = empty;
+  style.layers = [...style.layers, ...selectionGlowLayers('selection'), ...layers, ...selectionMarkerLayers('selection')];
+  // The dimming swapped in at runtime when a trail is selected.
+  for (const id of ['trail-line', 'trail-dashed']) {
+    const l = style.layers.find((x) => x.id === id);
+    style.layers.push({ ...l, id: `${id}-dim-check`, paint: { ...l.paint, 'line-opacity': trailOpacity('trail:X') } });
+  }
   const errors = validate(style);
   errors.length ? errors.forEach((e) => bad(e.message)) : ok(`${style.layers.length} layers validate (basemap + trails)`);
   const ids = style.layers.map((l) => l.id);
