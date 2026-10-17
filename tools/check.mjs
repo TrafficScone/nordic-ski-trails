@@ -3,7 +3,7 @@
 //   node tools/check.mjs
 //
 // Runs checks that would otherwise only fail (often silently) in the browser:
-//   1. every MapLibre layer spec validates against the style spec
+//   1. the basemap style plus the trail layers validate against the style spec
 //   2. every element id app.js reaches for exists in index.html
 //   3. trails/index.json matches the files in public/trails/, and each parses
 //
@@ -28,6 +28,7 @@ const bad = (msg) => { failures++; console.log(`  ✗ ${msg}`); };
 
 console.log('\nMapLibre layer specs');
 const { trailLayers, HIT_LAYERS } = await import(path.join(SITE, 'js/layers.js'));
+const { basemapStyle } = await import(path.join(SITE, 'js/basemap.js'));
 
 let validate = null;
 try {
@@ -38,15 +39,15 @@ try {
 
 const layers = trailLayers('trails');
 if (validate) {
-  const style = {
-    version: 8,
-    name: 'check',
-    glyphs: 'https://example.com/{fontstack}/{range}.pbf',
-    sources: { trails: { type: 'geojson', data: { type: 'FeatureCollection', features: [] } } },
-    layers,
-  };
+  // The full style exactly as the browser builds it: basemap, then trails.
+  const style = basemapStyle('KEY');
+  style.sources.trails = { type: 'geojson', data: { type: 'FeatureCollection', features: [] } };
+  style.layers = [...style.layers, ...layers];
   const errors = validate(style);
-  errors.length ? errors.forEach((e) => bad(e.message)) : ok(`${layers.length} layers validate`);
+  errors.length ? errors.forEach((e) => bad(e.message)) : ok(`${style.layers.length} layers validate (basemap + trails)`);
+  const ids = style.layers.map((l) => l.id);
+  const dupes = ids.filter((id, i) => ids.indexOf(id) !== i);
+  dupes.length ? bad(`duplicate layer ids: ${dupes.join(', ')}`) : ok('layer ids are unique');
 }
 const unknownHits = HIT_LAYERS.filter((id) => !layers.some((l) => l.id === id));
 unknownHits.length ? unknownHits.forEach((id) => bad(`HIT_LAYERS names unknown layer "${id}"`))

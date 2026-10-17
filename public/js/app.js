@@ -5,7 +5,8 @@
 // CalTopo exported it, and shows a list plus a popup on click.
 // ---------------------------------------------------------------------------
 
-import { DEFAULT_VIEW, FALLBACK_COLOR, MAP_STYLE, TRAILS_DIR, UNITS } from './config.js';
+import { basemapStyle } from './basemap.js';
+import { DEFAULT_VIEW, FALLBACK_COLOR, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
 import { HIT_LAYERS, trailLayers } from './layers.js';
 
 const SRC = 'trails';
@@ -13,7 +14,7 @@ const $ = (sel) => document.querySelector(sel);
 
 const map = new maplibregl.Map({
   container: 'map',
-  style: MAP_STYLE,
+  style: basemapStyle(MAPTILER_KEY),
   ...DEFAULT_VIEW,
   attributionControl: { compact: true },
 });

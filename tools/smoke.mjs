@@ -83,7 +83,7 @@ globalThis.fetch = async (url) => {
 console.log('\nBoot');
 await import(path.join(SITE, 'js/app.js'));
 const map = created;
-check('map constructed with the MapTiler style', String(map.opts.style).includes('api.maptiler.com'));
+check('map constructed with the basemap style', map.opts.style?.layers?.length > 0 && map.opts.style.glyphs.includes('api.maptiler.com'));
 await map.fire('load');
 
 const fc = map.getSource('trails')?.data;

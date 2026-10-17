@@ -9,7 +9,7 @@
 // and `_name` properties that app.js derives from CalTopo's own styling.
 // ---------------------------------------------------------------------------
 
-const LABEL_FONT = ['Roboto Medium', 'Noto Sans Regular'];
+const LABEL_FONT = ['Inter SemiBold', 'Noto Sans Bold'];
 
 const IS_LINE = ['in', ['geometry-type'], ['literal', ['LineString', 'MultiLineString']]];
 const IS_AREA = ['in', ['geometry-type'], ['literal', ['Polygon', 'MultiPolygon']]];
@@ -55,10 +55,12 @@ export function trailLayers(source) {
       layout: {
         'symbol-placement': 'line', 'symbol-spacing': 300,
         'text-field': ['get', '_name'], 'text-font': LABEL_FONT,
-        'text-size': ['interpolate', ['linear'], ['zoom'], 12, 10, 17, 13],
-        'text-max-angle': 40, 'text-padding': 4,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 12, 11.5, 17, 14],
+        // CalTopo lines are hand-drawn and jagged; a strict bend limit means
+        // MapLibre finds nowhere to place the name at all.
+        'text-max-angle': 80, 'text-padding': 4,
       },
-      paint: { 'text-color': '#1f2937', 'text-halo-color': '#ffffff', 'text-halo-width': 1.6 },
+      paint: { 'text-color': '#222222', 'text-halo-color': '#ffffff', 'text-halo-width': 2 },
     },
     // Fat invisible line so a trail is easy to hit with a finger.
     {

@@ -35,8 +35,12 @@ Dev deps install once with `npm install --prefix tools`. A bad MapLibre
 expression fails **silently** in the browser, so `check.mjs` is the fastest way
 to catch one.
 
-Layer specs live in `public/js/layers.js` as plain data precisely so they can be
-validated without a browser. Add new layers there, not inline in `app.js`.
+Layer specs live in `public/js/layers.js` (trails) and `public/js/basemap.js`
+(the whole basemap style) as plain data precisely so they can be validated
+without a browser. Add new layers there, not inline in `app.js`. Basemap colours
+come from `PALETTE` in `basemap.js`; the design rules are in its header comment.
+Symbol layers later in the style win label collisions, so trail labels (added
+last) beat basemap labels.
 
 ## Things that bite
 

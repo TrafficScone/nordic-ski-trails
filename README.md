@@ -1,8 +1,15 @@
 # Nordic Ski Trails
 
 A static map of nordic ski trails, drawn in [CalTopo](https://caltopo.com) and
-hosted on Netlify. Trails keep the colours and line styles you gave them in
-CalTopo; click one for its name, length, and description.
+hosted on Netlify for the Boulder Nordic Club. Trails keep the colours and line
+styles you gave them in CalTopo; click one for its name, length, and
+description.
+
+The basemap ("Corduroy", `public/js/basemap.js`) is a light winter style built
+on MapTiler's vector tiles: snow-white ground, forest tinted so treeline reads
+at a glance, soft relief with 40 ft contours, and Inter labels to match the
+club site. Its design rules are written at the top of that file, and every
+colour lives in its `PALETTE`.
 
 No build step and no framework. Just HTML, CSS, and ES modules.
 
@@ -45,7 +52,7 @@ and runs the index script. Only `public/` is deployed.
 
 ### The MapTiler key
 
-The key in `public/js/config.js` ships to the browser and can't be hidden.
+The key in `public/js/config.js` (used for basemap tiles and fonts) ships to the browser and can't be hidden.
 Protect it by restricting origins: MapTiler dashboard → your key → allowed
 origins → your Netlify domain (and `http://localhost:*` for development).
 
@@ -55,8 +62,9 @@ origins → your Netlify domain (and `http://localhost:*` for development).
 public/                 ← the only folder Netlify deploys
   index.html            map + trail list
   css/app.css           styling
-  js/config.js          basemap style, opening view, units
-  js/layers.js          MapLibre layer specs
+  js/config.js          MapTiler key, opening view, units
+  js/basemap.js         the winter basemap style (palette + layers)
+  js/layers.js          trail layer specs
   js/app.js             loads trails, list, popups
   trails/*.geojson      CalTopo exports
   trails/index.json     generated list of the above
