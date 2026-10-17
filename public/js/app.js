@@ -13,7 +13,11 @@
 import { basemapStyle } from './basemap.js';
 import { DEFAULT_VIEW, DEM_TILES, FALLBACK_COLOR, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
 import { HIT_LAYERS, trailLayers } from './layers.js';
+import { conditionLinksFor } from './conditions.js';
+import { defaultFilterState, difficultyOf, lineFilter, matchesFilter, renderFilters, renderLegend } from './filters.js';
+import { downloadGpx } from './gpx.js';
 import { profileOf, profileSvg } from './profile.js';
+import { clearHash, findGroup, parseHash, setHash, shareLink } from './share.js';
 import { SLOPE_CLASSES, registerSlopeProtocol } from './slope.js';
 
 const SRC = 'trails';
@@ -42,21 +46,40 @@ map.addControl(new maplibregl.GeolocateControl({ trackUserLocation: true }), 'to
 map.addControl(new maplibregl.FullscreenControl(), 'top-right');
 map.addControl(new maplibregl.ScaleControl({ unit: UNITS === 'mi' ? 'imperial' : 'metric' }), 'bottom-right');
 
-const popup = new maplibregl.Popup({ offset: 10, maxWidth: '280px' });
+const popup = new maplibregl.Popup({ offset: 10, maxWidth: '300px' });
+popup.on('close', () => { if (!switchingPopup) clearHash(); });
+let switchingPopup = false;
 const dataReady = loadTrails();
+
+// Trail line layers the difficulty/grooming filter applies to. Places and
+// areas are never filtered.
+const FILTERED_LAYERS = ['trail-casing', 'trail-line', 'trail-dashed', 'trail-label', 'trail-hit'];
+const filterState = defaultFilterState();
 
 map.on('load', async () => {
   const fc = await dataReady;
   map.addSource(SRC, { type: 'geojson', data: fc });
   for (const layer of trailLayers(SRC)) map.addLayer(layer);
 
-  const bb = bboxOf(fc.features);
-  if (bb) map.fitBounds(bb, { padding: 60, maxZoom: 15, duration: 0 });
-
   assignAreas(fc.features);
   groups = groupFeatures(fc.features);
   renderList();
   renderSlopeLegend();
+  renderFilters($('#filters'), filterState, applyFilters);
+  renderLegend($('#legend'));
+
+  // A shared link (#trail/devils-thumb-trail) opens that trail; otherwise
+  // show everything.
+  const linked = findGroup(groups, parseHash());
+  if (linked) focus(linked, { animate: false });
+  else {
+    const bb = bboxOf(fc.features);
+    if (bb) map.fitBounds(bb, { padding: 60, maxZoom: 15, duration: 0 });
+  }
+  window.addEventListener('hashchange', () => {
+    const g = findGroup(groups, parseHash());
+    if (g) focus(g);
+  });
 
   map.on('click', (e) => {
     const [hit] = map.queryRenderedFeatures(e.point, { layers: HIT_LAYERS });
@@ -131,6 +154,9 @@ function styled(f) {
       _opacity: num(p['stroke-opacity'], 1),
       _fillOpacity: num(p['fill-opacity'], 0.1),
       _dashed: !!p.pattern && p.pattern !== 'solid',
+      _difficulty: kind === 'trail' ? difficultyOf(color(p.stroke)) : '',
+      // OSM trails say; a dashed CalTopo line is drawn as ungroomed.
+      _grooming: p.grooming ?? (p.pattern && p.pattern !== 'solid' ? 'ungroomed' : 'unknown'),
       _length: lengthOf(f.geometry),
     },
   };
@@ -212,10 +238,11 @@ function renderList() {
 }
 
 /** Fly to a trail, place or area and open its popup. */
-function focus(g) {
+function focus(g, { animate = true } = {}) {
   const bb = bboxOf(g.features);
-  if (g.kind === 'place') map.flyTo({ center: bb[0], zoom: Math.max(map.getZoom(), 14) });
-  else map.fitBounds(bb, { padding: 80, maxZoom: 15 });
+  const duration = animate ? undefined : 0;
+  if (g.kind === 'place') map.flyTo({ center: bb[0], zoom: Math.max(map.getZoom(), 14), duration });
+  else map.fitBounds(bb, { padding: 80, maxZoom: 15, duration });
   showPopup(g, g.kind === 'area' ? [(bb[0][0] + bb[1][0]) / 2, bb[1][1]] : centerOf(g.features[0].geometry));
   if (window.matchMedia('(max-width: 640px)').matches) $('#panel').classList.add('is-collapsed');
 }
@@ -223,6 +250,7 @@ function focus(g) {
 function listItem(g) {
   const btn = document.createElement('button');
   btn.className = 'item';
+  btn.dataset.group = `${g.kind}:${g.name}`;
   btn.append(swatches(g), span('name', g.name), span('len', g.length ? formatDistance(g.length) : ''));
   btn.onclick = () => focus(g);
   return btn;
@@ -263,7 +291,84 @@ function showPopup(g, lngLat) {
     row.append(document.createTextNode(p.description));
     el.append(row);
   }
+  el.append(conditionsBlock(g), popupActions(g));
+
+  switchingPopup = true; // replacing one popup with another isn't a "close"
   popup.setLngLat(lngLat).setDOMContent(el).addTo(map);
+  switchingPopup = false;
+  setHash(g);
+}
+
+/** "Conditions" links: avalanche, weather, nearest snow station, area pages. */
+function conditionsBlock(g) {
+  const bb = bboxOf(g.features);
+  const center = g.kind === 'area'
+    ? [(bb[0][0] + bb[1][0]) / 2, (bb[0][1] + bb[1][1]) / 2]
+    : centerOf(g.features[0].geometry);
+  const links = conditionLinksFor(g, center);
+  const box = document.createElement('details');
+  box.className = 'pop-conditions';
+  const summary = document.createElement('summary');
+  summary.textContent = 'Conditions';
+  const list = document.createElement('ul');
+  for (const { label, url, note } of links) {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = label;
+    li.append(a);
+    if (note) li.append(span('note', ` · ${note}`));
+    list.append(li);
+  }
+  box.append(summary, list);
+  return box;
+}
+
+/** GPX download and share buttons. An area's GPX holds all its trails and places. */
+function popupActions(g) {
+  const row = span('pop-actions', '');
+  const members = g.kind === 'area'
+    ? [...groups.values()].filter((m) => m.kind !== 'area' && m.area === g.name)
+    : [g];
+  if (members.length) {
+    const gpx = document.createElement('button');
+    gpx.type = 'button';
+    gpx.textContent = g.kind === 'area' ? 'GPX (all trails)' : 'Download GPX';
+    gpx.onclick = () => downloadGpx(members, { name: g.name, link: location.href });
+    row.append(gpx);
+  }
+  const share = document.createElement('button');
+  share.type = 'button';
+  share.textContent = 'Share link';
+  share.onclick = async () => {
+    const result = await shareLink(g);
+    const said = { copied: 'Link copied ✓', shared: 'Shared ✓' }[result];
+    if (said) {
+      share.textContent = said;
+      setTimeout(() => { share.textContent = 'Share link'; }, 2000);
+    }
+  };
+  row.append(share);
+  return row;
+}
+
+/** Apply the filter chips to the trail layers and the list. */
+function applyFilters() {
+  const extra = lineFilter(filterState);
+  const specs = new Map(trailLayers(SRC).map((l) => [l.id, l.filter]));
+  for (const id of FILTERED_LAYERS) map.setFilter(id, ['all', specs.get(id), extra]);
+
+  for (const btn of document.querySelectorAll('#list .item')) {
+    const g = groups.get(btn.dataset.group);
+    if (g?.kind !== 'trail') continue;
+    btn.hidden = !g.features.some((f) => matchesFilter(f.properties, filterState));
+  }
+  for (const section of document.querySelectorAll('#list details.area')) {
+    section.querySelector('summary .len').textContent =
+      String(section.querySelectorAll('.item:not([hidden])').length);
+  }
 }
 
 /** Fill in climb stats and the elevation chart once the DEM has been read. */

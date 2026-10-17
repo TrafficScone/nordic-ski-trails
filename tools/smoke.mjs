@@ -41,6 +41,7 @@ class FakeMap {
   addLayer(spec) { this.layers.set(spec.id, spec); }
   getLayer(id) { return this.layers.get(id); }
   getCanvas() { return this.canvas; }
+  setFilter(id, filter) { this.layers.get(id).filter = filter; }
   setLayoutProperty(id, key, value) { (this.layers.get(id).layout ??= {})[key] = value; }
   flyTo() {}
   fitBounds(bb) { this.fitted = bb; }
@@ -53,6 +54,7 @@ class FakeMap {
 const noopCtrl = class {};
 let popupContent = null;
 class FakePopup {
+  on() { return this; }
   setLngLat() { return this; }
   setDOMContent(el) { popupContent = el; return this; }
   addTo() { return this; }
@@ -61,10 +63,15 @@ class FakePopup {
 // -- environment ------------------------------------------------------------
 
 const html = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-const dom = new JSDOM(html, { url: 'http://localhost:8787/', pretendToBeVisual: true });
+// Boot from a shared link, as someone clicking it in an email would.
+const dom = new JSDOM(html, { url: "http://localhost:8787/#trail/devils-thumb-trail", pretendToBeVisual: true });
 const { window } = dom;
 globalThis.window = window;
 globalThis.document = window.document;
+window.matchMedia = () => ({ matches: false });
+globalThis.location = window.location;
+globalThis.history = window.history;
+Object.defineProperty(globalThis, 'navigator', { value: window.navigator, configurable: true });
 
 globalThis.createImageBitmap = async () => ({ width: 4 });
 globalThis.OffscreenCanvas = class {
@@ -145,6 +152,32 @@ await new Promise((r) => setTimeout(r, 50)); // let the elevation profile resolv
 check('trail popup gets an elevation profile', !!popupContent.querySelector('svg.profile'));
 check('climb stats shown (flat DEM: no gain)', /↑ 0 ft · ↓ 0 ft/.test(popupContent.querySelector('.meta')?.textContent),
   popupContent.querySelector('.meta')?.textContent);
+
+console.log('\nShare, GPX, conditions');
+// The boot URL was #trail/devils-thumb-trail; the load handler should have opened it.
+check('a shared link opens its trail on load', !!map.fitted && popupContent !== null);
+check('opening a trail puts it in the URL', window.location.hash === '#trail/devils-thumb-trail', window.location.hash);
+const actions = [...popupContent.querySelectorAll('.pop-actions button')].map((b) => b.textContent);
+check('popup offers GPX download and share', actions.includes('Download GPX') && actions.includes('Share link'), actions.join(', '));
+const links = [...popupContent.querySelectorAll('.pop-conditions a')];
+check('popup lists condition links', links.length >= 3 && links.every((a) => a.href.startsWith('https://') && a.target === '_blank'),
+  links.map((a) => a.textContent).join(' | '));
+
+console.log('\nFilters');
+const chips = [...window.document.querySelectorAll('#filters .flt-chip')];
+check('difficulty chips rendered', chips.length === 4);
+check('legend rendered', window.document.querySelectorAll('#legend .lgd-row').length === 6);
+const greenTrail = fc.features.find((f) => f.properties._difficulty === 'easy');
+const greenRow = [...window.document.querySelectorAll('#list .item')]
+  .find((b) => b.querySelector('.name').textContent === greenTrail.properties._name);
+chips.find((c) => c.dataset.difficulty === 'easy').click();
+check('turning off Easier filters the trail layers', JSON.stringify(map.getLayer('trail-line').filter).includes('"in"')
+  && !JSON.stringify(map.getLayer('trail-line').filter).includes('"easy"'));
+check('…and hides easy trails in the list', greenRow?.hidden === true);
+check('…but never the places', map.getLayer('marker-dot').filter === undefined
+  || !JSON.stringify(map.getLayer('marker-dot').filter).includes('_difficulty'));
+chips.find((c) => c.dataset.difficulty === 'easy').click();
+check('turning it back on restores them', greenRow?.hidden === false);
 
 const toggle = $('#slope-toggle');
 toggle.checked = true;

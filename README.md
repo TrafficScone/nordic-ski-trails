@@ -4,7 +4,20 @@ A static map of nordic ski trails, drawn in [CalTopo](https://caltopo.com) and
 hosted on Netlify for the Boulder Nordic Club. Trails keep the colours and line
 styles you gave them in CalTopo; click one for its name, length, and
 description, along with distance, climb (↑ gain / ↓ loss) and an elevation
-profile computed from the elevation model.
+profile computed from the elevation model. Each popup also has:
+
+- **Conditions** links: CAIC avalanche forecast, the NWS point forecast for
+  that spot, the nearest SNOTEL snow station, and area pages (Eldora's grooming
+  report, Brainard road status…). Edit the area links in `AREA_LINKS` in
+  `public/js/conditions.js`.
+- **Download GPX**, for a watch or phone app. An area's popup downloads all of
+  its trails and places in one file.
+- **Share link**: `…/#trail/devils-thumb-trail` opens the map on that trail.
+  Opening anything updates the address bar, so copying the URL works too.
+
+The panel has difficulty filter chips (green/blue/black by the trail colour),
+a "Groomed trails only" switch (OSM grooming tags; a dashed CalTopo line
+counts as ungroomed), and a map key.
 
 The basemap ("Corduroy", `public/js/basemap.js`) is a light winter style built
 on MapTiler's vector tiles: snow-white ground, forest tinted so treeline reads
@@ -102,6 +115,9 @@ It has to be served over HTTP — browsers block ES modules and `fetch` on
 node tools/check.mjs     # layer specs, DOM ids, index.json in sync with the files
 node tools/smoke.mjs     # boots the app headlessly: load, style, list, popup
 python3 tools/test_sync_osm.py   # OSM sync: stitching, clipping, naming
+node tools/test_filters.mjs      # filter expressions validate and match the list logic
+node tools/test_gpx_share.mjs    # GPX output, link slugs and hashes
+node tools/test_conditions.mjs   # condition links, nearest SNOTEL
 ```
 
 Dev dependencies install once with `npm install --prefix tools`.
@@ -128,6 +144,10 @@ public/                 ← the only folder Netlify deploys
   js/dem.js             elevation tile loading (shared)
   js/slope.js           slope-angle shading, computed from elevation tiles
   js/profile.js         elevation profiles and climb stats
+  js/filters.js         difficulty/grooming filters and the map key
+  js/conditions.js      condition links per trail and area (edit AREA_LINKS)
+  js/gpx.js             GPX export
+  js/share.js           shareable #kind/slug links
   js/layers.js          trail layer specs
   js/app.js             loads trails, list, popups
   trails/*.geojson      CalTopo exports

@@ -44,6 +44,9 @@ node tools/check.mjs    # MapLibre layer specs, DOM ids, index.json in sync
 node tools/smoke.mjs    # headless boot: load, style, list, popup
 ```
 
+Module tests: `node tools/test_filters.mjs`, `node tools/test_gpx_share.mjs`,
+`node tools/test_conditions.mjs`, `python3 tools/test_sync_osm.py`.
+
 Dev deps install once with `npm install --prefix tools`. A bad MapLibre
 expression fails **silently** in the browser, so `check.mjs` is the fastest way
 to catch one.
@@ -57,6 +60,11 @@ is a custom `slope://` protocol (`public/js/slope.js`) that turns terrain-RGB
 tiles into a coloured raster in the browser.
 Symbol layers later in the style win label collisions, so trail labels (added
 last) beat basemap labels.
+
+`filters.js` filters only the trail line layers listed in `FILTERED_LAYERS` in
+`app.js`; `lineFilter` (MapLibre) and `matchesFilter` (list rows) must agree —
+the test checks it. Elements with a `display` rule need an explicit
+`[hidden] { display: none }` or the `hidden` attribute does nothing (bit twice).
 
 ## Things that bite
 

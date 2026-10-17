@@ -246,7 +246,14 @@ def describe(tags: dict) -> str:
     return "\n".join(bits)
 
 
-def feature(title, lines, *, color, description, ways, width=DEFAULT_WIDTH, pattern="solid"):
+def grooming_of(tags: dict) -> str:
+    """'groomed', 'ungroomed', or 'unknown' — what the map's filter reads."""
+    if ungroomed(tags):
+        return "ungroomed"
+    return "groomed" if tags.get("piste:grooming") else "unknown"
+
+
+def feature(title, lines, *, color, description, ways, width=DEFAULT_WIDTH, pattern="solid", grooming="unknown"):
     geometry = ({"type": "LineString", "coordinates": lines[0]} if len(lines) == 1
                 else {"type": "MultiLineString", "coordinates": lines})
     return {
@@ -260,6 +267,7 @@ def feature(title, lines, *, color, description, ways, width=DEFAULT_WIDTH, patt
             "stroke-width": width,
             "stroke-opacity": 1,
             "pattern": pattern,
+            "grooming": grooming,
             "source": "OpenStreetMap",
             "osm_ways": sorted(set(ways)),
         },
@@ -335,7 +343,7 @@ def sync_area(area_name: str, polygons: list, area: dict) -> list[dict]:
         description = "\n\n".join(t for t in (notes.get(key, ""), describe(g["tags"])) if t)
         f = feature(title, lines, color=color, description=description, ways=g["ways"],
                     # Ungroomed reads as dashed, as on printed trail maps.
-                    pattern="dash" if ungroomed(g["tags"]) else "solid")
+                    pattern="dash" if ungroomed(g["tags"]) else "solid", grooming=grooming_of(g["tags"]))
         f["properties"]["area"] = area_name
         features.append(f)
         miles = sum(length_m(c) for c in lines) / 1609.344
