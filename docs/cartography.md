@@ -167,7 +167,13 @@ Sources: [Ordnance Survey — text on maps][os-text];
 - **Markers** are a disc in the CalTopo marker colour with a letter for the
   symbol (`P` for `parked-car`, `WC`, `i`, `!`, `H` for huts). The letter is
   drawn with the map font, so no icon sprite is needed.
-- Dashed CalTopo patterns all render as one dash style.
+- **Line style carries snow and grooming, colour carries difficulty.** Solid =
+  groomed (or not known); a white stripe down the centre = ungroomed; dashed =
+  only skiable after heavy recent snowfall (Caribou Ranch, North Boulder Park).
+  Dashed is reserved for that one meaning so it never has to be decoded.
+- **Zones first.** Below zoom 11.5 the map shows only the areas — tinted,
+  outlined and labelled — as an overview of where to ski; trails and places
+  appear as you zoom in, and opening a trail never lands below that zoom.
 - **The selected trail** gets a white halo with a navy edge, and the other
   trails fade to 30 %. The halo avoids yellow/orange/red/purple (slope
   shading) and green/blue/black (difficulty). Navy **S** and **E** markers sit

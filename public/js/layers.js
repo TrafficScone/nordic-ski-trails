@@ -18,6 +18,15 @@ const GLYPH_FONT = ['Inter Bold', 'Noto Sans Bold'];
 const w = (k, add) => ['+', ['*', ['get', '_width'], k], add];
 const WIDTH = ['interpolate', ['linear'], ['zoom'], 10, w(0.6, 0.6), 14, w(1, 1), 17, w(1.5, 2)];
 const CASING = ['interpolate', ['linear'], ['zoom'], 10, w(0.6, 2.6), 14, w(1, 4), 17, w(1.5, 5.5)];
+// Ungroomed trails: a white stripe down the middle, about a third of the width.
+const STRIPE = ['interpolate', ['linear'], ['zoom'], 10, w(0.2, 0.2), 14, w(0.33, 0.35), 17, w(0.5, 0.7)];
+
+/**
+ * Zoomed out, the map shows only the areas (zones); trails, markers and their
+ * labels appear from this zoom in. app.js also never flies to a trail below it.
+ */
+export const TRAIL_MINZOOM = 11.5;
+const Z = { minzoom: TRAIL_MINZOOM };
 
 const IS_LINE = ['in', ['geometry-type'], ['literal', ['LineString', 'MultiLineString']]];
 const IS_AREA = ['in', ['geometry-type'], ['literal', ['Polygon', 'MultiPolygon']]];
@@ -48,25 +57,32 @@ export function trailLayers(source) {
     },
     // White casing so trails stand out against the basemap.
     {
-      id: 'trail-casing', type: 'line', source, filter: IS_LINE,
+      id: 'trail-casing', type: 'line', source, filter: IS_LINE, ...Z,
       layout: { 'line-cap': 'round', 'line-join': 'round' },
       paint: { 'line-color': 'rgba(255,255,255,0.9)', 'line-width': CASING },
     },
     {
-      id: 'trail-line', type: 'line', source,
+      id: 'trail-line', type: 'line', source, ...Z,
       filter: ['all', IS_LINE, ['!=', ['get', '_dashed'], true]],
       layout: { 'line-cap': 'round', 'line-join': 'round' },
       paint: { 'line-color': ['get', '_color'], 'line-width': WIDTH, 'line-opacity': ['get', '_opacity'] },
     },
-    // CalTopo's non-solid patterns all render as one dash style.
+    // Dashed = only skiable after heavy recent snowfall (CalTopo's non-solid
+    // patterns, and OSM areas marked needs_snow, all render as one dash style).
     {
-      id: 'trail-dashed', type: 'line', source,
+      id: 'trail-dashed', type: 'line', source, ...Z,
       filter: ['all', IS_LINE, ['==', ['get', '_dashed'], true]],
       layout: { 'line-cap': 'butt', 'line-join': 'round' },
       paint: {
         'line-color': ['get', '_color'], 'line-width': WIDTH, 'line-opacity': ['get', '_opacity'],
         'line-dasharray': [2, 1.5],
       },
+    },
+    {
+      id: 'trail-ungroomed', type: 'line', source, ...Z,
+      filter: ['all', IS_LINE, ['==', ['get', '_grooming'], 'ungroomed'], ['!=', ['get', '_dashed'], true]],
+      layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: { 'line-color': '#ffffff', 'line-width': STRIPE, 'line-opacity': 0.95 },
     },
     {
       id: 'trail-label', type: 'symbol', source, minzoom: 12, filter: IS_LINE,
@@ -82,14 +98,16 @@ export function trailLayers(source) {
     },
     // Fat invisible line so a trail is easy to hit with a finger.
     {
-      id: 'trail-hit', type: 'line', source, filter: IS_LINE,
+      id: 'trail-hit', type: 'line', source, filter: IS_LINE, ...Z,
       paint: { 'line-color': '#000000', 'line-opacity': 0, 'line-width': 22 },
     },
+    // Area names carry the zoomed-out map, so they're bigger and stay until
+    // the trails have taken over.
     {
       id: 'area-label', type: 'symbol', source, maxzoom: 12.5, filter: IS_AREA,
       layout: {
         'text-field': ['get', '_section'], 'text-font': LABEL_FONT,
-        'text-size': ['interpolate', ['linear'], ['zoom'], 8, 12, 12, 15],
+        'text-size': ['interpolate', ['linear'], ['zoom'], 8, 13, 12, 16],
         'text-max-width': 8, 'text-letter-spacing': 0.02,
       },
       paint: { 'text-color': '#0c3d54', 'text-halo-color': '#ffffff', 'text-halo-width': 2 },
@@ -98,7 +116,7 @@ export function trailLayers(source) {
     // for its symbol (P for parking…) — drawn with the map font, so no icon
     // sprite is needed.
     {
-      id: 'marker-dot', type: 'circle', source, filter: IS_POINT,
+      id: 'marker-dot', type: 'circle', source, filter: IS_POINT, ...Z,
       paint: {
         'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 5, 13, 10, 16, 12],
         'circle-color': ['get', '_color'],
@@ -106,7 +124,7 @@ export function trailLayers(source) {
       },
     },
     {
-      id: 'marker-glyph', type: 'symbol', source, minzoom: 12, filter: IS_POINT,
+      id: 'marker-glyph', type: 'symbol', source, minzoom: Math.max(12, TRAIL_MINZOOM), filter: IS_POINT,
       layout: {
         'text-field': ['get', '_glyph'], 'text-font': GLYPH_FONT,
         'text-size': ['interpolate', ['linear'], ['zoom'], 12, 10, 16, 13],
@@ -115,7 +133,7 @@ export function trailLayers(source) {
       paint: { 'text-color': '#ffffff' },
     },
     {
-      id: 'marker-label', type: 'symbol', source, minzoom: 11, filter: IS_POINT,
+      id: 'marker-label', type: 'symbol', source, ...Z, filter: IS_POINT,
       layout: {
         'text-field': ['get', '_name'], 'text-font': LABEL_FONT,
         'text-size': 12, 'text-offset': [0, 1.2], 'text-anchor': 'top', 'text-padding': 3,
@@ -145,12 +163,12 @@ export function selectionGlowLayers(source) {
   const width = (k) => ['interpolate', ['linear'], ['zoom'], 10, 9 + k, 14, 14 + k, 17, 20 + k];
   return [
     {
-      id: 'sel-edge', type: 'line', source, filter: ROLE('line'),
+      id: 'sel-edge', type: 'line', source, filter: ROLE('line'), ...Z,
       layout: { 'line-cap': 'round', 'line-join': 'round' },
       paint: { 'line-color': SELECT_INK, 'line-width': width(3), 'line-opacity': 0.55 },
     },
     {
-      id: 'sel-glow', type: 'line', source, filter: ROLE('line'),
+      id: 'sel-glow', type: 'line', source, filter: ROLE('line'), ...Z,
       layout: { 'line-cap': 'round', 'line-join': 'round' },
       paint: { 'line-color': '#ffffff', 'line-width': width(0) },
     },

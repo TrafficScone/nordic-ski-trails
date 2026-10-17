@@ -101,10 +101,10 @@ check(box.querySelectorAll('button.flt-chip').length === 4, 're-render clears th
 console.log('\nrenderLegend');
 const legend = document.getElementById('g');
 renderLegend(legend);
-check(legend.querySelectorAll('.lgd-row').length === 6, 'six rows');
-check(legend.querySelectorAll('svg').length === 5, 'inline SVG swatches');
+check(legend.querySelectorAll('.lgd-row').length === 7, 'seven rows');
+check(legend.querySelectorAll('svg').length === 6, 'inline SVG swatches');
 renderLegend(legend);
-check(legend.querySelectorAll('.lgd-row').length === 6, 're-render clears the container');
+check(legend.querySelectorAll('.lgd-row').length === 7, 're-render clears the container');
 
 console.log(failures ? `\n${failures} check(s) failed` : '\nAll checks passed');
 process.exit(failures ? 1 : 0);

@@ -12,7 +12,7 @@
 
 import { basemapStyle } from './basemap.js';
 import { DEFAULT_VIEW, DEM_TILES, FALLBACK_COLOR, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
-import { HIT_LAYERS, selectionGlowLayers, selectionMarkerLayers, trailLayers, trailOpacity } from './layers.js';
+import { HIT_LAYERS, TRAIL_MINZOOM, selectionGlowLayers, selectionMarkerLayers, trailLayers, trailOpacity } from './layers.js';
 import { conditionLinksFor } from './conditions.js';
 import { icon, iconForUrl } from './icons.js';
 import { liveConditions } from './live-conditions.js';
@@ -61,7 +61,7 @@ const dataReady = loadTrails();
 
 // Trail line layers the difficulty/grooming filter applies to. Places and
 // areas are never filtered.
-const FILTERED_LAYERS = ['trail-casing', 'trail-line', 'trail-dashed', 'trail-label', 'trail-hit'];
+const FILTERED_LAYERS = ['trail-casing', 'trail-line', 'trail-dashed', 'trail-ungroomed', 'trail-label', 'trail-hit'];
 const filterState = defaultFilterState();
 
 map.on('load', async () => {
@@ -197,8 +197,8 @@ function styled(f) {
       _fillOpacity: num(p['fill-opacity'], 0.1),
       _dashed: !!p.pattern && p.pattern !== 'solid',
       _difficulty: kind === 'trail' ? difficultyOf(color(p.stroke)) : '',
-      // OSM trails say; a dashed CalTopo line is drawn as ungroomed.
-      _grooming: p.grooming ?? (p.pattern && p.pattern !== 'solid' ? 'ungroomed' : 'unknown'),
+      // From the OSM sync (or an area override there); CalTopo lines don't say.
+      _grooming: p.grooming ?? 'unknown',
       _length: lengthOf(f.geometry),
     },
   };
@@ -287,7 +287,12 @@ function focus(g, { animate = true } = {}) {
   const bb = bboxOf(g.features);
   const duration = animate ? undefined : 0;
   if (g.kind === 'place') map.flyTo({ center: bb[0], zoom: Math.max(map.getZoom(), 14), duration });
-  else map.fitBounds(bb, { padding: 80, maxZoom: 15, duration });
+  else {
+    // Never land on a trail below the zoom where trails are drawn.
+    const cam = map.cameraForBounds(bb, { padding: 80, maxZoom: 15 }) ?? {};
+    const zoom = g.kind === 'trail' ? Math.max(cam.zoom ?? TRAIL_MINZOOM, TRAIL_MINZOOM) : cam.zoom;
+    map.easeTo({ center: cam.center, zoom, duration });
+  }
   showPopup(g, g.kind === 'area' ? [(bb[0][0] + bb[1][0]) / 2, bb[1][1]] : centerOf(g.features[0].geometry));
   if (window.matchMedia('(max-width: 640px)').matches) $('#panel').classList.add('is-collapsed');
 }

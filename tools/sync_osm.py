@@ -16,9 +16,13 @@ tools/osm-trails.json refines that, keyed by the polygon's CalTopo title:
       "colors":  {"Jenny Creek": "green"},       per-trail colour overrides
       "color":   "blue",                         when OSM has no difficulty
       "notes":   {"Jenny Creek": "Dogs allowed"} extra description text
-    }
+      "grooming": "ungroomed",                   override OSM for the whole area
+      "needs_snow": true                         only skiable after heavy recent
+    }                                              snowfall: drawn dashed
   },
-  "trails": [ … ]   exact OSM way lists, optionally in coloured sections
+  "trails": [ … ]   exact OSM way lists, optionally in coloured sections; give
+                    one an "area" to file it there and inherit the area's
+                    grooming / needs_snow
 
 The result is written to public/trails/osm.geojson in the same shape CalTopo
 exports, so the map treats it exactly like a hand-drawn trail. Run it by hand
@@ -244,8 +248,11 @@ def describe(tags: dict) -> str:
     return "\n".join(bits)
 
 
-def grooming_of(tags: dict) -> str:
-    """'groomed', 'ungroomed', or 'unknown' — what the map's filter reads."""
+def grooming_of(tags: dict, area: dict | None = None) -> str:
+    """'groomed', 'ungroomed', or 'unknown' — what the map's filter reads.
+    An area's "grooming" setting overrides OSM."""
+    if area and area.get("grooming"):
+        return area["grooming"]
     if ungroomed(tags):
         return "ungroomed"
     return "groomed" if tags.get("piste:grooming") else "unknown"
@@ -347,9 +354,9 @@ def sync_area(area_name: str, polygons: list, area: dict, curated: set[str] = fr
             continue
         description = "\n\n".join(t for t in (notes.get(key, ""), describe(g["tags"])) if t)
         f = feature(title, lines, color=color, description=description, ways=g["ways"],
-                    # Ungroomed reads as dashed, as on printed trail maps.
-                    pattern="dash" if ungroomed(g["tags"]) else "solid", grooming=grooming_of(g["tags"]),
-                    ref=g["tags"].get("ref", ""))
+                    # Dashed is reserved for "needs heavy recent snowfall".
+                    pattern="dash" if area.get("needs_snow") else "solid",
+                    grooming=grooming_of(g["tags"], area), ref=g["tags"].get("ref", ""))
         f["properties"]["area"] = area_name
         features.append(f)
         miles = sum(length_m(c) for c in lines) / 1609.344
@@ -366,7 +373,8 @@ def sync_area(area_name: str, polygons: list, area: dict, curated: set[str] = fr
 
 # -- explicit trails --------------------------------------------------------
 
-def sync_trails(trails: list[dict]) -> tuple[list[dict], int]:
+def sync_trails(trails: list[dict], areas: dict | None = None) -> tuple[list[dict], int]:
+    areas = areas or {}
     for t in trails:
         if not t.get("sections"):
             t["sections"] = [{k: t[k] for k in ("ways", "color", "description") if k in t}]
@@ -393,8 +401,15 @@ def sync_trails(trails: list[dict]) -> tuple[list[dict], int]:
                 print(f"  ! {t['name']} section {n}: {len(lines)} disconnected pieces — a way may be missing")
             total += sum(length_m(c) for c in lines)
             title = t["name"] if len(t["sections"]) == 1 else f"{t['name']}_{n}"
-            features.append(feature(title, lines, color=s.get("color", t.get("color")),
-                                    description=s.get("description", t.get("description", "")), ways=wanted))
+            area = areas.get(t.get("area"), {})
+            tags = found[wanted[0]].get("tags", {}) if wanted and wanted[0] in found else {}
+            f = feature(title, lines, color=s.get("color", t.get("color")),
+                        description=s.get("description", t.get("description", "")), ways=wanted,
+                        pattern="dash" if area.get("needs_snow") else "solid",
+                        grooming=t.get("grooming") or grooming_of(tags, area), ref=tags.get("ref", ""))
+            if t.get("area"):
+                f["properties"]["area"] = t["area"]
+            features.append(f)
         print(f"  ✓ {t['name']}: {len(t['sections'])} section(s), {total / 1609.344:.1f} mi")
     return features, problems
 
@@ -432,7 +447,7 @@ def main() -> int:
     for name, polygons in areas.items():
         print(f"area: {name}")
         features += sync_area(name, polygons, config.get(name, {}), curated)
-    trail_features, problems = sync_trails(manifest.get("trails", []))
+    trail_features, problems = sync_trails(manifest.get("trails", []), config)
     features += trail_features
 
     for f in trail_features:

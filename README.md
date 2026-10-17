@@ -27,8 +27,8 @@ installed to a phone's home screen, which on iPhones keeps its saved data from
 being cleared after a week of disuse.
 
 The panel has difficulty filter chips (green/blue/black by the trail colour),
-a "Groomed trails only" switch (OSM grooming tags; a dashed CalTopo line
-counts as ungroomed), and a map key.
+a "Groomed trails only" switch (OSM grooming tags or the area's `grooming`
+setting), and a map key.
 
 The basemap ("Corduroy", `public/js/basemap.js`) is a light winter style built
 on MapTiler's vector tiles: snow-white ground, forest tinted so treeline reads
@@ -100,9 +100,17 @@ polygon's CalTopo title, so it survives every re-export:
 | `color` | Colour for trails OSM gives no difficulty for (default blue). |
 | `notes` | Extra description text per trail, shown above OSM's grooming info. |
 | `min_length_m` | Drop pieces shorter than this (default 100 m; edge slivers). |
+| `grooming` | `"ungroomed"` / `"groomed"` for every trail in the area, overriding OSM. Ungroomed trails get a white centre stripe. |
+| `needs_snow` | `true` if the area is only skiable after heavy recent snowfall: its trails are drawn dashed. |
 
 `trails` takes exact way lists for when an area isn't the right tool:
-`{"name": "…", "sections": [{"ways": [123, 456], "color": "blue", "description": "…"}]}`.
+`{"name": "…", "area": "Brainard Lake Area", "sections": [{"ways": [123, 456], "color": "blue", "description": "…"}]}`
+(`area` files it under that area and applies the area's `grooming` / `needs_snow`).
+
+On the map, **solid** = groomed or unknown, **white centre stripe** = ungroomed,
+**dashed** = needs heavy recent snowfall (a dashed CalTopo line means the same).
+Zoomed out (below zoom 11.5, `TRAIL_MINZOOM` in `layers.js`) only the areas show;
+trails, places and their labels appear as you zoom in.
 
 An OSM trail with the same name as a CalTopo line is skipped automatically —
 the hand-drawn version wins. Differently spelled duplicates ("4th of July Road")

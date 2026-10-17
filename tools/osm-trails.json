@@ -1,8 +1,51 @@
 {
   "areas": {
+    "Brainard Lake Area": {
+      "grooming": "ungroomed",
+      "exclude": [
+        "Pawnee Campground Loop B - Tent Camp",
+        "Pawnee Campground Loop C",
+        "Pawnee Campground Loop D",
+        "Summer Snowshoe",
+        "Elk Spine",
+        "Moose Spine",
+        "Brainard Lake O/l"
+      ],
+      "colors": {
+        "Sourdough Trail": "green",
+        "South Saint Vrain": "blue",
+        "South Saint Vrain Trail": "blue",
+        "Waldrop Trail": "blue",
+        "Brainard Lake Road": "green",
+        "Little Raven Trail": "blue",
+        "Left Hand Reservoir Road": "green",
+        "Niwot Mountain": "black",
+        "Jean Lunning Trail": "blue",
+        "Niwot Ridge Trail": "black",
+        "Niwot Cutoff Trail": "blue",
+        "Long Lake Road": "green",
+        "Mitchell Lake Road": "green",
+        "Mitchell Lake Trail": "blue",
+        "Beaver Creek Trail": "blue",
+        "Pawnee Pass Trail": "blue"
+      }
+    },
+    "Caribou Ranch": {
+      "needs_snow": true
+    },
+    "North Boulder Park": {
+      "needs_snow": true
+    },
     "Hessie Trail Area": {
       "exclude": ["4th of July Road"]
     }
   },
-  "trails": []
+  "trails": [
+    {
+      "name": "CMC Ski Trail",
+      "area": "Brainard Lake Area",
+      "ways": [45048952],
+      "color": "blue"
+    }
+  ]
 }

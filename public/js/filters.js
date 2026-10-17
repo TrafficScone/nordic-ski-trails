@@ -108,7 +108,10 @@ export function renderLegend(container) {
   };
 
   for (const d of DIFFICULTIES.slice(0, 3)) row(lineSwatch(doc, d.color, false, 'lgd-swatch'), d.label);
-  row(lineSwatch(doc, '#575760', true, 'lgd-swatch'), 'Ungroomed / backcountry');
+  // Ungroomed: a white stripe down the middle. Dashed is kept for trails that
+  // are only skiable after heavy recent snowfall.
+  row(lineSwatch(doc, '#575760', false, 'lgd-swatch', true), 'Ungroomed');
+  row(lineSwatch(doc, '#575760', true, 'lgd-swatch'), 'Needs fresh snow');
 
   const parking = el(doc, 'span', 'lgd-disc');
   parking.textContent = 'P';
@@ -177,12 +180,13 @@ function svg(doc, width, height, className) {
 }
 
 /** 22×6 line swatch: white casing under the coloured line, like the map. */
-function lineSwatch(doc, color, dashed, className) {
-  const node = svg(doc, 22, 6, className);
-  const line = (attrs) => svgEl(doc, 'line', { x1: 1.5, y1: 3, x2: 20.5, y2: 3, ...attrs });
-  node.append(line({ stroke: '#ffffff', 'stroke-width': 6, 'stroke-linecap': 'round' }));
+function lineSwatch(doc, color, dashed, className, striped = false) {
+  const node = svg(doc, 22, 8, className);
+  const line = (attrs) => svgEl(doc, 'line', { x1: 1.5, y1: 4, x2: 20.5, y2: 4, ...attrs });
+  node.append(line({ stroke: '#ffffff', 'stroke-width': striped ? 7 : 6, 'stroke-linecap': 'round' }));
   node.append(line(dashed
     ? { stroke: color, 'stroke-width': 3, 'stroke-dasharray': '4 3' }
-    : { stroke: color, 'stroke-width': 3, 'stroke-linecap': 'round' }));
+    : { stroke: color, 'stroke-width': striped ? 4.5 : 3, 'stroke-linecap': 'round' }));
+  if (striped) node.append(line({ stroke: '#ffffff', 'stroke-width': 1.4, 'stroke-linecap': 'round' }));
   return node;
 }

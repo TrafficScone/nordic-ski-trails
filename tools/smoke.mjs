@@ -46,6 +46,8 @@ class FakeMap {
   setLayoutProperty(id, key, value) { (this.layers.get(id).layout ??= {})[key] = value; }
   flyTo() {}
   fitBounds(bb) { this.fitted = bb; }
+  cameraForBounds(bb) { return { center: [(bb[0][0] + bb[1][0]) / 2, (bb[0][1] + bb[1][1]) / 2], zoom: 10 }; }
+  easeTo(cam) { this.eased = cam; this.fitted = this.fitted ?? cam.center; }
   queryRenderedFeatures() { return this.queryResult; }
   async fire(type, event = {}) {
     for (const h of this.handlers.filter((x) => x.type === type && !x.layer)) await h.fn(event);
@@ -157,6 +159,7 @@ check('climb stats shown (flat DEM: no gain)', /↑ 0 ft · ↓ 0 ft/.test(popup
 console.log('\nShare, GPX, conditions');
 // The boot URL was #trail/devils-thumb-trail; the load handler should have opened it.
 check('a shared link opens its trail on load', !!map.fitted && popupContent !== null);
+check('opening a trail never lands below the trail zoom', map.eased?.zoom >= 11.5, String(map.eased?.zoom));
 check('opening a trail puts it in the URL', window.location.hash === '#trail/devils-thumb-trail', window.location.hash);
 const actions = [...popupContent.querySelectorAll('.pop-actions button')].map((b) => b.textContent);
 check('popup offers GPX download and share', actions.includes('Download GPX') && actions.includes('Share link'), actions.join(', '));
@@ -185,7 +188,7 @@ check('every list row is inside a collapsible section',
 console.log('\nFilters');
 const chips = [...window.document.querySelectorAll('#filters .flt-chip')];
 check('difficulty chips rendered', chips.length === 4);
-check('legend rendered', window.document.querySelectorAll('#legend .lgd-row').length === 6);
+check('legend rendered', window.document.querySelectorAll('#legend .lgd-row').length === 7);
 const greenTrail = fc.features.find((f) => f.properties._difficulty === 'easy');
 const greenRow = [...window.document.querySelectorAll('#list .item')]
   .find((b) => b.querySelector('.name').textContent === greenTrail.properties._name);
