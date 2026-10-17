@@ -1,14 +1,15 @@
-# Static site — nothing to build. Netlify serves public/ as-is.
+# Static site. Netlify serves public/ as-is; the only "build" is regenerating
+# public/trails/index.json so a dropped-in CalTopo export can't be missed.
 # Only public/ is deployed, so tools/ and the docs stay off the website.
 [build]
   publish = "public"
+  command = "python3 tools/index_trails.py"
 
 # Trail data should never be served stale after a deploy.
 [[headers]]
-  for = "/data/*"
+  for = "/trails/*"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
-    Content-Type = "application/geo+json; charset=utf-8"
 
 [[headers]]
   for = "/*"

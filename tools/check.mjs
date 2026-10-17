@@ -1,17 +1,16 @@
-// Static pre-flight for the map app.
+// Static pre-flight for the map.
 //
 //   node tools/check.mjs
 //
-// Runs three checks that would otherwise only fail (often silently) in the
-// browser:
-//   1. every MapLibre layer spec and filter validates against the style spec
+// Runs checks that would otherwise only fail (often silently) in the browser:
+//   1. every MapLibre layer spec validates against the style spec
 //   2. every element id app.js reaches for exists in index.html
-//   3. the published data file parses and has the properties the layers read
+//   3. trails/index.json matches the files in public/trails/, and each parses
 //
 // Everything it reads lives under public/ — the only folder that deploys.
 //
-// The style-spec validator is optional: `npm i @maplibre/maplibre-gl-style-spec`
-// enables check 1, and it's skipped with a note if that isn't installed.
+// The style-spec validator is optional: `npm install --prefix tools` enables
+// check 1, and it's skipped with a note if that isn't installed.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -28,49 +27,30 @@ const bad = (msg) => { failures++; console.log(`  ✗ ${msg}`); };
 // -- 1. layer specs ---------------------------------------------------------
 
 console.log('\nMapLibre layer specs');
-const { trailLayers, trailFilters, drawLayers } = await import(path.join(SITE, 'js/layers.js'));
+const { trailLayers, HIT_LAYERS } = await import(path.join(SITE, 'js/layers.js'));
 
 let validate = null;
 try {
   ({ validateStyleMin: validate } = await import('@maplibre/maplibre-gl-style-spec'));
 } catch {
-  console.log('  – skipped (npm i @maplibre/maplibre-gl-style-spec to enable)');
+  console.log('  – skipped (npm install --prefix tools to enable)');
 }
 
+const layers = trailLayers('trails');
 if (validate) {
-  const layers = [...trailLayers('trails'), ...drawLayers('draw-draft', 'draw-handles')];
   const style = {
     version: 8,
     name: 'check',
     glyphs: 'https://example.com/{fontstack}/{range}.pbf',
-    sources: Object.fromEntries(
-      ['trails', 'draw-draft', 'draw-handles'].map((id) => [
-        id, { type: 'geojson', data: { type: 'FeatureCollection', features: [] } },
-      ]),
-    ),
+    sources: { trails: { type: 'geojson', data: { type: 'FeatureCollection', features: [] } } },
     layers,
   };
-
   const errors = validate(style);
-  errors.length ? errors.forEach((e) => bad(`${e.message}`)) : ok(`${layers.length} layers validate`);
-
-  // Filters are swapped in at runtime, so validate them the same way.
-  const cases = [
-    trailFilters(),
-    trailFilters({ hiddenDifficulties: new Set(['easiest']), showPlaces: false, selectedId: 'abc' }),
-    trailFilters({ hiddenDifficulties: new Set(['easiest', 'more-difficult', 'most-difficult', 'expert', 'unrated']) }),
-  ];
-  let filterErrors = 0;
-  for (const set of cases) {
-    for (const [id, filter] of Object.entries(set)) {
-      const spec = layers.find((l) => l.id === id);
-      if (!spec) { bad(`filter targets unknown layer "${id}"`); continue; }
-      const probe = { ...style, layers: [{ ...spec, filter }] };
-      for (const e of validate(probe)) { filterErrors++; bad(`${id}: ${e.message}`); }
-    }
-  }
-  if (!filterErrors) ok(`${cases.length * Object.keys(cases[0]).length} filter combinations validate`);
+  errors.length ? errors.forEach((e) => bad(e.message)) : ok(`${layers.length} layers validate`);
 }
+const unknownHits = HIT_LAYERS.filter((id) => !layers.some((l) => l.id === id));
+unknownHits.length ? unknownHits.forEach((id) => bad(`HIT_LAYERS names unknown layer "${id}"`))
+                   : ok('click targets name real layers');
 
 // -- 2. DOM ids -------------------------------------------------------------
 
@@ -78,39 +58,38 @@ console.log('\nDOM wiring');
 const html = read('index.html');
 const appJs = read('js/app.js');
 const htmlIds = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
-// ids created at runtime by the details form and the hint bar
-const runtimeIds = new Set(['det-readout', 'hint-finish', 'hint-done',
-  ...[...read('js/schema.js').matchAll(/key: '(\w+)'/g)].map((m) => `f-${m[1]}`)]);
-
 const missing = [...new Set([...appJs.matchAll(/\$\('#([\w-]+)'\)/g)].map((m) => m[1]))]
-  .filter((id) => !htmlIds.has(id) && !runtimeIds.has(id));
+  .filter((id) => !htmlIds.has(id));
 missing.length ? missing.forEach((id) => bad(`app.js looks for #${id}, which index.html never defines`))
                : ok(`${htmlIds.size} element ids resolve`);
 
-for (const asset of ['css/app.css', 'js/app.js', 'data/trails.geojson']) {
-  fs.existsSync(path.join(SITE, asset)) ? ok(`${asset} present`) : bad(`${asset} is missing`);
-}
+// -- 3. trail files ---------------------------------------------------------
 
-// -- 3. published data ------------------------------------------------------
-
-console.log('\nPublished data');
+console.log('\nTrail files');
+const dir = path.join(SITE, 'trails');
+const onDisk = fs.readdirSync(dir).filter((f) => /\.(geo)?json$/.test(f) && f !== 'index.json').sort();
+let listed = [];
 try {
-  const fc = JSON.parse(read('data/trails.geojson'));
-  if (fc.type !== 'FeatureCollection') bad('data/trails.geojson is not a FeatureCollection');
-  const ids = new Set();
-  let dupes = 0;
-  let badGeom = 0;
-  for (const f of fc.features ?? []) {
-    const t = f.geometry?.type;
-    if (t !== 'LineString' && t !== 'Point') badGeom++;
-    if (ids.has(f.properties?.id)) dupes++;
-    ids.add(f.properties?.id);
-  }
-  if (badGeom) bad(`${badGeom} feature(s) are neither LineString nor Point`);
-  if (dupes) bad(`${dupes} duplicate feature id(s)`);
-  if (!badGeom && !dupes) ok(`${fc.features.length} feature(s) look well-formed`);
+  listed = JSON.parse(read('trails/index.json'));
 } catch (err) {
-  bad(`data/trails.geojson: ${err.message}`);
+  bad(`trails/index.json: ${err.message}`);
+}
+const unlisted = onDisk.filter((f) => !listed.includes(f));
+const gone = listed.filter((f) => !onDisk.includes(f));
+if (unlisted.length || gone.length) {
+  unlisted.forEach((f) => bad(`${f} is not in index.json — run python3 tools/index_trails.py`));
+  gone.forEach((f) => bad(`index.json lists ${f}, which doesn't exist`));
+} else {
+  ok(`index.json lists all ${onDisk.length} file(s)`);
+}
+for (const f of onDisk) {
+  try {
+    const fc = JSON.parse(read(`trails/${f}`));
+    if (fc.type !== 'FeatureCollection') bad(`${f} is not a FeatureCollection`);
+    else ok(`${f}: ${fc.features?.length ?? 0} feature(s)`);
+  } catch (err) {
+    bad(`${f}: ${err.message}`);
+  }
 }
 
 console.log(failures ? `\n${failures} problem(s)\n` : '\nAll checks passed\n');
