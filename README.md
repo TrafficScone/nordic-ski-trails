@@ -143,9 +143,20 @@ and runs the index script. Only `public/` is deployed.
 
 ### The MapTiler key
 
-The key in `public/js/config.js` (used for basemap tiles and fonts) ships to the browser and can't be hidden.
-Protect it by restricting origins: MapTiler dashboard → your key → allowed
-origins → your Netlify domain (and `http://localhost:*` for development).
+The key is never committed. `public/js/config.js` holds the placeholder
+`__MAPTILER_KEY__`; the Netlify build replaces it with the `MAPTILER_KEY`
+environment variable (Site configuration → Environment variables), and fails
+if that isn't set. Locally the key lives in `.env` (git-ignored):
+
+```
+MAPTILER_KEY=your-key
+```
+
+The key still reaches visitors' browsers — map tiles can't load without it —
+so restrict it in the MapTiler dashboard (Allowed HTTP origins:
+`bnc.worthgentry.com`, `bncmap.netlify.app`, `localhost`), keep an eye on
+usage, and rotate it every few months (new key → update the Netlify variable
+and `.env` → redeploy).
 
 ## Layout
 

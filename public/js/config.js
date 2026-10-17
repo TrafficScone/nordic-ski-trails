@@ -2,10 +2,13 @@
 // Everything you'd normally want to tweak lives here.
 // ---------------------------------------------------------------------------
 
-// MapTiler key for the basemap tiles and fonts (style: js/basemap.js). It is
-// public by design (it ships in the browser bundle); lock it to your domain in
-// the MapTiler dashboard under "Allowed origins".
-export const MAPTILER_KEY = 'S4gR7zmBTb2rOCbaTlBy';
+// MapTiler key for the basemap tiles and fonts (style: js/basemap.js). The
+// real key is never committed: it lives in .env locally and in the Netlify
+// MAPTILER_KEY environment variable, and the Netlify build swaps it in for
+// this placeholder (see netlify.toml). It still reaches visitors' browsers —
+// tiles can't load without it — so MapTiler's allowed-origin restriction and
+// usage limits are what protect it.
+export const MAPTILER_KEY = '__MAPTILER_KEY__';
 
 // Terrain-RGB elevation tiles, used to compute slope-angle shading.
 export const DEM_TILES = `https://api.maptiler.com/tiles/terrain-rgb-v2/{z}/{x}/{y}.webp?key=${MAPTILER_KEY}`;

@@ -77,7 +77,11 @@ Application → Service workers → Unregister, or use a private window.
 ## Things that bite
 
 - Python tools are standard library only. No pip installs.
-- The MapTiler key is public by design; it's protected by origin restrictions
-  in the MapTiler dashboard, not by hiding it.
+- No secrets in the repo. The MapTiler key lives in `.env` (git-ignored) and the
+  Netlify `MAPTILER_KEY` env var; `public/js/config.js` holds the placeholder
+  `__MAPTILER_KEY__`, which the Netlify build command replaces with `sed`.
+  Never commit a config.js with a real key (`check.mjs` fails if you do). The
+  key still reaches browsers, so MapTiler origin restrictions and usage limits
+  are its real protection.
 - MapLibre rejects `zoom` expressions nested inside arithmetic — write out a
   separate `interpolate` instead.

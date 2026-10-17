@@ -62,6 +62,13 @@ const unknownHits = HIT_LAYERS.filter((id) => !layers.some((l) => l.id === id));
 unknownHits.length ? unknownHits.forEach((id) => bad(`HIT_LAYERS names unknown layer "${id}"`))
                    : ok('click targets name real layers');
 
+// The MapTiler key comes from .env / the Netlify MAPTILER_KEY env var and is
+// swapped in at build time; the committed config must keep the placeholder.
+console.log('\nSecrets');
+/__MAPTILER_KEY__/.test(read('js/config.js'))
+  ? ok('js/config.js holds the __MAPTILER_KEY__ placeholder, not a key')
+  : bad('js/config.js has a real MapTiler key in it — restore the __MAPTILER_KEY__ placeholder before committing');
+
 // -- 2. DOM ids -------------------------------------------------------------
 
 console.log('\nDOM wiring');
