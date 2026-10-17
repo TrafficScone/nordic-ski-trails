@@ -1,0 +1,15 @@
+{
+  "name": "nordic-ski-trails-tools",
+  "private": true,
+  "description": "Dev-only checks. Kept out of the site root so Netlify has nothing to build.",
+  "type": "module",
+  "scripts": {
+    "check": "node check.mjs"
+  },
+  "devDependencies": {
+    "@maplibre/maplibre-gl-style-spec": "^26.4.1"
+  },
+  "dependencies": {
+    "jsdom": "^30.0.1"
+  }
+}

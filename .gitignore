@@ -216,3 +216,30 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ---------------------------------------------------------------------------
+# Nordic Ski Trails
+# ---------------------------------------------------------------------------
+
+# Node dev tooling (tools/check.mjs, tools/smoke.mjs). The site itself has no
+# build step; tools/package.json and package-lock.json ARE tracked.
+node_modules/
+npm-debug.log*
+.npm/
+
+# Netlify CLI state
+.netlify/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# The Python venv is already matched by `.venv` above; these cover the
+# variants people reach for out of habit.
+.venv*/
+venv*/

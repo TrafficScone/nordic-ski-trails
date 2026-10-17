@@ -1,0 +1,10 @@
+# The tools in tools/ are standard library only — there is nothing to install,
+# and `pip install -r requirements.txt` on a fresh .venv is a no-op.
+#
+# This file exists so there's an obvious place to record a dependency the first
+# time you need one. Likely candidates:
+#
+#   gpxpy          more forgiving GPX parsing than tools/import_gpx.py
+#   shapely        real geometry ops (buffers, intersections, snapping)
+#   pyproj         accurate projections and area/length in projected space
+#   requests       pulling trail or grooming data from an API
