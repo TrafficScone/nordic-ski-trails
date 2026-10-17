@@ -74,6 +74,7 @@ button { font: inherit; color: inherit; }
 .panel-foot { border-top: 1px solid #e6e8eb; padding: 6px 8px 8px; }
 .toggle { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 6px; cursor: pointer; }
 .toggle input { width: 18px; height: 18px; accent-color: var(--brand); margin: 0; }
+.legend[hidden] { display: none; }
 .legend { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px 8px; padding: 2px 6px 4px; font-size: 12px; color: var(--ink-2); }
 .legend-row { display: flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
 .legend .swatch { width: 14px; height: 10px; border-radius: 2px; opacity: .8; }

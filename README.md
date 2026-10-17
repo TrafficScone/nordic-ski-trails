@@ -30,6 +30,54 @@ markers (a coloured disc with a letter for the symbol, such as `P` for
 parking), and polygons (as tinted areas). Sections named `Trail_1`, `Trail_2`…
 are shown as one trail with a combined length.
 
+## Pulling trails from OpenStreetMap
+
+For established trail networks it's easier to pull the trails from OSM than to
+draw them. Groomed nordic trails there often carry difficulty and grooming
+tags, which become the green/blue/black colour and the popup text; ungroomed
+(`piste:grooming=backcountry`) trails are drawn dashed.
+
+1. In CalTopo, draw a polygon around the area and export it as GeoJSON into
+   `tools/osm-areas/`.
+2. Add the area to `tools/osm-trails.json`:
+
+   ```json
+   {
+     "areas": [
+       {
+         "name": "Eldora",
+         "polygon": "osm-areas/eldora.geojson",
+         "include": ["nordic", "paths"],
+         "color": "blue",
+         "exclude": ["Devils Thumb Trail", 206211544],
+         "colors": { "Fourth of July Road": "green" }
+       }
+     ],
+     "trails": []
+   }
+   ```
+
+   | Key | Meaning |
+   |---|---|
+   | `include` | `nordic` (groomed ski trails), `paths` (named hiking trails and tracks), `roads` (named minor roads). Default `["nordic"]`. |
+   | `color` | Colour for trails OSM gives no difficulty for: `green`, `blue`, `black`, or a hex colour. |
+   | `exclude` | Trail names or OSM way ids to leave out, e.g. one you've drawn better in CalTopo. |
+   | `colors` | Per-trail colour overrides, by name. |
+
+   For exact control, list ways instead under `trails`:
+   `{"name": "…", "sections": [{"ways": [123, 456], "color": "blue", "description": "…"}]}`.
+
+3. `python3 tools/sync_osm.py` writes `public/trails/osm.geojson`. Trails are
+   clipped to the polygon and joined by name ("Devils" and "Devil's" count as
+   the same). It warns when an OSM trail has the same name as a CalTopo one,
+   because the map would merge them.
+4. `python3 tools/index_trails.py`, look over the diff, commit. Re-run the sync
+   whenever you want OSM's latest; review before committing, since anyone can
+   edit OSM.
+
+Trail data from OSM is © OpenStreetMap contributors (ODbL), credited in the map's
+attribution.
+
 ## Run it locally
 
 ```bash
@@ -45,6 +93,7 @@ It has to be served over HTTP — browsers block ES modules and `fetch` on
 ```bash
 node tools/check.mjs     # layer specs, DOM ids, index.json in sync with the files
 node tools/smoke.mjs     # boots the app headlessly: load, style, list, popup
+python3 tools/test_sync_osm.py   # OSM sync: stitching, clipping, naming
 ```
 
 Dev dependencies install once with `npm install --prefix tools`.
@@ -74,6 +123,8 @@ public/                 ← the only folder Netlify deploys
   trails/*.geojson      CalTopo exports
   trails/index.json     generated list of the above
 docs/cartography.md     design principles and sources
-tools/                  dev only — index script, checks
+tools/                  dev only — index script, OSM sync, checks
+  osm-trails.json       which OSM areas/trails to pull
+  osm-areas/            CalTopo polygon exports for those areas
 netlify.toml            static hosting config
 ```
