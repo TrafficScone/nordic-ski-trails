@@ -6,6 +6,7 @@
 //   1. the basemap style plus the trail layers validate against the style spec
 //   2. every element id app.js reaches for exists in index.html
 //   3. trails/index.json matches the files in public/trails/, and each parses
+//   4. the service worker's precache list covers the shell and matches index.html
 //
 // Everything it reads lives under public/ — the only folder that deploys.
 //
@@ -91,6 +92,32 @@ for (const f of onDisk) {
   } catch (err) {
     bad(`${f}: ${err.message}`);
   }
+}
+
+// -- 4. offline -------------------------------------------------------------
+
+console.log('\nOffline');
+{
+  const vm = await import('node:vm');
+  const ctx = vm.createContext({ self: { addEventListener() {}, location: { origin: 'http://localhost' } }, URL, console });
+  vm.runInContext(read('sw.js'), ctx);
+  const shell = vm.runInContext('SHELL_FILES', ctx);
+  const thirdParty = vm.runInContext('THIRD_PARTY_URLS', ctx);
+
+  const absent = shell.filter((f) => f !== './' && !fs.existsSync(path.join(SITE, f)));
+  absent.length ? absent.forEach((f) => bad(`sw.js precaches ${f}, which doesn't exist`))
+                : ok(`${shell.length} precached shell paths exist`);
+
+  const modules = fs.readdirSync(path.join(SITE, 'js')).filter((f) => f.endsWith('.js')).map((f) => `js/${f}`);
+  const forgotten = modules.filter((m) => !shell.includes(m));
+  forgotten.length ? forgotten.forEach((m) => bad(`${m} is not in sw.js SHELL_FILES`))
+                   : ok(`all ${modules.length} js modules are precached`);
+
+  const used = [...html.matchAll(/(?:href|src)="(https:\/\/(?:unpkg\.com|fonts\.googleapis\.com)[^"]+)"/g)]
+    .map((m) => m[1].replaceAll('&amp;', '&'));
+  const mismatch = [...used.filter((u) => !thirdParty.includes(u)), ...thirdParty.filter((u) => !used.includes(u))];
+  mismatch.length ? mismatch.forEach((u) => bad(`sw.js and index.html disagree on ${u}`))
+                  : ok(`${used.length} third-party URLs match index.html`);
 }
 
 console.log(failures ? `\n${failures} problem(s)\n` : '\nAll checks passed\n');

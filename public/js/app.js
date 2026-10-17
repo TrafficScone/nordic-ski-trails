@@ -483,3 +483,17 @@ function haversine([lng1, lat1], [lng2, lat2]) {
 function formatDistance(m) {
   return UNITS === 'mi' ? `${(m / 1609.344).toFixed(1)} mi` : `${(m / 1000).toFixed(1)} km`;
 }
+
+// -- offline support --------------------------------------------------------
+// Register the service worker (sw.js) so the app and viewed map tiles work offline.
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js', { scope: './' })
+      .catch((err) => console.warn('Offline support unavailable:', err));
+    Promise.resolve(navigator.storage?.persist?.()).catch(() => {});
+  });
+}
+const syncOffline = () => document.body.classList.toggle('is-offline', !navigator.onLine);
+window.addEventListener('online', syncOffline);
+window.addEventListener('offline', syncOffline);
+syncOffline();

@@ -15,6 +15,14 @@ profile computed from the elevation model. Each popup also has:
 - **Share link**: `…/#trail/devils-thumb-trail` opens the map on that trail.
   Opening anything updates the address bar, so copying the URL works too.
 
+**Offline:** a service worker (`public/sw.js`) saves the app, the trail data,
+and every map tile you've looked at, so an area browsed at home still works at
+a trailhead with no signal. GPS works offline too. There's no "download an
+area" button (check MapTiler's terms before adding one); for serious offline
+navigation, use **Download GPX** in Gaia, CalTopo or onX. The site can also be
+installed to a phone's home screen, which on iPhones keeps its saved data from
+being cleared after a week of disuse.
+
 The panel has difficulty filter chips (green/blue/black by the trail colour),
 a "Groomed trails only" switch (OSM grooming tags; a dashed CalTopo line
 counts as ungroomed), and a map key.
@@ -118,6 +126,7 @@ python3 tools/test_sync_osm.py   # OSM sync: stitching, clipping, naming
 node tools/test_filters.mjs      # filter expressions validate and match the list logic
 node tools/test_gpx_share.mjs    # GPX output, link slugs and hashes
 node tools/test_conditions.mjs   # condition links, nearest SNOTEL
+node tools/test_sw.mjs           # service worker routing and caching
 ```
 
 Dev dependencies install once with `npm install --prefix tools`.
@@ -148,6 +157,8 @@ public/                 ← the only folder Netlify deploys
   js/conditions.js      condition links per trail and area (edit AREA_LINKS)
   js/gpx.js             GPX export
   js/share.js           shareable #kind/slug links
+  sw.js                 service worker: offline app + saved map tiles
+  manifest.webmanifest  home-screen install (icons/ from tools/make_icons.py)
   js/layers.js          trail layer specs
   js/app.js             loads trails, list, popups
   trails/*.geojson      CalTopo exports

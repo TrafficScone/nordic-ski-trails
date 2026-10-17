@@ -45,7 +45,8 @@ node tools/smoke.mjs    # headless boot: load, style, list, popup
 ```
 
 Module tests: `node tools/test_filters.mjs`, `node tools/test_gpx_share.mjs`,
-`node tools/test_conditions.mjs`, `python3 tools/test_sync_osm.py`.
+`node tools/test_conditions.mjs`, `node tools/test_sw.mjs`,
+`python3 tools/test_sync_osm.py`.
 
 Dev deps install once with `npm install --prefix tools`. A bad MapLibre
 expression fails **silently** in the browser, so `check.mjs` is the fastest way
@@ -65,6 +66,13 @@ last) beat basemap labels.
 `app.js`; `lineFilter` (MapLibre) and `matchesFilter` (list rows) must agree —
 the test checks it. Elements with a `display` rule need an explicit
 `[hidden] { display: none }` or the `hidden` attribute does nothing (bit twice).
+
+`public/sw.js` makes the site work offline. App files are network-first (so
+deploys show up immediately online); MapTiler tiles are cache-first. A new
+`js/*.js` module must be added to `SHELL_FILES` in `sw.js` — `check.mjs` fails
+if it isn't. Bump `CACHE_VERSION` only to throw away everyone's saved caches.
+When testing locally, a stale service worker can serve old code: DevTools →
+Application → Service workers → Unregister, or use a private window.
 
 ## Things that bite
 
