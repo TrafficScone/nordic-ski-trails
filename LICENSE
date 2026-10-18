@@ -19,3 +19,16 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+This license covers the source code only. It does not cover:
+
+- Logos and trademarks: the Boulder Nordic Club logo (public/icons/bnc-mark.png,
+  tools/bnc-mark.svg), the Eldora logo (public/icons/eldora-mark.png) and the
+  Boulder Nordic & Cycle Sport logos (public/icons/bns-logo.png,
+  public/icons/bns-mark.png). They belong to their respective owners and are
+  not licensed for reuse; remove or replace them in any fork.
+- Trail data derived from OpenStreetMap (public/trails/osm.geojson), which is
+  © OpenStreetMap contributors and available under the Open Database License
+  (ODbL), https://opendatacommons.org/licenses/odbl/.
