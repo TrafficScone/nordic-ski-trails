@@ -11,8 +11,8 @@
 // ---------------------------------------------------------------------------
 
 import { basemapStyle } from './basemap.js';
-import { DEFAULT_VIEW, DEM_TILES, FALLBACK_COLOR, HOME_AREA, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
-import { HIT_LAYERS, PARTNER_LAYERS, TRAIL_MINZOOM, homeLayers, partnerLayers, selectionGlowLayers, selectionMarkerLayers, trailLayers, trailOpacity } from './layers.js';
+import { DEFAULT_VIEW, DEM_TILES, FALLBACK_COLOR, AREA_MARKS, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
+import { HIT_LAYERS, PARTNER_LAYERS, TRAIL_MINZOOM, areaMarkLayers, partnerLayers, selectionGlowLayers, selectionMarkerLayers, trailLayers, trailOpacity } from './layers.js';
 import { conditionLinksFor } from './conditions.js';
 import { icon, iconForUrl } from './icons.js';
 import { liveConditions } from './live-conditions.js';
@@ -73,7 +73,7 @@ map.on('load', async () => {
   for (const layer of selectionGlowLayers(SEL)) map.addLayer(layer, 'trail-casing');
   for (const layer of selectionMarkerLayers(SEL)) map.addLayer(layer);
   addPartners();
-  addHome(fc.features);
+  addAreaMarks(fc.features);
 
   assignAreas(fc.features);
   groups = groupFeatures(fc.features);
@@ -340,34 +340,39 @@ function swatches(g) {
   return box;
 }
 
-/** Layers a click opens a popup from; the home mark exists only if HOME_AREA does. */
-const clickLayers = () => (map.getLayer('home-mark') ? ['home-mark', ...HIT_LAYERS] : HIT_LAYERS);
+/** Layers a click opens a popup from; area marks exist only if their areas do. */
+const clickLayers = () => (map.getLayer('area-mark') ? ['area-mark', ...HIT_LAYERS] : HIT_LAYERS);
 
-/** The club's home area: its mark and name, at every zoom. */
-async function addHome(features) {
-  const area = features.find((f) => f.properties._group === `area:${HOME_AREA}`);
-  if (!area) return;
-  area.properties._home = true;
-  map.getSource(SRC).setData({ type: 'FeatureCollection', features });
-  try {
-    const { data } = await map.loadImage('icons/bnc-mark.png');
-    map.addImage('bnc-mark', data, { pixelRatio: 2 });
-  } catch (err) {
-    console.error('BNC mark:', err);
-  }
-  const [[x0, y0], [x1, y1]] = bboxOf([area]);
-  map.addSource('home', {
-    type: 'geojson',
-    data: { type: 'FeatureCollection', features: [{
+/** Logos for the areas in AREA_MARKS: mark and name at every zoom, own colour. */
+async function addAreaMarks(features) {
+  const points = [];
+  for (const [name, spec] of Object.entries(AREA_MARKS)) {
+    const area = features.find((f) => f.properties._group === `area:${name}`);
+    if (!area) continue;
+    const id = `area-mark-${name}`;
+    try {
+      const { data } = await map.loadImage(spec.mark);
+      map.addImage(id, data, { pixelRatio: 2 });
+    } catch (err) {
+      console.error(`Area mark ${spec.mark}:`, err);
+      continue;
+    }
+    area.properties._mark = true;
+    if (spec.color) area.properties._color = spec.color;
+    const [[x0, y0], [x1, y1]] = bboxOf([area]);
+    points.push({
       type: 'Feature',
       geometry: { type: 'Point', coordinates: [(x0 + x1) / 2, (y0 + y1) / 2] },
-      properties: { name: HOME_AREA, _group: area.properties._group },
-    }] },
-  });
-  // Under the trail labels and markers, so names along the loops stay readable.
-  for (const layer of homeLayers('home')) map.addLayer(layer, 'trail-label');
-  map.on('mouseenter', 'home-mark', () => { map.getCanvas().style.cursor = 'pointer'; });
-  map.on('mouseleave', 'home-mark', () => { map.getCanvas().style.cursor = ''; });
+      properties: { name, mark: id, _group: area.properties._group },
+    });
+  }
+  map.getSource(SRC).setData({ type: 'FeatureCollection', features });
+  map.addSource('area-marks', { type: 'geojson', data: { type: 'FeatureCollection', features: points } });
+  // On top: symbol layers higher up are placed first, so every other label
+  // gives way to these.
+  for (const layer of areaMarkLayers('area-marks')) map.addLayer(layer);
+  map.on('mouseenter', 'area-mark', () => { map.getCanvas().style.cursor = 'pointer'; });
+  map.on('mouseleave', 'area-mark', () => { map.getCanvas().style.cursor = ''; });
 }
 
 /** Club supporters: their mark on the map (drawn above the trails). */

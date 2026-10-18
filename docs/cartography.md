@@ -179,12 +179,14 @@ Sources: [Ordnance Survey — text on maps][os-text];
 - **Zones first.** Below zoom 10.5 the map shows only the areas — tinted,
   outlined and labelled — as an overview of where to ski; trails and places
   appear as you zoom in, and opening a trail never lands below that zoom.
-- **Home area.** North Boulder Park (`HOME_AREA` in `config.js`) is the club's
-  main area but a speck at regional scale, so it gets the BNC snowflake mark
-  and its name, exempt from label collisions, at every zoom. From z13 the
-  name drops and the mark shrinks among the loops, whose own labels take over.
+- **Area logos.** North Boulder Park is the club's main area but a speck at
+  regional scale; Eldora is the one resort. Both get their logo (the BNC
+  snowflake; Eldora's tree) beside their name at every zoom — other labels
+  give way to them — and their area tint takes the logo colour (BNC blue
+  `#005daa`, Eldora orange `#e75300`). From z13 the name drops and the logo
+  shrinks among the trails. Set in `AREA_MARKS` in `config.js`.
 - **Club supporters** (`partners.js`) show their own mark from z11, kept
-  further in so it never crowds the home mark.
+  further in so it never crowds the North Boulder Park logo.
 - **The selected trail** gets a white halo with a navy edge, and the other
   trails fade to 30 %. The halo avoids yellow/orange/red/purple (slope
   shading) and green/blue/black (difficulty). Navy **S** and **E** markers sit

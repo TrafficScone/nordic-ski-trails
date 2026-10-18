@@ -49,6 +49,11 @@ export const FALLBACK_COLOR = '#0f6fd1';
 
 export const UNITS = 'mi'; // 'mi' | 'km'
 
-// The club's home area (a CalTopo polygon title): always on the map, at every
-// zoom, with the club's mark beside its name.
-export const HOME_AREA = 'North Boulder Park';
+// Areas with their own logo, drawn beside the area's name at every zoom
+// (never hidden by other labels) and smaller among the trails close in.
+// `color` replaces the CalTopo colour of the area's tint and outline.
+// North Boulder Park is the club's home area; Eldora uses the resort's mark.
+export const AREA_MARKS = {
+  'North Boulder Park': { mark: 'icons/bnc-mark.png', color: '#005daa' },
+  Eldora: { mark: 'icons/eldora-mark.png', color: '#e75300' },
+};
