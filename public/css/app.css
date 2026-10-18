@@ -217,3 +217,10 @@ button { font: inherit; color: inherit; }
 .partner-info dt { color: #6b737c; }
 .partner-info dd { margin: 0; }
 .partner-info a { color: var(--brand); }
+
+/* ---------- coordinates under the mouse ---------- */
+.coords {
+  padding: 3px 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.85);
+  font: 12px/1.4 var(--font); font-variant-numeric: tabular-nums; color: var(--ink);
+}
+.coords[hidden] { display: none; }

@@ -51,6 +51,18 @@ map.addControl(new maplibregl.GeolocateControl({ trackUserLocation: true }), 'to
 map.addControl(new maplibregl.FullscreenControl(), 'top-right');
 map.addControl(new maplibregl.ScaleControl({ unit: UNITS === 'mi' ? 'imperial' : 'metric' }), 'bottom-right');
 
+// Latitude/longitude under the mouse (decimal degrees, ~1 m precision).
+// Touch screens have no hover, so it only appears once a mouse moves.
+const coords = document.createElement('div');
+coords.className = 'maplibregl-ctrl coords';
+coords.hidden = true;
+map.addControl({ onAdd: () => coords, onRemove: () => {} }, 'bottom-left');
+map.on('mousemove', (e) => {
+  coords.hidden = false;
+  coords.textContent = `${e.lngLat.lat.toFixed(5)}, ${e.lngLat.lng.toFixed(5)}`;
+});
+map.getCanvas().addEventListener?.('mouseleave', () => { coords.hidden = true; });
+
 const popup = new maplibregl.Popup({ offset: 10, maxWidth: '320px' });
 popup.on('close', () => {
   if (switchingPopup) return;

@@ -35,7 +35,7 @@ class FakeMap {
     for (const layer of opts.style?.layers ?? []) this.addLayer(structuredClone(layer));
   }
   on(type, a, b) { this.handlers.push(b ? { type, layer: a, fn: b } : { type, fn: a }); }
-  addControl() {}
+  addControl(c) { const el = c.onAdd?.(this); if (el?.nodeType) globalThis.document.body.append(el); }
   addSource(id, spec) { this.sources.set(id, { ...spec, setData(d) { this.data = d; } }); }
   getSource(id) { return this.sources.get(id); }
   addLayer(spec) { this.layers.set(spec.id, spec); }
@@ -191,6 +191,10 @@ check('North Boulder Park and Eldora carry their logos', marked.join() === 'Eldo
   && map.getSource('area-marks')?.data.features.length === 2);
 check('marked areas take their logo colour',
   fc.features.find((f) => f.properties._group === 'area:Eldora').properties._color === '#e75300');
+
+// Coordinates follow the mouse.
+await map.fire('mousemove', { lngLat: { lng: -105.2864656, lat: 40.027619 } });
+check('mouse position shows as lat, lon', document.querySelector('.coords')?.textContent === '40.02762, -105.28647');
 
 // Club supporters: their mark is on the map and opens their own card.
 await new Promise((r) => setTimeout(r, 0));
