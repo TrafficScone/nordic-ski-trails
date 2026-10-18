@@ -48,7 +48,11 @@ class FakeMap {
   fitBounds(bb) { this.fitted = bb; }
   cameraForBounds(bb) { return { center: [(bb[0][0] + bb[1][0]) / 2, (bb[0][1] + bb[1][1]) / 2], zoom: 10 }; }
   easeTo(cam) { this.eased = cam; this.fitted = this.fitted ?? cam.center; }
-  queryRenderedFeatures() { return this.queryResult; }
+  queryRenderedFeatures(point, { layers = [] } = {}) {
+    return layers.includes('partner-icon') ? this.partnerResult ?? [] : this.queryResult;
+  }
+  async loadImage(url) { return { data: { url } }; }
+  addImage(id) { (this.images ??= new Set()).add(id); }
   async fire(type, event = {}) {
     for (const h of this.handlers.filter((x) => x.type === type && !x.layer)) await h.fn(event);
   }
@@ -179,6 +183,16 @@ map.queryResult = [withRef];
 await map.fire('click', { point: { x: 1, y: 1 }, lngLat: { lng: 0, lat: 0 } });
 check('agency ref sits at the very bottom of the popup',
   popupContent.lastElementChild?.className === 'pop-ref' && popupContent.lastElementChild.textContent.includes(withRef.properties.ref));
+
+// Club supporters: their mark is on the map and opens their own card.
+await new Promise((r) => setTimeout(r, 0));
+check('partner mark is loaded and drawn', map.images?.has('partner-boulder-nordic-sport') && !!map.getLayer('partner-icon'));
+map.partnerResult = [{ properties: { id: 'boulder-nordic-sport' } }];
+await map.fire('click', { point: { x: 1, y: 1 }, lngLat: { lng: 0, lat: 0 } });
+map.partnerResult = [];
+check('partner popup shows logo, address and website',
+  !!popupContent.querySelector('img.partner-logo') && /Valmont/.test(popupContent.textContent)
+  && !!popupContent.querySelector('a[href^="https://www.bouldernordic.com"]'));
 // Trails outside every area go in a collapsible "Other trails & places"
 // section like the areas — so no list row should sit loose in the list.
 check('every list row is inside a collapsible section',

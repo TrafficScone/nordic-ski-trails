@@ -70,7 +70,27 @@
       "include": [
         "nordic",
         "paths"
-      ]
+      ],
+      "exclude": [
+        "Ranch Access",
+        "Observatory Spur",
+        "Rollinsville Spur",
+        "Tennessee Mountain",
+        "YMCA Camp",
+        "Clear Cut Trail",
+        "North Observatory Spur Trail",
+        "Re-Root",
+        "Sam's Club",
+        "Sugar Magnolia"
+      ],
+      "colors": {
+        "Buckeye Mountain Road": "green",
+        "Forest Service Camp Road": "green",
+        "FS 512.1A": "green",
+        "Los Logos": "green",
+        "Rollinsville": "green",
+        "South Tennessee Mountain Spur": "green"
+      }
     },
     "Eldora": {
       "exclude": [

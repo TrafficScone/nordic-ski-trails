@@ -12,12 +12,13 @@
 
 import { basemapStyle } from './basemap.js';
 import { DEFAULT_VIEW, DEM_TILES, FALLBACK_COLOR, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
-import { HIT_LAYERS, TRAIL_MINZOOM, selectionGlowLayers, selectionMarkerLayers, trailLayers, trailOpacity } from './layers.js';
+import { HIT_LAYERS, PARTNER_LAYERS, TRAIL_MINZOOM, partnerLayers, selectionGlowLayers, selectionMarkerLayers, trailLayers, trailOpacity } from './layers.js';
 import { conditionLinksFor } from './conditions.js';
 import { icon, iconForUrl } from './icons.js';
 import { liveConditions } from './live-conditions.js';
 import { defaultFilterState, difficultyOf, lineFilter, matchesFilter, renderFilters, renderLegend } from './filters.js';
 import { downloadGpx } from './gpx.js';
+import { PARTNERS, partnerPopup, partnersGeoJSON } from './partners.js';
 import { profileOf, profileSvg } from './profile.js';
 import { clearHash, findGroup, parseHash, setHash, shareLink } from './share.js';
 import { SLOPE_CLASSES, registerSlopeProtocol } from './slope.js';
@@ -71,6 +72,7 @@ map.on('load', async () => {
   for (const layer of trailLayers(SRC)) map.addLayer(layer);
   for (const layer of selectionGlowLayers(SEL)) map.addLayer(layer, 'trail-casing');
   for (const layer of selectionMarkerLayers(SEL)) map.addLayer(layer);
+  addPartners();
 
   assignAreas(fc.features);
   groups = groupFeatures(fc.features);
@@ -94,10 +96,12 @@ map.on('load', async () => {
   });
 
   map.on('click', (e) => {
+    const [partner] = map.queryRenderedFeatures(e.point, { layers: PARTNER_LAYERS });
+    if (partner) return showPartner(partner.properties.id);
     const [hit] = map.queryRenderedFeatures(e.point, { layers: HIT_LAYERS });
     if (hit) showPopup(groups.get(hit.properties._group), e.lngLat);
   });
-  for (const id of HIT_LAYERS) {
+  for (const id of [...HIT_LAYERS, ...PARTNER_LAYERS]) {
     map.on('mouseenter', id, () => { map.getCanvas().style.cursor = 'pointer'; });
     map.on('mouseleave', id, () => { map.getCanvas().style.cursor = ''; });
   }
@@ -330,6 +334,29 @@ function swatches(g) {
     box.append(chip);
   }
   return box;
+}
+
+/** Club supporters: their mark on the map (drawn above the trails). */
+async function addPartners() {
+  await Promise.all(PARTNERS.map(async (p) => {
+    try {
+      const { data } = await map.loadImage(p.mark);
+      map.addImage(`partner-${p.id}`, data, { pixelRatio: 2 });
+    } catch (err) {
+      console.error(`Partner mark ${p.mark}:`, err);
+    }
+  }));
+  map.addSource('partners', { type: 'geojson', data: partnersGeoJSON() });
+  for (const layer of partnerLayers('partners')) map.addLayer(layer);
+}
+
+function showPartner(id) {
+  const p = PARTNERS.find((x) => x.id === id);
+  if (!p) return;
+  switchingPopup = true;
+  popup.setLngLat(p.lngLat).setDOMContent(partnerPopup(document, p)).addTo(map);
+  switchingPopup = false;
+  select(null);
 }
 
 function showPopup(g, lngLat) {

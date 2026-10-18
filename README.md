@@ -192,6 +192,7 @@ public/                 ← the only folder Netlify deploys
   js/gpx.js             GPX export
   js/share.js           shareable #kind/slug links
   js/live-conditions.js live avalanche / weather / snow readings
+  js/partners.js        club supporters on the map (Boulder Nordic Sport): details, logo
   js/icons.js           conditions card icons
   sw.js                 service worker: offline app + saved map tiles
   manifest.webmanifest  home-screen install (icons/ from tools/make_icons.py)

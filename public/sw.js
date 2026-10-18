@@ -45,10 +45,13 @@ const SHELL_FILES = [
   'js/icons.js',
   'js/layers.js',
   'js/live-conditions.js',
+  'js/partners.js',
   'js/profile.js',
   'js/share.js',
   'js/slope.js',
   'manifest.webmanifest',
+  'icons/bns-logo.png',
+  'icons/bns-mark.png',
 ];
 
 /** Trail file list; the files it names are precached too. */

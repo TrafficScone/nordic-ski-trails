@@ -223,3 +223,22 @@ export function trailOpacity(selectedGroup = '') {
   if (!selectedGroup) return ['get', '_opacity'];
   return ['case', ['==', ['get', '_group'], selectedGroup], ['get', '_opacity'], 0.3];
 }
+
+/**
+ * Club supporters (partners.js): the business's own square mark, at every
+ * zoom since they sit in town, away from the ski areas. Name from z11.
+ */
+export const PARTNER_LAYERS = ['partner-icon'];
+export function partnerLayers(source) {
+  return [
+    {
+      id: 'partner-icon', type: 'symbol', source,
+      layout: {
+        'icon-image': ['get', 'mark'], 'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 0.8, 14, 1.1], 'icon-allow-overlap': true,
+        'text-field': ['step', ['zoom'], '', 11, ['get', 'name']], 'text-font': LABEL_FONT, 'text-size': 12,
+        'text-anchor': 'top', 'text-offset': [0, 1.3], 'text-optional': true,
+      },
+      paint: { 'text-color': '#222222', 'text-halo-color': '#ffffff', 'text-halo-width': 1.6 },
+    },
+  ];
+}
