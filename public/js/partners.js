@@ -33,6 +33,7 @@ export const NORDIC_CENTERS = {
     address: '2861 Eldora Ski Road, Nederland, CO 80466',
     phones: [['303-440-8700', '+13034408700']],
     url: 'https://www.eldora.com/activities-amenities/nordic-center/',
+    logo: 'icons/eldora-logo.png',
   },
   "Devil's Thumb Ranch": {
     address: '3530 County Road 83, Tabernash, CO 80478',

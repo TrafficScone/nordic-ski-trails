@@ -53,7 +53,7 @@ const SHELL_FILES = [
   'icons/bnc-mark.png',
   'icons/bns-logo.png',
   'icons/bns-mark.png',
-  'icons/eldora-mark.png', 'icons/dtr-mark.png', 'icons/smr-mark.png', 'icons/dtr-logo.png', 'icons/smr-logo.png',
+  'icons/eldora-mark.png', 'icons/dtr-mark.png', 'icons/smr-mark.png', 'icons/eldora-logo.png', 'icons/dtr-logo.png', 'icons/smr-logo.png',
 ];
 
 /** Trail file list; the files it names are precached too. */
