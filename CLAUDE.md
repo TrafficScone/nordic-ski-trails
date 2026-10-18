@@ -16,6 +16,13 @@ server. It must be served over HTTP; ES modules and `fetch` are blocked on
 `file://`. Use `netlify dev --offline` (port 8888) only when you need to verify
 `netlify.toml` headers/redirects.
 
+## Branches and deploys
+
+Work on `dev`; pushing it is free (a Netlify branch deploy at
+dev--bncmap.netlify.app). `main` is the live site and every push to it costs
+Netlify credits, so never push or merge to `main` unless the user explicitly
+asks for a production release.
+
 ## Trail data
 
 CalTopo exports go in `public/trails/`. A static site can't list a folder, so

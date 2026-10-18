@@ -149,6 +149,19 @@ Dev dependencies install once with `npm install --prefix tools`.
 Connect the repo and accept the defaults — `netlify.toml` publishes `public/`
 and runs the index script. Only `public/` is deployed.
 
+### Branches: `dev` for work, `main` for the live site
+
+Netlify's free plan charges 15 credits per production deploy (every push to
+`main`) out of 300 a month, and pauses the site when they run out. Branch
+deploys are free. So:
+
+- Work lands on **`dev`**. Each push to it updates the preview at
+  https://dev--bncmap.netlify.app (free). The MapTiler key must allow that
+  origin too.
+- **`main` is production.** Merge `dev` into it only to release
+  (`git checkout main && git merge --ff-only dev && git push`), batching changes.
+- A commit message containing `[skip netlify]` doesn't build at all.
+
 ### The MapTiler key
 
 The key is never committed. `public/js/config.js` holds the placeholder
