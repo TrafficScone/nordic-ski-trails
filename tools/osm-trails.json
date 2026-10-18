@@ -1,6 +1,6 @@
 {
   "areas": {
-    "Brainard Lake Area": {
+    "Brainard Lake": {
       "grooming": "ungroomed",
       "exclude": [
         "Pawnee Campground Loop B - Tent Camp",
@@ -54,7 +54,7 @@
         "paths"
       ]
     },
-    "Hessie Trail Area": {
+    "Hessie/Lost Lake": {
       "exclude": [
         "4th of July Road"
       ],
@@ -65,7 +65,7 @@
         "King Lake": "black"
       }
     },
-    "West Magnolia Trails": {
+    "West Magnolia": {
       "grooming": "ungroomed",
       "include": [
         "nordic",
@@ -104,7 +104,7 @@
   "trails": [
     {
       "name": "CMC Ski Trail",
-      "area": "Brainard Lake Area",
+      "area": "Brainard Lake",
       "ways": [
         45048952
       ],

@@ -22,12 +22,12 @@ export const AREA_LINKS = {
   'Eldora': [
     { label: 'Eldora Nordic grooming & trail report', url: 'https://www.eldora.com/activities-amenities/nordic-center/trail-map-conditions/' },
   ],
-  'Brainard Lake Area': [
+  'Brainard Lake': [
     { label: 'Brainard Lake road & winter access (USFS)', url: 'https://www.fs.usda.gov/r02/arp/conditions', note: 'Arapaho & Roosevelt NF current conditions' },
     { label: 'Brainard Lake Recreation Area (USFS)', url: 'https://www.fs.usda.gov/r02/arp/recreation/brainard-lake-recreation-area' },
     { label: 'CMC Brainard Cabin', url: 'https://www.cmcboulder.org/brainard-cabin', note: 'Colorado Mountain Club, Boulder Group' },
   ],
-  'West Magnolia Trails': [
+  'West Magnolia': [
     { label: 'West Magnolia Trailhead (USFS)', url: 'https://www.fs.usda.gov/r02/arp/recreation/west-magnolia-trailhead', note: 'Boulder Ranger District' },
   ],
 };

@@ -40,7 +40,7 @@ const nws = trail.find((l) => l.label.includes('NWS'));
 check(nws && nws.url.endsWith('lat=39.9370&lon=-105.5830'), `NWS url has 4-decimal lat/lon (${nws && nws.url})`);
 
 console.log('\nShape');
-for (const [area, label] of [['Eldora', 'Eldora'], ['Brainard Lake Area', 'Brainard'], ['West Magnolia Trails', 'West Mag']]) {
+for (const [area, label] of [['Eldora', 'Eldora'], ['Brainard Lake', 'Brainard'], ['West Magnolia', 'West Mag']]) {
   const ls = conditionLinksFor({ name: 'x', kind: 'trail', area }, [-105.55, 39.99]);
   check(ls.length <= 5, `${label}: at most 5 links (${ls.length})`);
   check(ls.every((l) => l.label && /^https:\/\//.test(l.url)), `${label}: every link has label and https url`);
