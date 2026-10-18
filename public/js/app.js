@@ -103,6 +103,9 @@ map.on('load', async () => {
   }
 });
 
+// Phones get the map: the list and the key start tucked away.
+const SMALL_SCREEN = window.matchMedia('(max-width: 640px)');
+if (SMALL_SCREEN.matches) $('#panel').classList.add('is-collapsed');
 $('#btn-list').onclick = () => $('#panel').classList.toggle('is-collapsed');
 $('#slope-toggle').onchange = (e) => {
   map.setLayoutProperty('slope', 'visibility', e.target.checked ? 'visible' : 'none');
@@ -112,15 +115,16 @@ $('#slope-toggle').onchange = (e) => {
 /**
  * The map key floats bottom-right as a MapLibre control, so it stacks above
  * the scale bar and attribution. It starts open; "Hide" collapses it to a
- * small button, remembered per browser.
+ * small button, remembered per browser. On a phone it always starts hidden.
  */
 function setupKey() {
   const KEY = 'bnc-key-hidden';
   const box = $('#key');
   const reopen = $('#key-show');
-  const setHidden = (hidden) => {
+  const setHidden = (hidden, remember = true) => {
     box.hidden = hidden;
     reopen.hidden = !hidden;
+    if (!remember) return;
     try { localStorage.setItem(KEY, hidden ? '1' : ''); } catch { /* private mode */ }
   };
   map.addControl({
@@ -134,13 +138,16 @@ function setupKey() {
   }, 'bottom-right');
   $('#key-hide').onclick = () => setHidden(true);
   reopen.onclick = () => setHidden(false);
-  let hidden = false;
-  try { hidden = localStorage.getItem(KEY) === '1'; } catch { /* private mode */ }
-  setHidden(hidden);
+  let hidden = SMALL_SCREEN.matches;
+  try { hidden ||= localStorage.getItem(KEY) === '1'; } catch { /* private mode */ }
+  setHidden(hidden, false);
 }
 
 /** @type {Map<string, {name: string, kind: 'trail'|'place'|'area', area: string, features: object[], length: number}>} */
 let groups = new Map();
+
+/** Area-wide grooming / needs_snow from the OSM sync (osm.geojson "areas"). */
+const areaSettings = {};
 
 // ===========================================================================
 // Data
@@ -157,6 +164,7 @@ async function loadTrails() {
     })));
     for (const fc of collections) {
       for (const f of fc.features ?? []) if (f.geometry) features.push(styled(f));
+      Object.assign(areaSettings, fc.areas);
     }
   } catch (err) {
     console.error('Could not load trails/index.json:', err);
@@ -226,6 +234,13 @@ function assignAreas(features) {
     const home = areas.find((a) => inPolygon(probe, a.geometry));
     if (home) f.properties._area = home.properties._area;
   }
+  // The sync's area settings cover CalTopo lines drawn in that area too.
+  for (const { properties: p } of features) {
+    const area = areaSettings[p._area];
+    if (!area || !p._group.startsWith('trail:')) continue;
+    if (p._grooming === 'unknown' && area.grooming) p._grooming = area.grooming;
+    if (area.needs_snow) p._dashed = true;
+  }
 }
 
 /** Collect sections that share a name into one trail (or place, or area). */
@@ -294,7 +309,7 @@ function focus(g, { animate = true } = {}) {
     map.easeTo({ center: cam.center, zoom, duration });
   }
   showPopup(g, g.kind === 'area' ? [(bb[0][0] + bb[1][0]) / 2, bb[1][1]] : centerOf(g.features[0].geometry));
-  if (window.matchMedia('(max-width: 640px)').matches) $('#panel').classList.add('is-collapsed');
+  if (SMALL_SCREEN.matches) $('#panel').classList.add('is-collapsed');
 }
 
 function listItem(g) {

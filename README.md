@@ -109,7 +109,7 @@ polygon's CalTopo title, so it survives every re-export:
 
 On the map, **solid** = groomed or unknown, **white centre stripe** = ungroomed,
 **dashed** = needs heavy recent snowfall (a dashed CalTopo line means the same).
-Zoomed out (below zoom 11.5, `TRAIL_MINZOOM` in `layers.js`) only the areas show;
+Zoomed out (below zoom 10.5, `TRAIL_MINZOOM` in `layers.js`) only the areas show;
 trails, places and their labels appear as you zoom in.
 
 An OSM trail with the same name as a CalTopo line is skipped automatically —

@@ -17,8 +17,13 @@ tools/osm-trails.json refines that, keyed by the polygon's CalTopo title:
       "color":   "blue",                         when OSM has no difficulty
       "notes":   {"Jenny Creek": "Dogs allowed"} extra description text
       "grooming": "ungroomed",                   override OSM for the whole area
-      "needs_snow": true                         only skiable after heavy recent
-    }                                              snowfall: drawn dashed
+      "needs_snow": true,                        only skiable after heavy recent
+                                                   snowfall: drawn dashed
+      "splits": {"Pawnee Pass Trail":            colour a trail in sections, cut
+        {"at": "Jean Lunning Trail",             where it last meets another trail
+         "from": "east",                         counting from this end
+         "colors": ["blue", "black"]}}
+    }
   },
   "trails": [ … ]   exact OSM way lists, optionally in coloured sections; give
                     one an "area" to file it there and inherit the area's
@@ -284,6 +289,23 @@ def feature(title, lines, *, color, description, ways, width=DEFAULT_WIDTH, patt
 
 # -- areas ------------------------------------------------------------------
 
+def split_line(lines, points: set, start: str):
+    """Cut a single line in two where it last touches `points` (shared OSM
+    nodes), counting from its `start` end ("north", "south", "east", "west").
+    Returns [before, after], or None if it isn't one line or never touches."""
+    if len(lines) != 1:
+        return None
+    line = lines[0]
+    axis, sign = {"east": (0, 1), "west": (0, -1), "north": (1, 1), "south": (1, -1)}[start]
+    if (line[0][axis] - line[-1][axis]) * sign < 0:
+        line = line[::-1]
+    hits = [i for i, c in enumerate(line) if tuple(c) in points and 0 < i < len(line) - 1]
+    if not hits:
+        return None
+    i = hits[-1]
+    return [line[:i + 1], line[i:]]
+
+
 def sync_area(area_name: str, polygons: list, area: dict, curated: set[str] = frozenset()) -> list[dict]:
     include = area.get("include", DEFAULT_INCLUDE)
     unknown = [k for k in include if k not in INCLUDE]
@@ -310,6 +332,7 @@ def sync_area(area_name: str, polygons: list, area: dict, curated: set[str] = fr
     exclude_ids = {n for n in area.get("exclude", []) if isinstance(n, int)}
     colors = {name_key(k): v for k, v in area.get("colors", {}).items()}
     notes = {name_key(k): v for k, v in area.get("notes", {}).items()}
+    splits = {name_key(k): v for k, v in area.get("splits", {}).items()}
 
     groups: dict[str, dict] = {}
     skipped = skipped_short = 0
@@ -353,12 +376,23 @@ def sync_area(area_name: str, polygons: list, area: dict, curated: set[str] = fr
             skipped_short += 1
             continue
         description = "\n\n".join(t for t in (notes.get(key, ""), describe(g["tags"])) if t)
-        f = feature(title, lines, color=color, description=description, ways=g["ways"],
-                    # Dashed is reserved for "needs heavy recent snowfall".
-                    pattern="dash" if area.get("needs_snow") else "solid",
-                    grooming=grooming_of(g["tags"], area), ref=g["tags"].get("ref", ""))
-        f["properties"]["area"] = area_name
-        features.append(f)
+        sections = [(title, lines, color)]
+        split = splits.get(key)
+        if split:
+            at = groups.get(name_key(split["at"]))
+            cut = split_line(lines, {tuple(c) for p in (at or {}).get("pieces", []) for c in p["coords"]},
+                             split.get("from", "east")) if at else None
+            if cut:
+                sections = [(f"{title}_{n}", [part], c) for n, (part, c) in enumerate(zip(cut, split["colors"]), 1)]
+            else:
+                print(f"  ! {area_name}: can't split {title} at {split['at']} — they don't meet")
+        for section_title, section_lines, section_color in sections:
+            f = feature(section_title, section_lines, color=section_color, description=description, ways=g["ways"],
+                        # Dashed is reserved for "needs heavy recent snowfall".
+                        pattern="dash" if area.get("needs_snow") else "solid",
+                        grooming=grooming_of(g["tags"], area), ref=g["tags"].get("ref", ""))
+            f["properties"]["area"] = area_name
+            features.append(f)
         miles = sum(length_m(c) for c in lines) / 1609.344
         print(f"    {title}: {miles:.1f} mi ({len(g['ways'])} ways)")
     note = f", {skipped} unnamed ways skipped" if skipped else ""
@@ -431,6 +465,11 @@ def other_trail_names() -> set[str]:
     return names
 
 
+def area_settings(config: dict) -> dict:
+    return {name: {k: a[k] for k in ("grooming", "needs_snow") if k in a}
+            for name, a in sorted(config.items()) if "grooming" in a or "needs_snow" in a}
+
+
 def main() -> int:
     try:
         manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
@@ -457,6 +496,8 @@ def main() -> int:
     OUTPUT.write_text(json.dumps({
         "type": "FeatureCollection",
         "attribution": "© OpenStreetMap contributors, ODbL",
+        # Area-wide settings, so the app can apply them to CalTopo lines too.
+        "areas": area_settings(config),
         "features": features,
     }, indent=1) + "\n", encoding="utf-8")
     print(f"wrote {OUTPUT.relative_to(ROOT)} ({len(features)} trails)")

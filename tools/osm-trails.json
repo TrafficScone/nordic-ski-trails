@@ -26,25 +26,43 @@
         "Long Lake Road": "green",
         "Mitchell Lake Road": "green",
         "Mitchell Lake Trail": "blue",
-        "Beaver Creek Trail": "blue",
-        "Pawnee Pass Trail": "blue"
+        "Beaver Creek Trail": "blue"
+      },
+      "splits": {
+        "Pawnee Pass Trail": {
+          "at": "Jean Lunning Trail",
+          "from": "east",
+          "colors": [
+            "blue",
+            "black"
+          ]
+        }
       }
     },
     "Caribou Ranch": {
-      "needs_snow": true
+      "needs_snow": true,
+      "grooming": "ungroomed"
     },
     "North Boulder Park": {
       "needs_snow": true
     },
     "Hessie Trail Area": {
-      "exclude": ["4th of July Road"]
+      "exclude": [
+        "4th of July Road"
+      ],
+      "grooming": "ungroomed"
+    },
+    "West Magnolia Trails": {
+      "grooming": "ungroomed"
     }
   },
   "trails": [
     {
       "name": "CMC Ski Trail",
       "area": "Brainard Lake Area",
-      "ways": [45048952],
+      "ways": [
+        45048952
+      ],
       "color": "blue"
     }
   ]

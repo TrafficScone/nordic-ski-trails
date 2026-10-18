@@ -1,6 +1,24 @@
 {
  "type": "FeatureCollection",
  "attribution": "\u00a9 OpenStreetMap contributors, ODbL",
+ "areas": {
+  "Brainard Lake Area": {
+   "grooming": "ungroomed"
+  },
+  "Caribou Ranch": {
+   "grooming": "ungroomed",
+   "needs_snow": true
+  },
+  "Hessie Trail Area": {
+   "grooming": "ungroomed"
+  },
+  "North Boulder Park": {
+   "needs_snow": true
+  },
+  "West Magnolia Trails": {
+   "grooming": "ungroomed"
+  }
+ },
  "features": [
   {
    "type": "Feature",
@@ -10181,7 +10199,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 926B",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -10730,7 +10748,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 512.1",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -10927,7 +10945,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 342",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -11011,7 +11029,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FR 355.1I",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -11183,7 +11201,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 105.1",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -11255,7 +11273,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -11391,7 +11409,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 342",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -11684,7 +11702,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "CR 132W",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -14024,7 +14042,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 355.1G",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -14340,7 +14358,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 355.1G",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -14733,7 +14751,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 355.1H",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -14801,7 +14819,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -15235,7 +15253,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -15747,7 +15765,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 926 E",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -15927,7 +15945,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 429.1",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -16275,7 +16293,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 355.1I",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -17723,7 +17741,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -17869,7 +17887,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FR 342.1B",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -18057,7 +18075,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 926.1D",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -18734,7 +18752,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FR 355.1A",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -18867,7 +18885,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 355.1E",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -19191,7 +19209,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -19431,7 +19449,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -20568,7 +20586,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 927.1",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -21426,7 +21444,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 355.1I",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -22264,7 +22282,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 105.1",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -22688,7 +22706,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 105.1",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -22776,7 +22794,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -24364,7 +24382,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 109.1A",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -24556,7 +24574,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -25032,7 +25050,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -25440,7 +25458,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -25960,7 +25978,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -26368,7 +26386,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -26456,7 +26474,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -26532,7 +26550,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -26616,7 +26634,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -26756,7 +26774,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -26984,7 +27002,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -27120,7 +27138,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 109.1B",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -27769,7 +27787,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 343.1",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -28209,7 +28227,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -28581,7 +28599,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 109.1",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -28725,7 +28743,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -29194,7 +29212,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 925",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -29366,7 +29384,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -37465,6 +37483,38 @@
      [
       -105.601351,
       40.0704476
+     ]
+    ]
+   },
+   "properties": {
+    "title": "Pawnee Pass Trail_1",
+    "description": "",
+    "class": "Shape",
+    "stroke": "#0000ff",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "pattern": "solid",
+    "grooming": "ungroomed",
+    "ref": "FS 907",
+    "source": "OpenStreetMap",
+    "osm_ways": [
+     51324388,
+     431562686,
+     431562689,
+     431562691,
+     431562693
+    ],
+    "area": "Brainard Lake Area"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -105.601351,
+      40.0704476
      ],
      [
       -105.6016949,
@@ -37953,10 +38003,10 @@
     ]
    },
    "properties": {
-    "title": "Pawnee Pass Trail",
+    "title": "Pawnee Pass Trail_2",
     "description": "",
     "class": "Shape",
-    "stroke": "#0000ff",
+    "stroke": "#000000",
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
@@ -41212,7 +41262,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 905",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -41572,7 +41622,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FR 904",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -41676,7 +41726,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 902.1",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -41796,7 +41846,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FR 902.1",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -43364,7 +43414,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 975",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -43775,7 +43825,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 901",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -44172,7 +44222,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 813",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -44244,7 +44294,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -44696,7 +44746,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "solid",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "FS 811",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -45781,7 +45831,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "dash",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -45989,7 +46039,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "dash",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -46146,7 +46196,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "dash",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [
@@ -46218,7 +46268,7 @@
     "stroke-width": 2,
     "stroke-opacity": 1,
     "pattern": "dash",
-    "grooming": "unknown",
+    "grooming": "ungroomed",
     "ref": "",
     "source": "OpenStreetMap",
     "osm_ways": [

@@ -171,7 +171,7 @@ Sources: [Ordnance Survey — text on maps][os-text];
   groomed (or not known); a white stripe down the centre = ungroomed; dashed =
   only skiable after heavy recent snowfall (Caribou Ranch, North Boulder Park).
   Dashed is reserved for that one meaning so it never has to be decoded.
-- **Zones first.** Below zoom 11.5 the map shows only the areas — tinted,
+- **Zones first.** Below zoom 10.5 the map shows only the areas — tinted,
   outlined and labelled — as an overview of where to ski; trails and places
   appear as you zoom in, and opening a trail never lands below that zoom.
 - **The selected trail** gets a white halo with a navy edge, and the other

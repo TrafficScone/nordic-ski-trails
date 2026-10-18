@@ -25,7 +25,7 @@ const STRIPE = ['interpolate', ['linear'], ['zoom'], 10, w(0.2, 0.2), 14, w(0.33
  * Zoomed out, the map shows only the areas (zones); trails, markers and their
  * labels appear from this zoom in. app.js also never flies to a trail below it.
  */
-export const TRAIL_MINZOOM = 11.5;
+export const TRAIL_MINZOOM = 10.5;
 const Z = { minzoom: TRAIL_MINZOOM };
 
 const IS_LINE = ['in', ['geometry-type'], ['literal', ['LineString', 'MultiLineString']]];

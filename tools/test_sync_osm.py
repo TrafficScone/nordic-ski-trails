@@ -5,7 +5,7 @@
 
 import unittest
 
-from sync_osm import clip_way, describe, in_polygon, name_key, stitch
+from sync_osm import area_settings, clip_way, describe, in_polygon, name_key, split_line, stitch
 
 SQUARE = [[[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]]]
 
@@ -46,6 +46,29 @@ class Naming(unittest.TestCase):
         self.assertEqual(describe({"piste:grooming": "classic+skating"}), "Groomed: classic and skate")
         self.assertEqual(describe({"piste:grooming": "classic;skating"}), "Groomed: classic and skate")
         self.assertEqual(describe({"piste:grooming": "backcountry"}), "Not groomed")
+
+
+class Split(unittest.TestCase):
+    # Runs west from x=10 to x=0, meeting the other trail at x=8 and x=3.
+    LINE = [[[10, 0], [8, 0], [5, 0], [3, 0], [0, 0]]]
+
+    def test_cuts_at_last_meeting_counted_from_start(self):
+        before, after = split_line(self.LINE, {(8, 0), (3, 0)}, "east")
+        self.assertEqual(before, [[10, 0], [8, 0], [5, 0], [3, 0]])
+        self.assertEqual(after, [[3, 0], [0, 0]])
+
+    def test_line_drawn_the_other_way_is_turned_round(self):
+        before, after = split_line([self.LINE[0][::-1]], {(8, 0), (3, 0)}, "east")
+        self.assertEqual(before[0], [10, 0])
+        self.assertEqual(after[-1], [0, 0])
+
+    def test_no_meeting_or_touching_only_an_end(self):
+        self.assertIsNone(split_line(self.LINE, {(42, 42)}, "east"))
+        self.assertIsNone(split_line(self.LINE, {(0, 0)}, "east"))
+
+    def test_area_settings_keep_only_grooming_and_snow(self):
+        config = {"A": {"grooming": "ungroomed", "colors": {}}, "B": {"exclude": []}, "C": {"needs_snow": True}}
+        self.assertEqual(area_settings(config), {"A": {"grooming": "ungroomed"}, "C": {"needs_snow": True}})
 
 
 if __name__ == "__main__":

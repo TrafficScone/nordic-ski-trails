@@ -159,7 +159,7 @@ check('climb stats shown (flat DEM: no gain)', /↑ 0 ft · ↓ 0 ft/.test(popup
 console.log('\nShare, GPX, conditions');
 // The boot URL was #trail/devils-thumb-trail; the load handler should have opened it.
 check('a shared link opens its trail on load', !!map.fitted && popupContent !== null);
-check('opening a trail never lands below the trail zoom', map.eased?.zoom >= 11.5, String(map.eased?.zoom));
+check('opening a trail never lands below the trail zoom', map.eased?.zoom >= 10.5, String(map.eased?.zoom));
 check('opening a trail puts it in the URL', window.location.hash === '#trail/devils-thumb-trail', window.location.hash);
 const actions = [...popupContent.querySelectorAll('.pop-actions button')].map((b) => b.textContent);
 check('popup offers GPX download and share', actions.includes('Download GPX') && actions.includes('Share link'), actions.join(', '));
