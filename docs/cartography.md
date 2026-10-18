@@ -181,7 +181,7 @@ Sources: [Ordnance Survey — text on maps][os-text];
 - **Zones first.** Below zoom 10.5 the map shows only the areas — tinted,
   outlined and labelled — as an overview of where to ski; trails and places
   appear as you zoom in, and opening a trail never lands below that zoom.
-- **Backcountry areas are grey.** Brainard Lake, Hessie/Lost Lake, Moffat
+- **Backcountry areas are grey.** Brainard Lake, Caribou Ranch, Hessie/Lost Lake, Moffat
   Tunnel / Rollins Pass, Peaceful Valley, West Magnolia and Wild Basin have no
   grooming or facilities; their tint and outline are grey (`#6b7480`, a
   "Backcountry area" row in the map key) so they read differently from the

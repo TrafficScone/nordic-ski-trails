@@ -59,7 +59,7 @@ export const UNITS = 'mi'; // 'mi' | 'km'
 // grey instead of their CalTopo colour, and the map key says what grey means.
 // Names are the CalTopo polygon titles.
 export const BACKCOUNTRY_AREAS = [
-  'Brainard Lake', 'Hessie/Lost Lake', 'Moffat Tunnel / Rollins Pass',
+  'Brainard Lake', 'Caribou Ranch', 'Hessie/Lost Lake', 'Moffat Tunnel / Rollins Pass',
   'Peaceful Valley', 'West Magnolia', 'Wild Basin (RMNP)',
 ];
 export const BACKCOUNTRY_COLOR = '#6b7480';

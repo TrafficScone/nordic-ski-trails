@@ -236,7 +236,7 @@ check('difficulty chips rendered', chips.length === 4);
 check('legend rendered, with a backcountry area row', window.document.querySelectorAll('#legend .lgd-row').length === 8
   && /Backcountry area/.test($('#legend').textContent));
 check('backcountry areas are grey', fc.features.find((f) => f.properties._group === 'area:Brainard Lake')?.properties._color === '#6b7480'
-  && fc.features.find((f) => f.properties._group === 'area:Caribou Ranch')?.properties._color !== '#6b7480');
+  && fc.features.find((f) => f.properties._group === 'area:Eldora')?.properties._color !== '#6b7480');
 const greenTrail = fc.features.find((f) => f.properties._difficulty === 'easy');
 const greenRow = [...window.document.querySelectorAll('#list .item')]
   .find((b) => b.querySelector('.name').textContent === greenTrail.properties._name);
