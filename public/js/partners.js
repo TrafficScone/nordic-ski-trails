@@ -22,6 +22,32 @@ export const PARTNERS = [
   },
 ];
 
+/**
+ * Nordic centres, keyed by their area's CalTopo title: contact details shown
+ * at the top of the area's popup. Last checked 2026-10-18 against each
+ * centre's site (devilsthumbranch.com, ymcarockies.org, eldora.com).
+ * Their live grooming reports (Nordic Pulse) are in AREA_LINKS in conditions.js.
+ */
+export const NORDIC_CENTERS = {
+  Eldora: {
+    address: '2861 Eldora Ski Road, Nederland, CO 80466',
+    phones: [['303-440-8700', '+13034408700']],
+    url: 'https://www.eldora.com/activities-amenities/nordic-center/',
+  },
+  "Devil's Thumb Ranch": {
+    address: '3530 County Road 83, Tabernash, CO 80478',
+    hours: ['Daily in ski season'],
+    phones: [['970-726-7000', '+19707267000']],
+    url: 'https://www.devilsthumbranch.com/adventure/cross-country-skiing/',
+  },
+  'Snow Mountain Ranch (SMR)': {
+    address: '1101 County Road 53, Granby, CO 80446',
+    hours: ['Daily 8:30–5 in ski season'],
+    phones: [['888-573-9622', '+18885739622']],
+    url: 'https://www.ymcarockies.org/things-to-do/nordic-center',
+  },
+};
+
 /** The partners as a GeoJSON source; `mark` is the map image id. */
 export function partnersGeoJSON() {
   return {
@@ -48,6 +74,12 @@ export function partnerPopup(doc, p) {
   const about = doc.createElement('p');
   about.textContent = p.about;
 
+  el.append(logo, tag, about, contactList(doc, p));
+  return el;
+}
+
+/** Address, hours, phone and website as a two-column list (`hours` optional). */
+export function contactList(doc, p) {
   const dl = doc.createElement('dl');
   dl.className = 'partner-info';
   const row = (label, ...nodes) => {
@@ -66,10 +98,8 @@ export function partnerPopup(doc, p) {
   };
   const lines = (items) => items.flatMap((x, i) => (i ? [doc.createElement('br'), x] : [x]));
   row('Address', link(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.address)}`, p.address));
-  row('Hours', ...lines(p.hours));
+  if (p.hours) row('Hours', ...lines(p.hours));
   row('Phone', ...lines(p.phones.map(([text, tel]) => link(`tel:${tel}`, text))));
   row('Web', link(p.url, new URL(p.url).hostname.replace(/^www\./, '')));
-
-  el.append(logo, tag, about, dl);
-  return el;
+  return dl;
 }

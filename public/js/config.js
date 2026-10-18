@@ -59,5 +59,5 @@ export const AREA_MARKS = {
   'North Boulder Park': { mark: 'icons/bnc-mark.png', color: '#005daa', at: [-105.28692, 40.02824] },
   Eldora: { mark: 'icons/eldora-mark.png', color: '#e75300', at: [-105.5819, 39.93828] },
   "Devil's Thumb Ranch": { mark: 'icons/dtr-mark.png', color: '#372c25' },
-  'Snow Mountain Ranch (SMR)': { mark: 'icons/smr-mark.png', color: '#234938' },
+  'Snow Mountain Ranch (SMR)': { mark: 'icons/smr-mark.png', color: '#234938', at: [-105.92738, 39.98412] },
 };

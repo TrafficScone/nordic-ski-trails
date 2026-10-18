@@ -18,7 +18,7 @@ import { icon, iconForUrl } from './icons.js';
 import { liveConditions } from './live-conditions.js';
 import { defaultFilterState, difficultyOf, lineFilter, matchesFilter, renderFilters, renderLegend } from './filters.js';
 import { downloadGpx } from './gpx.js';
-import { PARTNERS, partnerPopup, partnersGeoJSON } from './partners.js';
+import { NORDIC_CENTERS, PARTNERS, contactList, partnerPopup, partnersGeoJSON } from './partners.js';
 import { elevationAt, profileOf, profileSvg } from './profile.js';
 import { clearHash, findGroup, parseHash, setHash, shareLink } from './share.js';
 import { SLOPE_CLASSES, registerSlopeProtocol } from './slope.js';
@@ -462,6 +462,9 @@ function showPopup(g, lngLat) {
   const stats = span('meta', g.length ? formatDistance(g.length) : '');
   el.append(stats);
   if (g.kind === 'trail') addProfile(g, el, stats);
+  // A nordic centre's own area: how to reach them, before the description.
+  const center = g.kind === 'area' && NORDIC_CENTERS[g.name];
+  if (center) el.append(contactList(document, center));
 
   // One line per section that has something to say, keyed by its colour.
   for (const f of g.features) {

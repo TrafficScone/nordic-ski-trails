@@ -150,6 +150,13 @@ map.queryResult = [first];
 await map.fire('click', { point: { x: 1, y: 1 }, lngLat: { lng: 0, lat: 0 } });
 check('clicking a trail opens its popup', popupContent?.querySelector('h3')?.textContent === first.properties._name);
 
+const eldoraArea = fc.features.find((f) => f.properties._group === 'area:Eldora');
+map.queryResult = [eldoraArea];
+await map.fire('click', { point: { x: 1, y: 1 }, lngLat: { lng: 0, lat: 0 } });
+check('a nordic centre area popup shows its contact details and grooming report',
+  /2861 Eldora Ski Road/.test(popupContent?.querySelector('.partner-info')?.textContent)
+  && [...popupContent.querySelectorAll('a')].some((a) => a.href.includes('nordic-pulse.com')));
+
 const devil = fc.features.find((f) => f.properties._section === "Devil's Thumb Trail_2");
 map.queryResult = [devil];
 await map.fire('click', { point: { x: 1, y: 1 }, lngLat: { lng: 0, lat: 0 } });

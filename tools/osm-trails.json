@@ -155,7 +155,10 @@
         "County Road 92": "green",
         "Coney Creek Road": "green",
         "Coney Flats Road": "green",
-        "Coney Non-Motorized Spur": "green"
+        "Coney Non-Motorized Spur": "green",
+        "Saint Vrain Glacier Bypass Trail": "black",
+        "County Road 92J": "green",
+        "Bunce School Road": "green"
       },
       "notes": {
         "County Road 92": "Gated at Peaceful Valley in winter and not plowed beyond; ski the closed road (or the Middle Saint Vrain Trail beside it) to Camp Dick.",
@@ -189,7 +192,8 @@
         "Arapaho Lakes Trail": "black",
         "Crater Lakes Trail": "black",
         "Clayton Lake Trail": "black",
-        "Needle Eye Bypass Trail": "black"
+        "Needle Eye Bypass Trail": "black",
+        "Boulder Wagon Road": "black"
       },
       "splits": {
         "Rollins Pass Road": {
@@ -216,6 +220,24 @@
           ]
         }
       }
+    },
+    "Snow Mountain Ranch (SMR)": {
+      "exclude": [
+        "County Road 53",
+        "County Road 5301",
+        "Nine Mile Road",
+        "Crestview Drive",
+        "Just Lane",
+        "County Road 5362",
+        "County Road 5361",
+        "Campout Road",
+        "Stillwater Road",
+        "Meadow Lane",
+        "Aspen Lane",
+        "Parkerson Road",
+        "Mill Gulch Road",
+        "Reflection Lane"
+      ]
     }
   },
   "trails": [

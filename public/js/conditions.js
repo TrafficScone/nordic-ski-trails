@@ -20,7 +20,16 @@
  */
 export const AREA_LINKS = {
   'Eldora': [
+    { label: 'Live grooming report (Nordic Pulse)', url: 'https://nordic-pulse.com/ski-areas/US/CO/Eldora-Nordic-Center' },
     { label: 'Eldora Nordic grooming & trail report', url: 'https://www.eldora.com/activities-amenities/nordic-center/trail-map-conditions/' },
+  ],
+  "Devil's Thumb Ranch": [
+    { label: 'Live grooming report (Nordic Pulse)', url: 'https://nordic-pulse.com/ski-areas/US/CO/Devils-Thumb-Ranch' },
+    { label: "Devil's Thumb Ranch cross-country skiing", url: 'https://www.devilsthumbranch.com/adventure/cross-country-skiing/', note: 'Trail passes, rentals, lessons' },
+  ],
+  'Snow Mountain Ranch (SMR)': [
+    { label: 'Live grooming report (Nordic Pulse)', url: 'https://nordic-pulse.com/ski-areas/US/CO/Snow-Mountain-Ranch-Nordic' },
+    { label: 'Snow Mountain Ranch Nordic Center', url: 'https://www.ymcarockies.org/things-to-do/nordic-center', note: 'YMCA of the Rockies: passes, rentals, lessons' },
   ],
   'Brainard Lake': [
     { label: 'Brainard Lake road & winter access (USFS)', url: 'https://www.fs.usda.gov/r02/arp/conditions', note: 'Arapaho & Roosevelt NF current conditions' },
