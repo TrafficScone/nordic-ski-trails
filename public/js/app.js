@@ -11,8 +11,8 @@
 // ---------------------------------------------------------------------------
 
 import { basemapStyle } from './basemap.js';
-import { DEFAULT_VIEW, DEM_TILES, FALLBACK_COLOR, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
-import { HIT_LAYERS, PARTNER_LAYERS, TRAIL_MINZOOM, partnerLayers, selectionGlowLayers, selectionMarkerLayers, trailLayers, trailOpacity } from './layers.js';
+import { DEFAULT_VIEW, DEM_TILES, FALLBACK_COLOR, HOME_AREA, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
+import { HIT_LAYERS, PARTNER_LAYERS, TRAIL_MINZOOM, homeLayers, partnerLayers, selectionGlowLayers, selectionMarkerLayers, trailLayers, trailOpacity } from './layers.js';
 import { conditionLinksFor } from './conditions.js';
 import { icon, iconForUrl } from './icons.js';
 import { liveConditions } from './live-conditions.js';
@@ -73,6 +73,7 @@ map.on('load', async () => {
   for (const layer of selectionGlowLayers(SEL)) map.addLayer(layer, 'trail-casing');
   for (const layer of selectionMarkerLayers(SEL)) map.addLayer(layer);
   addPartners();
+  addHome(fc.features);
 
   assignAreas(fc.features);
   groups = groupFeatures(fc.features);
@@ -98,7 +99,7 @@ map.on('load', async () => {
   map.on('click', (e) => {
     const [partner] = map.queryRenderedFeatures(e.point, { layers: PARTNER_LAYERS });
     if (partner) return showPartner(partner.properties.id);
-    const [hit] = map.queryRenderedFeatures(e.point, { layers: HIT_LAYERS });
+    const [hit] = map.queryRenderedFeatures(e.point, { layers: clickLayers() });
     if (hit) showPopup(groups.get(hit.properties._group), e.lngLat);
   });
   for (const id of [...HIT_LAYERS, ...PARTNER_LAYERS]) {
@@ -190,8 +191,11 @@ function styled(f) {
   const isPoint = f.geometry.type.endsWith('Point');
   const kind = isPoint ? 'place' : f.geometry.type.endsWith('Polygon') ? 'area' : 'trail';
   const title = String(p.title || p.name || '').trim();
-  // "Devil's Thumb Trail_2" is section 2 of "Devil's Thumb Trail".
-  const name = title.replace(/[\s_-]+\d+$/, '') || title;
+  // "Devil's Thumb Trail_2" is section 2 of "Devil's Thumb Trail". OSM names
+  // can end in a number of their own ("Social 16"); the sync marks its
+  // sections with "_2" only.
+  const section = p.source === 'OpenStreetMap' ? /_\d+$/ : /[\s_-]+\d+$/;
+  const name = title.replace(section, '') || title;
   const num = (v, fallback) => (Number.isFinite(Number(v)) && v !== '' && v != null ? Number(v) : fallback);
   return {
     type: 'Feature',
@@ -334,6 +338,36 @@ function swatches(g) {
     box.append(chip);
   }
   return box;
+}
+
+/** Layers a click opens a popup from; the home mark exists only if HOME_AREA does. */
+const clickLayers = () => (map.getLayer('home-mark') ? ['home-mark', ...HIT_LAYERS] : HIT_LAYERS);
+
+/** The club's home area: its mark and name, at every zoom. */
+async function addHome(features) {
+  const area = features.find((f) => f.properties._group === `area:${HOME_AREA}`);
+  if (!area) return;
+  area.properties._home = true;
+  map.getSource(SRC).setData({ type: 'FeatureCollection', features });
+  try {
+    const { data } = await map.loadImage('icons/bnc-mark.png');
+    map.addImage('bnc-mark', data, { pixelRatio: 2 });
+  } catch (err) {
+    console.error('BNC mark:', err);
+  }
+  const [[x0, y0], [x1, y1]] = bboxOf([area]);
+  map.addSource('home', {
+    type: 'geojson',
+    data: { type: 'FeatureCollection', features: [{
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [(x0 + x1) / 2, (y0 + y1) / 2] },
+      properties: { name: HOME_AREA, _group: area.properties._group },
+    }] },
+  });
+  // Under the trail labels and markers, so names along the loops stay readable.
+  for (const layer of homeLayers('home')) map.addLayer(layer, 'trail-label');
+  map.on('mouseenter', 'home-mark', () => { map.getCanvas().style.cursor = 'pointer'; });
+  map.on('mouseleave', 'home-mark', () => { map.getCanvas().style.cursor = ''; });
 }
 
 /** Club supporters: their mark on the map (drawn above the trails). */

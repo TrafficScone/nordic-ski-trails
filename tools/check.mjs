@@ -28,7 +28,7 @@ const bad = (msg) => { failures++; console.log(`  ✗ ${msg}`); };
 // -- 1. layer specs ---------------------------------------------------------
 
 console.log('\nMapLibre layer specs');
-const { trailLayers, HIT_LAYERS, partnerLayers, selectionGlowLayers, selectionMarkerLayers, trailOpacity } =
+const { trailLayers, HIT_LAYERS, homeLayers, partnerLayers, selectionGlowLayers, selectionMarkerLayers, trailOpacity } =
   await import(path.join(SITE, 'js/layers.js'));
 const { basemapStyle } = await import(path.join(SITE, 'js/basemap.js'));
 
@@ -47,8 +47,9 @@ if (validate) {
   style.sources.trails = empty;
   style.sources.selection = empty;
   style.sources.partners = empty;
+  style.sources.home = empty;
   style.layers = [...style.layers, ...selectionGlowLayers('selection'), ...layers, ...selectionMarkerLayers('selection'),
-    ...partnerLayers('partners')];
+    ...homeLayers('home'), ...partnerLayers('partners')];
   // The dimming swapped in at runtime when a trail is selected.
   for (const id of ['trail-line', 'trail-dashed']) {
     const l = style.layers.find((x) => x.id === id);

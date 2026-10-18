@@ -48,3 +48,7 @@ export const TRAILS_DIR = 'trails/';
 export const FALLBACK_COLOR = '#0f6fd1';
 
 export const UNITS = 'mi'; // 'mi' | 'km'
+
+// The club's home area (a CalTopo polygon title): always on the map, at every
+// zoom, with the club's mark beside its name.
+export const HOME_AREA = 'North Boulder Park';

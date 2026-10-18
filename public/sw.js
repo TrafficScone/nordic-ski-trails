@@ -50,6 +50,7 @@ const SHELL_FILES = [
   'js/share.js',
   'js/slope.js',
   'manifest.webmanifest',
+  'icons/bnc-mark.png',
   'icons/bns-logo.png',
   'icons/bns-mark.png',
 ];

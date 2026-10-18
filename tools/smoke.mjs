@@ -184,6 +184,11 @@ await map.fire('click', { point: { x: 1, y: 1 }, lngLat: { lng: 0, lat: 0 } });
 check('agency ref sits at the very bottom of the popup',
   popupContent.lastElementChild?.className === 'pop-ref' && popupContent.lastElementChild.textContent.includes(withRef.properties.ref));
 
+// The home area: BNC mark and name at every zoom, no duplicate area label.
+const home = fc.features.find((f) => f.properties._home);
+check('home area is marked with the BNC mark', !!home && map.images?.has('bnc-mark') && !!map.getLayer('home-mark')
+  && map.getSource('home')?.data.features[0].properties.name === home.properties._section);
+
 // Club supporters: their mark is on the map and opens their own card.
 await new Promise((r) => setTimeout(r, 0));
 check('partner mark is loaded and drawn', map.images?.has('partner-boulder-nordic-sport') && !!map.getLayer('partner-icon'));

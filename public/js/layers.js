@@ -104,7 +104,8 @@ export function trailLayers(source) {
     // Area names carry the zoomed-out map, so they're bigger and stay until
     // the trails have taken over.
     {
-      id: 'area-label', type: 'symbol', source, maxzoom: 12.5, filter: IS_AREA,
+      id: 'area-label', type: 'symbol', source, maxzoom: 12.5,
+      filter: ['all', IS_AREA, ['!', ['to-boolean', ['get', '_home']]]],
       layout: {
         'text-field': ['get', '_section'], 'text-font': LABEL_FONT,
         'text-size': ['interpolate', ['linear'], ['zoom'], 8, 13, 12, 16],
@@ -225,20 +226,46 @@ export function trailOpacity(selectedGroup = '') {
 }
 
 /**
- * Club supporters (partners.js): the business's own square mark, at every
- * zoom since they sit in town, away from the ski areas. Name from z11.
+ * Club supporters (partners.js): the business's own square mark from z11
+ * (further out it would crowd the home-area mark), name from z11.
  */
 export const PARTNER_LAYERS = ['partner-icon'];
 export function partnerLayers(source) {
   return [
     {
-      id: 'partner-icon', type: 'symbol', source,
+      id: 'partner-icon', type: 'symbol', source, minzoom: 11,
       layout: {
         'icon-image': ['get', 'mark'], 'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 0.8, 14, 1.1], 'icon-allow-overlap': true,
         'text-field': ['step', ['zoom'], '', 11, ['get', 'name']], 'text-font': LABEL_FONT, 'text-size': 12,
         'text-anchor': 'top', 'text-offset': [0, 1.3], 'text-optional': true,
       },
       paint: { 'text-color': '#222222', 'text-halo-color': '#ffffff', 'text-halo-width': 1.6 },
+    },
+  ];
+}
+
+/**
+ * The club's home area (HOME_AREA in config.js): the BNC mark and the area's
+ * name, never hidden by collisions, so it shows however far out you zoom.
+ * Once the trails are drawn the name drops and the mark shrinks, sitting
+ * among the trails.
+ */
+export const HOME_MARK_ZOOM = 13;
+export function homeLayers(source) {
+  return [
+    {
+      id: 'home-mark', type: 'symbol', source,
+      layout: {
+        'icon-image': 'bnc-mark',
+        'icon-size': ['interpolate', ['linear'], ['zoom'], 6, 0.7, 11, 1, HOME_MARK_ZOOM - 0.01, 1, HOME_MARK_ZOOM, 0.55, 17, 0.7],
+        'icon-allow-overlap': true, 'icon-ignore-placement': true,
+        'text-field': ['step', ['zoom'], ['get', 'name'], HOME_MARK_ZOOM, ''],
+        'text-font': LABEL_FONT,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 6, 13, 12, 16],
+        'text-anchor': 'left', 'text-offset': [1.5, 0], 'text-max-width': 12,
+        'text-allow-overlap': true, 'text-ignore-placement': true,
+      },
+      paint: { 'text-color': '#0c3d54', 'text-halo-color': '#ffffff', 'text-halo-width': 2 },
     },
   ];
 }
