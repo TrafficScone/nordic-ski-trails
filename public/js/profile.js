@@ -60,7 +60,8 @@ function resample(line) {
   return out;
 }
 
-async function elevationAt(p, demUrl) {
+/** Elevation in metres at a [lng, lat], bilinear between DEM pixels. */
+export async function elevationAt(p, demUrl) {
   const [fx, fy] = tileXY(p, ZOOM);
   const tx = Math.floor(fx), ty = Math.floor(fy);
   const { size, elev } = await loadDemTile(demUrl, ZOOM, tx, ty);

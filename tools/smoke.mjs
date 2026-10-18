@@ -194,7 +194,15 @@ check('marked areas take their logo colour',
 
 // Coordinates follow the mouse.
 await map.fire('mousemove', { lngLat: { lng: -105.2864656, lat: 40.027619 } });
-check('mouse position shows as lat, lon', document.querySelector('.coords')?.textContent === '40.02762, -105.28647');
+check('mouse position shows as lat, lon · elevation',
+  document.querySelector('.coords')?.textContent === '40.02762, -105.28647 · 9,843 ft',
+  document.querySelector('.coords')?.textContent);
+// Right-click (and a press-and-hold on touch) opens the same reading as a popup.
+await map.fire('contextmenu', { lngLat: { lng: -105.2864656, lat: 40.027619 } });
+await new Promise((r) => setTimeout(r, 0));
+check('right-click shows coordinates and elevation in a popup',
+  popupContent.querySelector('.point-ll')?.textContent === '40.02762, -105.28647'
+  && popupContent.querySelector('.point-elev')?.textContent === '9,843 ft');
 
 // Club supporters: their mark is on the map and opens their own card.
 await new Promise((r) => setTimeout(r, 0));

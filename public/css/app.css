@@ -224,3 +224,7 @@ button { font: inherit; color: inherit; }
   font: 12px/1.4 var(--font); font-variant-numeric: tabular-nums; color: var(--ink);
 }
 .coords[hidden] { display: none; }
+.point-pop .maplibregl-popup-content { padding: 8px 30px 8px 12px; }
+.point-ll, .point-elev { display: block; font-variant-numeric: tabular-nums; }
+.point-ll { font-size: 13px; }
+.point-elev { font-size: 15px; font-weight: 600; }

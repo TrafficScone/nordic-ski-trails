@@ -19,7 +19,7 @@ import { liveConditions } from './live-conditions.js';
 import { defaultFilterState, difficultyOf, lineFilter, matchesFilter, renderFilters, renderLegend } from './filters.js';
 import { downloadGpx } from './gpx.js';
 import { PARTNERS, partnerPopup, partnersGeoJSON } from './partners.js';
-import { profileOf, profileSvg } from './profile.js';
+import { elevationAt, profileOf, profileSvg } from './profile.js';
 import { clearHash, findGroup, parseHash, setHash, shareLink } from './share.js';
 import { SLOPE_CLASSES, registerSlopeProtocol } from './slope.js';
 
@@ -51,17 +51,60 @@ map.addControl(new maplibregl.GeolocateControl({ trackUserLocation: true }), 'to
 map.addControl(new maplibregl.FullscreenControl(), 'top-right');
 map.addControl(new maplibregl.ScaleControl({ unit: UNITS === 'mi' ? 'imperial' : 'metric' }), 'bottom-right');
 
-// Latitude/longitude under the mouse (decimal degrees, ~1 m precision).
-// Touch screens have no hover, so it only appears once a mouse moves.
+// Latitude/longitude and elevation under the mouse (decimal degrees, ~1 m).
+// Touch screens have no hover: there, press and hold for the same reading in
+// a popup (right-click does it with a mouse).
 const coords = document.createElement('div');
 coords.className = 'maplibregl-ctrl coords';
 coords.hidden = true;
 map.addControl({ onAdd: () => coords, onRemove: () => {} }, 'bottom-left');
-map.on('mousemove', (e) => {
+
+const formatLatLng = ({ lng, lat }) => `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+const formatElevation = (m) => (UNITS === 'mi' ? `${Math.round(m * 3.28084).toLocaleString()} ft` : `${Math.round(m).toLocaleString()} m`);
+/** Elevation text for a point, or '' if the tile can't be had (offline). */
+const elevationText = (lngLat) => elevationAt([lngLat.lng, lngLat.lat], DEM_TILES).then(formatElevation, () => '');
+
+let hoverSeq = 0;
+map.on('mousemove', async (e) => {
+  const seq = ++hoverSeq;
   coords.hidden = false;
-  coords.textContent = `${e.lngLat.lat.toFixed(5)}, ${e.lngLat.lng.toFixed(5)}`;
+  const where = formatLatLng(e.lngLat);
+  coords.textContent = where;
+  const elev = await elevationText(e.lngLat);
+  if (seq === hoverSeq && elev) coords.textContent = `${where} · ${elev}`; // a later move wins
 });
 map.getCanvas().addEventListener?.('mouseleave', () => { coords.hidden = true; });
+
+const pointPopup = new maplibregl.Popup({ offset: 6, className: 'point-pop', maxWidth: '240px' });
+let suppressClick = false; // the touchend after a hold must not also open a trail
+async function showPoint(lngLat) {
+  const el = document.createElement('div');
+  const where = span('point-ll', formatLatLng(lngLat));
+  const elev = span('point-elev', '…');
+  el.append(where, elev);
+  pointPopup.setLngLat(lngLat).setDOMContent(el).addTo(map);
+  elev.textContent = (await elevationText(lngLat)) || 'Elevation unavailable';
+}
+map.on('contextmenu', (e) => showPoint(e.lngLat));
+// iOS Safari never fires contextmenu for a long press, so time the touch.
+let hold = null;
+const canvas = map.getCanvasContainer?.() ?? map.getCanvas();
+canvas.addEventListener?.('touchstart', (e) => {
+  clearTimeout(hold?.timer);
+  if (e.touches.length !== 1) return (hold = null);
+  const t = e.touches[0];
+  const rect = canvas.getBoundingClientRect();
+  const point = [t.clientX - rect.left, t.clientY - rect.top];
+  hold = { x: t.clientX, y: t.clientY, timer: setTimeout(() => {
+    suppressClick = true;
+    showPoint(map.unproject(point));
+  }, 500) };
+}, { passive: true });
+canvas.addEventListener?.('touchmove', (e) => {
+  const t = e.touches[0];
+  if (hold && t && Math.hypot(t.clientX - hold.x, t.clientY - hold.y) > 10) clearTimeout(hold.timer);
+}, { passive: true });
+canvas.addEventListener?.('touchend', () => clearTimeout(hold?.timer), { passive: true });
 
 const popup = new maplibregl.Popup({ offset: 10, maxWidth: '320px' });
 popup.on('close', () => {
@@ -109,6 +152,7 @@ map.on('load', async () => {
   });
 
   map.on('click', (e) => {
+    if (suppressClick) return (suppressClick = false);
     const [partner] = map.queryRenderedFeatures(e.point, { layers: PARTNER_LAYERS });
     if (partner) return showPartner(partner.properties.id);
     const [hit] = map.queryRenderedFeatures(e.point, { layers: clickLayers() });
