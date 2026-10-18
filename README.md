@@ -57,7 +57,7 @@ are shown as one trail with a combined length.
 
 ## Areas and OpenStreetMap trails
 
-Polygons in the CalTopo map are **areas** ("Eldora", "West Magnolia Trails").
+Polygons in the CalTopo map are **areas** ("Eldora", "West Magnolia").
 On the site, an area is a light outline (strongest zoomed out) and a section in
 the trail list holding every trail and place inside it; its CalTopo description
 shows when you click it.
@@ -67,7 +67,8 @@ pulls every OSM trail inside the polygon (groomed nordic trails, named paths
 and tracks, named minor roads), clips it to the polygon, and joins it by name
 ("Devils" and "Devil's" count as the same). Groomed trails often carry OSM
 difficulty and grooming tags, which become the green/blue/black colour and the
-popup text; ungroomed (`piste:grooming=backcountry`) trails are drawn dashed.
+popup text; ungroomed (`piste:grooming=backcountry`) trails get a white
+centre stripe.
 
 ```bash
 python3 tools/sync_osm.py        # writes public/trails/osm.geojson
@@ -104,7 +105,7 @@ polygon's CalTopo title, so it survives every re-export:
 | `needs_snow` | `true` if the area is only skiable after heavy recent snowfall: its trails are drawn dashed. |
 
 `trails` takes exact way lists for when an area isn't the right tool:
-`{"name": "…", "area": "Brainard Lake Area", "sections": [{"ways": [123, 456], "color": "blue", "description": "…"}]}`
+`{"name": "…", "area": "Brainard Lake", "sections": [{"ways": [123, 456], "color": "blue", "description": "…"}]}`
 (`area` files it under that area and applies the area's `grooming` / `needs_snow`).
 
 On the map, **solid** = groomed or unknown, **white centre stripe** = ungroomed,
@@ -118,6 +119,29 @@ still need an `exclude` entry. Re-run it
 whenever you want OSM's latest, and review before committing, since anyone can
 edit OSM. Trail data from OSM is © OpenStreetMap contributors (ODbL), credited
 in the map's attribution.
+
+## Contributing a region
+
+You can't edit the club's CalTopo map, but you don't need to: the site loads
+every GeoJSON file in `public/trails/`. To add your own area, send a pull
+request with:
+
+1. **Your CalTopo export** as a new file, e.g. `public/trails/lyons.geojson`.
+   Draw a **polygon** around each area (its title becomes the area's name in
+   the list; keep it short, no "Area" or "Zone" suffix) and any hand-drawn
+   **lines** for trails OSM doesn't have. Use the club's conventions so it
+   reads like the rest of the map: line colour green `#00cd00` / blue
+   `#0000ff` / black `#000000` for difficulty, and a dashed line only for
+   "skiable after heavy recent snowfall". Markers with CalTopo's symbols
+   become discs (`P` for parking, and so on).
+2. **Your curation** in `tools/osm-trails.json` (optional), keyed by your
+   polygon titles: trails to drop, recolour, or mark ungroomed (see the table
+   above). Polygon titles must be unique across all the files.
+3. Run `python3 tools/index_trails.py` and the [checks](#checks).
+
+Don't commit a regenerated `osm.geojson` in the PR; the maintainer runs
+`tools/sync_osm.py` after merging (it never runs in the Netlify build) and
+reviews what OSM returns for the new area.
 
 ## Run it locally
 
@@ -218,3 +242,63 @@ tools/                  dev only — index script, OSM sync, checks
   osm-trails.json       per-area OSM keep/drop/recolour decisions
 netlify.toml            static hosting config
 ```
+
+## Make it your own (forking)
+
+The whole app is reusable for any club or region. What a fork has to change:
+
+**Accounts and keys** (none are shared with forks):
+
+- A **MapTiler** account and key (the free tier is enough for a club site),
+  restricted to your own domain. It's both the basemap and the elevation data
+  behind slope shading, profiles and the elevation readout. See
+  [The MapTiler key](#the-maptiler-key).
+- **Hosting**: on Netlify, set the `MAPTILER_KEY` environment variable and
+  the included `netlify.toml` does the rest. Any static host works if its
+  build runs the same `sed` substitution (see `netlify.toml`) and serves
+  `public/`.
+- **Overpass**: change `USER_AGENT` in `tools/sync_osm.py` so OSM's servers
+  see who is querying. Overpass is a shared, volunteer-run service: run the
+  sync by hand and occasionally, as this repo does.
+
+**Your trails**: replace `public/trails/bnc-places-to-ski.geojson` with your
+own CalTopo export, empty the `areas` and `trails` in `tools/osm-trails.json`,
+and run the sync.
+
+**Club-specific files** to edit or empty:
+
+| File | What's specific |
+|---|---|
+| `public/js/config.js` | `DEFAULT_VIEW` (opening map position), `UNITS`, `AREA_MARKS` (area logos; empty it to have none) |
+| `public/js/partners.js` | Club supporters on the map; set `PARTNERS` to `[]` |
+| `public/js/conditions.js` | `AREA_LINKS` (per-area condition pages), `SNOTEL_STATIONS` (Colorado stations), the CAIC avalanche link |
+| `public/index.html` | Page title and panel heading |
+| `public/manifest.webmanifest` | Home-screen app name and colours |
+| `public/css/app.css` | Brand colours (`--brand`, `--brand-ink`) |
+| `public/icons/` | App icons (`tools/make_icons.py`) and the logos below |
+| `tools/bnc-mark.svg` | Source of the BNC logo |
+
+**Regional data sources.** The live conditions in each popup use US services:
+the National Weather Service (US only), NRCS SNOTEL snow stations (western
+US), and avalanche.org (US avalanche centres; CAIC in Colorado). Outside their
+coverage each card fails on its own and is left out, but the SNOTEL list has
+no distance limit, so a fork elsewhere in the US should replace
+`SNOTEL_STATIONS` with its nearby stations, and one outside the US should
+remove the snow card.
+
+## Licence
+
+The code is [MIT](LICENSE). Two things in the repo are **not** covered by it:
+
+- **Logos and trademarks.** The Boulder Nordic Club logo (`icons/bnc-mark.png`,
+  `tools/bnc-mark.svg`), the Eldora logo (`icons/eldora-mark.png`) and the
+  Boulder Nordic & Cycle Sport logos (`icons/bns-logo.png`, `icons/bns-mark.png`)
+  belong to their owners and aren't licensed for reuse. A fork must remove or
+  replace them.
+- **Trail data from OpenStreetMap** (`public/trails/osm.geojson`) is
+  © OpenStreetMap contributors under the
+  [ODbL](https://opendatacommons.org/licenses/odbl/): keep the attribution
+  (the map shows it) and share changes to the data under the same licence.
+
+Basemap tiles and elevation data come from MapTiler under their own
+[terms](https://www.maptiler.com/terms/), with your own key.
