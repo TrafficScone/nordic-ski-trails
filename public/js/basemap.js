@@ -46,6 +46,8 @@ export const PALETTE = {
   majorCasing: '#c9b28e',
   path: '#7a8086',
   otherNordic: '#5f7d96',
+  alpine: '#c4c9ce',     // downhill runs: present but recessive
+  lift: '#8d949b',
   building: '#dcdcdc',
   protected: '#6f9a7c',
   ink: '#222222',        // BNC --contrast
@@ -178,7 +180,7 @@ export function basemapLayers() {
 
     // -- built --------------------------------------------------------------
     {
-      id: 'building', type: 'fill', source: 'planet', 'source-layer': 'building', minzoom: 14,
+      id: 'building', type: 'fill', source: 'planet', 'source-layer': 'building', minzoom: 13,
       paint: { 'fill-color': P.building, 'fill-outline-color': P.roadCasing },
     },
 
@@ -197,6 +199,19 @@ export function basemapLayers() {
       filter: ['==', ['get', 'class'], 'nordic'],
       layout: { 'line-cap': 'round' },
       paint: { 'line-color': P.otherNordic, 'line-width': z(12, 1.4, 16, 2.6), 'line-dasharray': [0.1, 2] },
+    },
+    // Downhill runs and lifts (Eldora): light grey context, so they don't read
+    // as nordic trails or compete with difficulty colours.
+    {
+      id: 'alpine-run', type: 'line', source: 'outdoor', 'source-layer': 'ski', minzoom: 12,
+      filter: ['all', ['==', ['get', 'class'], 'downhill'], ['==', ['geometry-type'], 'LineString']],
+      layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: { 'line-color': P.alpine, 'line-width': z(12, 1.2, 16, 3) },
+    },
+    {
+      id: 'lift', type: 'line', source: 'outdoor', 'source-layer': 'ski', minzoom: 12,
+      filter: ['==', ['get', 'class'], 'lift'],
+      paint: { 'line-color': P.lift, 'line-width': z(12, 0.8, 16, 1.5) },
     },
     roadLine('minor-casing', ['minor', 'service'], 12, P.roadCasing, z(12, 1.6, 14, 3, 17, 9)),
     roadLine('major-casing', ['primary', 'secondary', 'tertiary', 'trunk', 'motorway'], 7, P.majorCasing,
@@ -244,6 +259,15 @@ export function basemapLayers() {
       paint: { 'text-color': P.otherNordic, ...halo(1.2) },
     },
     {
+      id: 'alpine-label', type: 'symbol', source: 'outdoor', 'source-layer': 'ski', minzoom: 14,
+      filter: ['in', ['get', 'class'], ['literal', ['downhill', 'lift']]],
+      layout: {
+        'symbol-placement': 'line', 'symbol-spacing': 400,
+        'text-field': ['get', 'name'], 'text-font': ITALIC, 'text-size': 10,
+      },
+      paint: { 'text-color': P.lift, ...halo(1.2) },
+    },
+    {
       id: 'water-label', type: 'symbol', source: 'planet', 'source-layer': 'water_name', minzoom: 11,
       layout: { 'text-field': NAME, 'text-font': ITALIC, 'text-size': z(11, 11, 15, 13), 'text-max-width': 7 },
       paint: { 'text-color': P.waterText, ...halo(1.5) },
@@ -259,12 +283,12 @@ export function basemapLayers() {
     },
     // Trailhead-relevant points: parking, huts and shelters, toilets.
     {
-      id: 'poi', type: 'symbol', source: 'planet', 'source-layer': 'poi', minzoom: 13,
+      id: 'poi', type: 'symbol', source: 'planet', 'source-layer': 'poi', minzoom: 12,
       filter: ['in', ['get', 'class'], ['literal', ['parking', 'toilets', 'shelter', 'lodging']]],
       layout: {
         'icon-image': ['match', ['get', 'class'], 'lodging', 'hut', ['get', 'class']],
         'icon-size': 0.9,
-        'text-field': ['step', ['zoom'], '', 15, NAME], 'text-font': MEDIUM, 'text-size': 11,
+        'text-field': ['step', ['zoom'], '', 13, NAME], 'text-font': MEDIUM, 'text-size': 11,
         'text-anchor': 'top', 'text-offset': [0, 0.9], 'text-optional': true, 'text-max-width': 8,
       },
       paint: { 'icon-color': P.ink2, 'icon-halo-color': P.halo, 'icon-halo-width': 1.5, 'text-color': P.ink2, ...halo(1.5) },

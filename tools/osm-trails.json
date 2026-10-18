@@ -26,7 +26,10 @@
         "Long Lake Road": "green",
         "Mitchell Lake Road": "green",
         "Mitchell Lake Trail": "blue",
-        "Beaver Creek Trail": "blue"
+        "Beaver Creek Trail": "blue",
+        "Pawnee Pass": "black",
+        "Isabell Glacier Trail": "black",
+        "Little Blue Lake Route": "black"
       },
       "splits": {
         "Pawnee Pass Trail": {
@@ -41,19 +44,40 @@
     },
     "Caribou Ranch": {
       "needs_snow": true,
-      "grooming": "ungroomed"
+      "grooming": "ungroomed",
+      "color": "green"
     },
     "North Boulder Park": {
-      "needs_snow": true
+      "needs_snow": true,
+      "include": [
+        "nordic",
+        "paths"
+      ]
     },
     "Hessie Trail Area": {
       "exclude": [
         "4th of July Road"
       ],
-      "grooming": "ungroomed"
+      "grooming": "ungroomed",
+      "colors": {
+        "Diamond Lake Trail": "black",
+        "Woodland Lake Trail": "black",
+        "King Lake": "black"
+      }
     },
     "West Magnolia Trails": {
-      "grooming": "ungroomed"
+      "grooming": "ungroomed",
+      "include": [
+        "nordic",
+        "paths"
+      ]
+    },
+    "Eldora": {
+      "exclude": [
+        "Eldora Ski Road",
+        "Lake Eldora Ski Road",
+        "Eldora Spur"
+      ]
     }
   },
   "trails": [

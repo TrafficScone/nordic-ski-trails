@@ -149,7 +149,11 @@ Sources: [Ordnance Survey — text on maps][os-text];
   routes.
 - **Other groomed nordic trails in OpenStreetMap**: faint blue-grey dots, so
   they can never be confused with the club's own trails.
-- **Trailhead points**: parking, toilets, huts and shelters.
+- **Downhill runs and lifts** (Eldora): light grey lines, lifts a shade darker
+  and thinner, names in small grey italic from z14. Grey keeps them out of the
+  green/blue/black difficulty scheme, so they can't be mistaken for nordic
+  trails.
+- **Trailhead points**: parking, toilets, huts and shelters, named from z13.
 - **Boundaries**: wilderness and open-space edges are drawn, since the rules
   change at the line. National-forest boundaries are *not*: they don't change
   what you can do on skis, and around old mining towns (Ward, Nederland) they
