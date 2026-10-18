@@ -220,8 +220,8 @@ button { font: inherit; color: inherit; }
 
 /* ---------- coordinates under the mouse ---------- */
 .coords {
-  padding: 3px 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.85);
-  font: 12px/1.4 var(--font); font-variant-numeric: tabular-nums; color: var(--ink);
+  margin-top: 6px; padding-top: 4px; border-top: 1px solid #eceef1;
+  font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ink);
 }
 .coords[hidden] { display: none; }
 .point-pop .maplibregl-popup-content { padding: 8px 30px 8px 12px; }

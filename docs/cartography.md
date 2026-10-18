@@ -174,7 +174,8 @@ Sources: [Ordnance Survey — text on maps][os-text];
 - **Line style carries snow and grooming, colour carries difficulty.** Solid =
   groomed (or not known); a white stripe down the centre = ungroomed; dashed =
   only skiable after heavy recent snowfall (Caribou Ranch, North Boulder Park,
-  West Magnolia).
+  West Magnolia). The two combine: an ungroomed trail that needs fresh snow is
+  dashed with the stripe running through (Caribou Ranch, West Magnolia).
   Dashed is reserved for that one meaning so it never has to be decoded.
 - **Zones first.** Below zoom 10.5 the map shows only the areas — tinted,
   outlined and labelled — as an overview of where to ski; trails and places
@@ -184,7 +185,11 @@ Sources: [Ordnance Survey — text on maps][os-text];
   snowflake; Eldora's tree) beside their name at every zoom — other labels
   give way to them — and their area tint takes the logo colour (BNC blue
   `#005daa`, Eldora orange `#e75300`). From z13 the name drops and the logo
-  shrinks among the trails. Set in `AREA_MARKS` in `config.js`.
+  shrinks among the trails. Set in `AREA_MARKS` in `config.js`, which also
+  pins each logo to a hand-picked spot (`at`).
+- **Cursor readout.** Latitude, longitude and elevation under the mouse sit
+  at the bottom of the map key, so hiding the key hides them too. Touch
+  screens press and hold for the same reading in a popup.
 - **Club supporters** (`partners.js`) show their own mark from z11, kept
   further in so it never crowds the North Boulder Park logo.
 - **The selected trail** gets a white halo with a navy edge, and the other

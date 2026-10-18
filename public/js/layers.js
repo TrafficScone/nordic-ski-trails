@@ -80,7 +80,9 @@ export function trailLayers(source) {
     },
     {
       id: 'trail-ungroomed', type: 'line', source, ...Z,
-      filter: ['all', IS_LINE, ['==', ['get', '_grooming'], 'ungroomed'], ['!=', ['get', '_dashed'], true]],
+      // Also on dashed trails: the gaps show the white casing, so the stripe
+      // just runs through them.
+      filter: ['all', IS_LINE, ['==', ['get', '_grooming'], 'ungroomed']],
       layout: { 'line-cap': 'round', 'line-join': 'round' },
       paint: { 'line-color': '#ffffff', 'line-width': STRIPE, 'line-opacity': 0.95 },
     },

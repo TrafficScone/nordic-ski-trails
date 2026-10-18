@@ -189,13 +189,16 @@ const marked = fc.features.filter((f) => f.properties._mark).map((f) => f.proper
 check('North Boulder Park and Eldora carry their logos', marked.join() === 'Eldora,North Boulder Park'
   && map.images?.has('area-mark-North Boulder Park') && !!map.getLayer('area-mark')
   && map.getSource('area-marks')?.data.features.length === 2);
+check('logos sit where AREA_MARKS pins them',
+  map.getSource('area-marks')?.data.features.find((f) => f.properties.name === 'Eldora')
+    ?.geometry.coordinates.join() === '-105.5819,39.93828');
 check('marked areas take their logo colour',
   fc.features.find((f) => f.properties._group === 'area:Eldora').properties._color === '#e75300');
 
 // Coordinates follow the mouse.
 await map.fire('mousemove', { lngLat: { lng: -105.2864656, lat: 40.027619 } });
-check('mouse position shows as lat, lon · elevation',
-  document.querySelector('.coords')?.textContent === '40.02762, -105.28647 · 9,843 ft',
+check('mouse position shows as lat, lon · elevation, inside the map key',
+  !!document.querySelector('#key #coords') && document.querySelector('.coords')?.textContent === '40.02762, -105.28647 · 9,843 ft',
   document.querySelector('.coords')?.textContent);
 // Right-click (and a press-and-hold on touch) opens the same reading as a popup.
 await map.fire('contextmenu', { lngLat: { lng: -105.2864656, lat: 40.027619 } });

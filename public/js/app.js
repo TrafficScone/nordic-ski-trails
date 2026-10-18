@@ -54,10 +54,8 @@ map.addControl(new maplibregl.ScaleControl({ unit: UNITS === 'mi' ? 'imperial' :
 // Latitude/longitude and elevation under the mouse (decimal degrees, ~1 m).
 // Touch screens have no hover: there, press and hold for the same reading in
 // a popup (right-click does it with a mouse).
-const coords = document.createElement('div');
-coords.className = 'maplibregl-ctrl coords';
-coords.hidden = true;
-map.addControl({ onAdd: () => coords, onRemove: () => {} }, 'bottom-left');
+// The reading sits at the bottom of the map key, so it hides with it.
+const coords = $('#coords');
 
 const formatLatLng = ({ lng, lat }) => `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 const formatElevation = (m) => (UNITS === 'mi' ? `${Math.round(m * 3.28084).toLocaleString()} ft` : `${Math.round(m).toLocaleString()} m`);
@@ -418,7 +416,7 @@ async function addAreaMarks(features) {
     const [[x0, y0], [x1, y1]] = bboxOf([area]);
     points.push({
       type: 'Feature',
-      geometry: { type: 'Point', coordinates: [(x0 + x1) / 2, (y0 + y1) / 2] },
+      geometry: { type: 'Point', coordinates: spec.at ?? [(x0 + x1) / 2, (y0 + y1) / 2] },
       properties: { name, mark: id, _group: area.properties._group },
     });
   }
