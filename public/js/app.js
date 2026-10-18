@@ -456,15 +456,23 @@ function showPopup(g, lngLat) {
   if (!g) return;
   const el = document.createElement('div');
   el.className = 'pop';
+  // A nordic centre's own area: its logo on top, like a supporter's card.
+  const center = g.kind === 'area' && NORDIC_CENTERS[g.name];
+  if (center?.logo) {
+    const logo = document.createElement('img');
+    logo.src = center.logo;
+    logo.alt = g.name;
+    logo.className = 'partner-logo center-logo';
+    el.append(logo);
+  }
   const h = document.createElement('h3');
   h.textContent = g.name || 'Untitled';
   el.append(h);
   const stats = span('meta', g.length ? formatDistance(g.length) : '');
   el.append(stats);
   if (g.kind === 'trail') addProfile(g, el, stats);
-  // A nordic centre's own area: how to reach them, before the description.
-  const center = g.kind === 'area' && NORDIC_CENTERS[g.name];
-  if (center) el.append(contactList(document, center));
+  if (center) el.append(contactList(document, center)); // how to reach them
+
 
   // One line per section that has something to say, keyed by its colour.
   for (const f of g.features) {

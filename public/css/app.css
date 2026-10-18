@@ -212,6 +212,7 @@ button { font: inherit; color: inherit; }
 
 /* ---------- partner popup (club supporters) ---------- */
 .partner-logo { display: block; width: 230px; max-width: 100%; height: auto; margin: 2px 0 6px; }
+.center-logo { width: auto; max-width: 230px; max-height: 56px; }
 .partner-tag { margin: 0 0 4px; font-size: 12px; font-weight: 600; color: var(--brand); text-transform: uppercase; letter-spacing: 0.03em; }
 .partner-info { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; margin: 8px 0 0; font-size: 13px; }
 .partner-info dt { color: #6b737c; }

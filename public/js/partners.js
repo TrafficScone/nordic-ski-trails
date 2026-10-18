@@ -24,7 +24,7 @@ export const PARTNERS = [
 
 /**
  * Nordic centres, keyed by their area's CalTopo title: contact details shown
- * at the top of the area's popup. Last checked 2026-10-18 against each
+ * at the top of the area's popup, under their logo (`logo`, optional). Last checked 2026-10-18 against each
  * centre's site (devilsthumbranch.com, ymcarockies.org, eldora.com).
  * Their live grooming reports (Nordic Pulse) are in AREA_LINKS in conditions.js.
  */
@@ -39,12 +39,14 @@ export const NORDIC_CENTERS = {
     hours: ['Daily in ski season'],
     phones: [['970-726-7000', '+19707267000']],
     url: 'https://www.devilsthumbranch.com/adventure/cross-country-skiing/',
+    logo: 'icons/dtr-logo.png',
   },
   'Snow Mountain Ranch (SMR)': {
     address: '1101 County Road 53, Granby, CO 80446',
     hours: ['Daily 8:30–5 in ski season'],
     phones: [['888-573-9622', '+18885739622']],
     url: 'https://www.ymcarockies.org/things-to-do/nordic-center',
+    logo: 'icons/smr-logo.png',
   },
 };
 
