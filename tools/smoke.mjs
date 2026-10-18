@@ -240,8 +240,12 @@ check('turning it back on restores them', greenRow?.hidden === false);
 
 console.log('\nMap key and slope');
 const toggle = $('#slope-toggle');
-check('slope shading is on by default', toggle.checked && map.getLayer('slope').layout.visibility === 'visible'
-  && !$('#slope-legend').hidden);
+check('slope shading is off by default', !toggle.checked && map.getLayer('slope').layout.visibility === 'none'
+  && $('#slope-legend').hidden);
+toggle.checked = true;
+toggle.dispatchEvent(new window.Event('change'));
+check('ticking shows slope shading and its legend',
+  map.getLayer('slope').layout.visibility === 'visible' && !$('#slope-legend').hidden);
 check('slope legend uses the club classes', /18–25°/.test($('#slope-legend').textContent)
   && /40°\+/.test($('#slope-legend').textContent), $('#slope-legend').textContent);
 toggle.checked = false;

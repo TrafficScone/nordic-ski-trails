@@ -75,7 +75,7 @@ Sources: [Terrain cartography (Wikipedia)][wiki-terrain];
 Sources: [Locus Map — winter maps][locus-winter];
 [MapTiler — contours schema][maptiler-contours].
 
-### Slope-angle shading (on by default)
+### Slope-angle shading (off by default)
 
 Shading is on when the map opens and toggled from the map key. The classes are
 the club's own, chosen for nordic skiing rather than copied from CalTopo's
@@ -89,8 +89,9 @@ avalanche-focused scheme (which starts at 27°):
 | 30–40° | red | avalanche terrain; most slab avalanches start 30–45°, peaking near 38° |
 | 40°+ | purple | very steep |
 
-Because it's on by default and starts at 18°, it covers a lot of mountain
-terrain, so it's drawn lighter (28–36 % opacity) than CalTopo draws its own.
+It's off by default (the map key turns it on): it's for judging avalanche
+terrain, not for finding a groomed loop, and it busies the map. Because it
+starts at 18°, it covers a lot of mountain terrain, so it's drawn lighter (28–36 % opacity) than CalTopo draws its own.
 
 Fixed steps are used rather than a smooth gradient on purpose: small changes
 in angle matter, and a stepped scale makes the 30° and 35° thresholds visible.
@@ -190,8 +191,8 @@ Sources: [Ordnance Survey — text on maps][os-text];
 - **Cursor readout.** Latitude, longitude and elevation under the mouse sit
   at the bottom of the map key, so hiding the key hides them too. Touch
   screens press and hold for the same reading in a popup.
-- **Club supporters** (`partners.js`) show their own mark from z11, kept
-  further in so it never crowds the North Boulder Park logo.
+- **Club supporters** (`partners.js`) show their own mark from z10 (name
+  from z11), kept further in so it never crowds the North Boulder Park logo.
 - **The selected trail** gets a white halo with a navy edge, and the other
   trails fade to 30 %. The halo avoids yellow/orange/red/purple (slope
   shading) and green/blue/black (difficulty). Navy **S** and **E** markers sit

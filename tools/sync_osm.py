@@ -22,7 +22,9 @@ tools/osm-trails.json refines that, keyed by the polygon's CalTopo title:
       "splits": {"Pawnee Pass Trail":            colour a trail in sections, cut
         {"at": "Jean Lunning Trail",             where it last meets another trail
          "from": "east",                         counting from this end
-         "colors": ["blue", "black"]}}
+         "colors": ["blue", "black"]}}           (or "at": [lng, lat], the point on
+                                                   the trail nearest it; a "drop"
+                                                   colour leaves that piece out)
     }
   },
   "trails": [ … ]   exact OSM way lists, optionally in coloured sections; give
@@ -289,6 +291,13 @@ def feature(title, lines, *, color, description, ways, width=DEFAULT_WIDTH, patt
 
 # -- areas ------------------------------------------------------------------
 
+def nearest_vertex(lines, point) -> set:
+    """The vertex of a single line closest to [lng, lat], as a `points` set."""
+    if len(lines) != 1:
+        return set()
+    return {tuple(min(lines[0], key=lambda c: haversine(c, point)))}
+
+
 def split_line(lines, points: set, start: str):
     """Cut a single line in two where it last touches `points` (shared OSM
     nodes), counting from its `start` end ("north", "south", "east", "west").
@@ -379,11 +388,15 @@ def sync_area(area_name: str, polygons: list, area: dict, curated: set[str] = fr
         sections = [(title, lines, color)]
         split = splits.get(key)
         if split:
-            at = groups.get(name_key(split["at"]))
-            cut = split_line(lines, {tuple(c) for p in (at or {}).get("pieces", []) for c in p["coords"]},
-                             split.get("from", "east")) if at else None
+            if isinstance(split["at"], list):
+                points = nearest_vertex(lines, split["at"])
+            else:
+                at = groups.get(name_key(split["at"]))
+                points = {tuple(c) for p in (at or {}).get("pieces", []) for c in p["coords"]}
+            cut = split_line(lines, points, split.get("from", "east")) if points else None
             if cut:
-                sections = [(f"{title}_{n}", [part], c) for n, (part, c) in enumerate(zip(cut, split["colors"]), 1)]
+                sections = [(f"{title}_{n}", [part], c) for n, (part, c) in enumerate(zip(cut, split["colors"]), 1)
+                            if c != "drop"]
             else:
                 print(f"  ! {area_name}: can't split {title} at {split['at']} — they don't meet")
         for section_title, section_lines, section_color in sections:

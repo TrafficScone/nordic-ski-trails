@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Nordic Ski Trails</title>
+<title>BNC | Places to Ski</title>
 <meta name="description" content="A map of nordic ski trails." />
 <link rel="manifest" href="manifest.webmanifest" />
 <meta name="theme-color" content="#0c3d54" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎿</text></svg>" />
+<link rel="icon" type="image/png" href="icons/bnc-mark.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
@@ -37,8 +37,8 @@
     <button id="key-hide" class="key-hide" type="button" title="Hide the map key">Hide</button>
   </div>
   <div id="legend"></div>
-  <label class="toggle"><input id="slope-toggle" type="checkbox" checked /> Slope angle shading</label>
-  <div id="slope-legend" class="legend"></div>
+  <label class="toggle"><input id="slope-toggle" type="checkbox" /> Slope angle shading</label>
+  <div id="slope-legend" class="legend" hidden></div>
   <div id="coords" class="coords" hidden></div>
 </section>
 <button id="key-show" class="key-show" type="button" hidden>Map key</button>

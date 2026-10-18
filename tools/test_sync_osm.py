@@ -5,7 +5,7 @@
 
 import unittest
 
-from sync_osm import area_settings, clip_way, describe, in_polygon, name_key, split_line, stitch
+from sync_osm import area_settings, clip_way, describe, in_polygon, name_key, nearest_vertex, split_line, stitch
 
 SQUARE = [[[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]]]
 
@@ -65,6 +65,12 @@ class Split(unittest.TestCase):
     def test_no_meeting_or_touching_only_an_end(self):
         self.assertIsNone(split_line(self.LINE, {(42, 42)}, "east"))
         self.assertIsNone(split_line(self.LINE, {(0, 0)}, "east"))
+
+    def test_cut_at_a_point_uses_the_nearest_vertex(self):
+        points = nearest_vertex(self.LINE, [5.1, 0.2])
+        self.assertEqual(points, {(5, 0)})
+        before, after = split_line(self.LINE, points, "east")
+        self.assertEqual(after, [[5, 0], [3, 0], [0, 0]])
 
     def test_area_settings_keep_only_grooming_and_snow(self):
         config = {"A": {"grooming": "ungroomed", "colors": {}}, "B": {"exclude": []}, "C": {"needs_snow": True}}

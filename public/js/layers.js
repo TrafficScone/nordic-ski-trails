@@ -228,14 +228,14 @@ export function trailOpacity(selectedGroup = '') {
 }
 
 /**
- * Club supporters (partners.js): the business's own square mark from z11
+ * Club supporters (partners.js): the business's own square mark from z10
  * (further out it would crowd the North Boulder Park mark), name from z11.
  */
 export const PARTNER_LAYERS = ['partner-icon'];
 export function partnerLayers(source) {
   return [
     {
-      id: 'partner-icon', type: 'symbol', source, minzoom: 11,
+      id: 'partner-icon', type: 'symbol', source, minzoom: 10,
       layout: {
         'icon-image': ['get', 'mark'], 'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 0.8, 14, 1.1], 'icon-allow-overlap': true,
         'text-field': ['step', ['zoom'], '', 11, ['get', 'name']], 'text-font': LABEL_FONT, 'text-size': 12,

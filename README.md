@@ -34,7 +34,7 @@ The basemap ("Corduroy", `public/js/basemap.js`) is a light winter style built
 on MapTiler's vector tiles: snow-white ground, forest tinted so treeline reads
 at a glance, soft relief with 40 ft contours, and Inter labels to match the
 club site. Slope-angle shading (18–25° yellow, 25–30° orange, 30–40° red, 40°+ purple,
-computed in the browser) is on by default; the map key in the corner toggles it. The design principles and their sources are in
+computed in the browser) is off by default; the map key in the corner toggles it. The design principles and their sources are in
 [docs/cartography.md](docs/cartography.md); every basemap colour lives in
 `PALETTE` in `basemap.js`.
 

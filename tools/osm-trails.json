@@ -99,6 +99,63 @@
         "Lake Eldora Ski Road",
         "Eldora Spur"
       ]
+    },
+    "Wild Basin (RMNP)": {
+      "grooming": "ungroomed",
+      "needs_snow": true,
+      "colors": {
+        "Meadow Mountain Ranch Trail": "green",
+        "Finch Lake Cutoff Trail": "black",
+        "Finch Lake - Pear Lake Trail": "black",
+        "Thunder Lake Trail": "black",
+        "Ouzel Lake Trail": "black",
+        "Thunder Lake Campsite Access Trail": "black",
+        "Box-Eagle Lakes Route": "black",
+        "Boulder-Grand Pass Trail": "black",
+        "Lion Lake Trail": "black",
+        "Bluebird Lake Trail": "black",
+        "Cony Lake Trail": "black",
+        "County Highway 115": "green"
+      },
+      "splits": {
+        "Wild Basin Trail": {
+          "at": "Thunder Lake Trail",
+          "from": "east",
+          "colors": [
+            "blue",
+            "black"
+          ]
+        },
+        "County Highway 115": {
+          "at": [
+            -105.5503,
+            40.2135
+          ],
+          "from": "east",
+          "colors": [
+            "drop",
+            "green"
+          ]
+        }
+      },
+      "notes": {
+        "County Highway 115": "Wild Basin Road. In winter it's plowed only to the winter parking near Copeland Lake; the last mile to the summer trailhead is closed to cars."
+      }
+    },
+    "Peaceful Valley": {
+      "grooming": "ungroomed",
+      "needs_snow": true,
+      "colors": {
+        "Coney Lake Trail": "black",
+        "Beaver Creek Trail": "black",
+        "Saint Vrain Glacier Trail": "black"
+      },
+      "notes": {
+        "County Road 92": "Gated at Peaceful Valley in winter and not plowed beyond; ski the closed road (or the Middle Saint Vrain Trail beside it) to Camp Dick.",
+        "County Road 92J": "Middle Saint Vrain Road (FS 114): closed to vehicles mid-November to late June.",
+        "Coney Creek Road": "Coney Flats Road (FS 507) from Beaver Reservoir: closed to vehicles mid-November to late June.",
+        "Coney Flats Road": "Closed to vehicles mid-November to late June."
+      }
     }
   },
   "trails": [

@@ -133,9 +133,9 @@ export function basemapLayers() {
     },
     {
       id: 'slope', type: 'raster', source: 'slope', minzoom: 10,
-      layout: { visibility: 'visible' }, // on by default; the map key toggles it
-      // Lighter than CalTopo's: it's on by default and starts at 18°, so it
-      // covers a lot of ground and mustn't drown the basemap.
+      layout: { visibility: 'none' }, // off by default; the map key toggles it
+      // Lighter than CalTopo's: it starts at 18°, so it covers a lot of
+      // ground and mustn't drown the basemap.
       paint: { 'raster-opacity': z(10, 0.28, 14, 0.36) },
     },
     {
