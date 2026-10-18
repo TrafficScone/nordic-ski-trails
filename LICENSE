@@ -25,8 +25,10 @@ SOFTWARE.
 This license covers the source code only. It does not cover:
 
 - Logos and trademarks: the Boulder Nordic Club logo (public/icons/bnc-mark.png,
-  tools/bnc-mark.svg), the Eldora logo (public/icons/eldora-mark.png) and the
-  Boulder Nordic & Cycle Sport logos (public/icons/bns-logo.png,
+  tools/bnc-mark.svg), the Eldora logo (public/icons/eldora-mark.png), the
+  Devil's Thumb Ranch logo (public/icons/dtr-mark.png), the YMCA of the
+  Rockies logo (public/icons/smr-mark.png) and the Boulder Nordic & Cycle
+  Sport logos (public/icons/bns-logo.png,
   public/icons/bns-mark.png). They belong to their respective owners and are
   not licensed for reuse; remove or replace them in any fork.
 - Trail data derived from OpenStreetMap (public/trails/osm.geojson), which is

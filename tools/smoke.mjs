@@ -186,9 +186,9 @@ check('agency ref sits at the very bottom of the popup',
 
 // Area logos: mark and name at every zoom, own colour, no duplicate area label.
 const marked = fc.features.filter((f) => f.properties._mark).map((f) => f.properties._section).sort();
-check('North Boulder Park and Eldora carry their logos', marked.join() === 'Eldora,North Boulder Park'
+check('logo areas carry their logos', marked.join() === "Devil's Thumb Ranch,Eldora,North Boulder Park,Snow Mountain Ranch (SMR)"
   && map.images?.has('area-mark-North Boulder Park') && !!map.getLayer('area-mark')
-  && map.getSource('area-marks')?.data.features.length === 2);
+  && map.getSource('area-marks')?.data.features.length === 4);
 check('logos sit where AREA_MARKS pins them',
   map.getSource('area-marks')?.data.features.find((f) => f.properties.name === 'Eldora')
     ?.geometry.coordinates.join() === '-105.5819,39.93828');

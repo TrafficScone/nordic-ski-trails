@@ -53,8 +53,11 @@ export const UNITS = 'mi'; // 'mi' | 'km'
 // (never hidden by other labels) and smaller among the trails close in.
 // `color` replaces the CalTopo colour of the area's tint and outline; `at`
 // ([lng, lat]) places the logo (default: the middle of the area's bounding box).
-// North Boulder Park is the club's home area; Eldora uses the resort's mark.
+// North Boulder Park is the club's home area; Eldora and the two ranches use
+// their own marks.
 export const AREA_MARKS = {
   'North Boulder Park': { mark: 'icons/bnc-mark.png', color: '#005daa', at: [-105.28692, 40.02824] },
   Eldora: { mark: 'icons/eldora-mark.png', color: '#e75300', at: [-105.5819, 39.93828] },
+  "Devil's Thumb Ranch": { mark: 'icons/dtr-mark.png', color: '#372c25' },
+  'Snow Mountain Ranch (SMR)': { mark: 'icons/smr-mark.png', color: '#234938' },
 };

@@ -292,7 +292,9 @@ remove the snow card.
 The code is [MIT](LICENSE). Two things in the repo are **not** covered by it:
 
 - **Logos and trademarks.** The Boulder Nordic Club logo (`icons/bnc-mark.png`,
-  `tools/bnc-mark.svg`), the Eldora logo (`icons/eldora-mark.png`) and the
+  `tools/bnc-mark.svg`), the Eldora logo (`icons/eldora-mark.png`), the
+  Devil's Thumb Ranch logo (`icons/dtr-mark.png`), the YMCA of the Rockies
+  logo for Snow Mountain Ranch (`icons/smr-mark.png`) and the
   Boulder Nordic & Cycle Sport logos (`icons/bns-logo.png`, `icons/bns-mark.png`)
   belong to their owners and aren't licensed for reuse. A fork must remove or
   replace them.

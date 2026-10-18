@@ -182,10 +182,13 @@ Sources: [Ordnance Survey — text on maps][os-text];
   outlined and labelled — as an overview of where to ski; trails and places
   appear as you zoom in, and opening a trail never lands below that zoom.
 - **Area logos.** North Boulder Park is the club's main area but a speck at
-  regional scale; Eldora is the one resort. Both get their logo (the BNC
-  snowflake; Eldora's tree) beside their name at every zoom — other labels
-  give way to them — and their area tint takes the logo colour (BNC blue
-  `#005daa`, Eldora orange `#e75300`). From z13 the name drops and the logo
+  regional scale; Eldora, Devil's Thumb Ranch and Snow Mountain Ranch are the
+  commercial nordic centres. Each gets its logo (the BNC snowflake, Eldora's
+  tree, DTR, the YMCA Y) beside its name at every zoom — other labels give way
+  to them — and its area tint takes the logo colour (BNC blue `#005daa`,
+  Eldora orange `#e75300`, DTR brown `#372c25`, YMCA green `#234938`). Federal
+  areas (RMNP, the national forests) get none: the NPS arrowhead and Forest
+  Service shield are protected emblems. From z13 the name drops and the logo
   shrinks among the trails. Set in `AREA_MARKS` in `config.js`, which also
   pins each logo to a hand-picked spot (`at`).
 - **Cursor readout.** Latitude, longitude and elevation under the mouse sit
