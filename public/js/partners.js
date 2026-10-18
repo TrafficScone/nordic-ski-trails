@@ -9,7 +9,7 @@
 export const PARTNERS = [
   {
     id: 'boulder-nordic-sport',
-    name: 'Boulder Nordic Sport',
+    name: 'Boulder Nordic & Cycle Sport',
     tagline: 'Supports the Boulder Nordic Club',
     about: 'Cross-country ski gear, waxing and boot, ski and pole fitting.',
     address: '3280 Valmont Road, Boulder, CO 80301',

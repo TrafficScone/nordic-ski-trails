@@ -173,7 +173,8 @@ Sources: [Ordnance Survey — text on maps][os-text];
   drawn with the map font, so no icon sprite is needed.
 - **Line style carries snow and grooming, colour carries difficulty.** Solid =
   groomed (or not known); a white stripe down the centre = ungroomed; dashed =
-  only skiable after heavy recent snowfall (Caribou Ranch, North Boulder Park).
+  only skiable after heavy recent snowfall (Caribou Ranch, North Boulder Park,
+  West Magnolia).
   Dashed is reserved for that one meaning so it never has to be decoded.
 - **Zones first.** Below zoom 10.5 the map shows only the areas — tinted,
   outlined and labelled — as an overview of where to ski; trails and places

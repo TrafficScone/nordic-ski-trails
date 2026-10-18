@@ -90,7 +90,8 @@
         "Los Logos": "green",
         "Rollinsville": "green",
         "South Tennessee Mountain Spur": "green"
-      }
+      },
+      "needs_snow": true
     },
     "Eldora": {
       "exclude": [
