@@ -236,7 +236,28 @@
         "Aspen Lane",
         "Parkerson Road",
         "Mill Gulch Road",
-        "Reflection Lane"
+        "Reflection Lane",
+        "Recreation Way",
+        "Kiva Lane"
+      ]
+    },
+    "Devil's Thumb Ranch": {
+      "exclude": [
+        "Devil's Thumb Road",
+        "Cattle Drive",
+        "Sky Valley Way",
+        "Elkhorn Ridge Trail",
+        "Devil's Thumb Lane",
+        "Inspiration Point",
+        "Bull Bugle Bend",
+        "Alpenglow Vista",
+        "Sunset Drive",
+        "Ranch Creek Court",
+        "Denver Water Board Road",
+        "North Ranch Creek",
+        "County Road 809",
+        "Ranch Creek Drive",
+        "Tawny Buck Trail"
       ]
     }
   },
