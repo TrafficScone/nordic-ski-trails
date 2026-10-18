@@ -233,7 +233,10 @@ check('every list row is inside a collapsible section',
 console.log('\nFilters');
 const chips = [...window.document.querySelectorAll('#filters .flt-chip')];
 check('difficulty chips rendered', chips.length === 4);
-check('legend rendered', window.document.querySelectorAll('#legend .lgd-row').length === 7);
+check('legend rendered, with a backcountry area row', window.document.querySelectorAll('#legend .lgd-row').length === 8
+  && /Backcountry area/.test($('#legend').textContent));
+check('backcountry areas are grey', fc.features.find((f) => f.properties._group === 'area:Brainard Lake')?.properties._color === '#6b7480'
+  && fc.features.find((f) => f.properties._group === 'area:Caribou Ranch')?.properties._color !== '#6b7480');
 const greenTrail = fc.features.find((f) => f.properties._difficulty === 'easy');
 const greenRow = [...window.document.querySelectorAll('#list .item')]
   .find((b) => b.querySelector('.name').textContent === greenTrail.properties._name);
@@ -246,6 +249,10 @@ check('…but never the places', map.getLayer('marker-dot').filter === undefined
 chips.find((c) => c.dataset.difficulty === 'easy').click();
 check('turning it back on restores them', greenRow?.hidden === false);
 
+check('club card links to membership and feedback email',
+  $('#club')?.querySelector('.club-join')?.href === 'https://bouldernordic.org/membership-account/membership-levels/'
+  && $('#club').querySelector('a[href="mailto:info@bouldernordic.org"]') !== null
+  && $('#club').classList.contains('maplibregl-ctrl'));
 console.log('\nMap key and slope');
 const toggle = $('#slope-toggle');
 check('slope shading is off by default', !toggle.checked && map.getLayer('slope').layout.visibility === 'none'

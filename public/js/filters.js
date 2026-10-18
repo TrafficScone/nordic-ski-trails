@@ -95,8 +95,11 @@ export function renderFilters(container, state, onChange) {
   container.append(chips, row);
 }
 
-/** Static legend matching the map: white-cased lines, parking disc, area box. */
-export function renderLegend(container) {
+/**
+ * Static legend matching the map: white-cased lines, parking disc, area box,
+ * and a grey box for backcountry areas when `backcountryColor` is given.
+ */
+export function renderLegend(container, { backcountryColor } = {}) {
   const doc = container.ownerDocument;
   container.replaceChildren();
   const list = el(doc, 'ul', 'lgd-list');
@@ -118,12 +121,16 @@ export function renderLegend(container) {
   parking.setAttribute('aria-hidden', 'true');
   row(parking, 'Parking');
 
-  const area = svg(doc, 22, 14, 'lgd-swatch');
-  area.append(svgEl(doc, 'rect', {
-    x: 1.5, y: 1.5, width: 19, height: 11, rx: 2, fill: 'rgba(0,93,170,0.1)',
-    stroke: '#005daa', 'stroke-width': 1.5, 'stroke-dasharray': '3 2',
-  }));
-  row(area, 'Area');
+  const areaBox = (stroke, fill) => {
+    const box = svg(doc, 22, 14, 'lgd-swatch');
+    box.append(svgEl(doc, 'rect', {
+      x: 1.5, y: 1.5, width: 19, height: 11, rx: 2, fill,
+      stroke, 'stroke-width': 1.5, 'stroke-dasharray': '3 2',
+    }));
+    return box;
+  };
+  row(areaBox('#005daa', 'rgba(0,93,170,0.1)'), 'Area');
+  if (backcountryColor) row(areaBox(backcountryColor, `${backcountryColor}1f`), 'Backcountry area');
 
   container.append(list);
 }

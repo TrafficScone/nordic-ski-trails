@@ -181,6 +181,13 @@ Sources: [Ordnance Survey — text on maps][os-text];
 - **Zones first.** Below zoom 10.5 the map shows only the areas — tinted,
   outlined and labelled — as an overview of where to ski; trails and places
   appear as you zoom in, and opening a trail never lands below that zoom.
+- **Backcountry areas are grey.** Brainard Lake, Hessie/Lost Lake, Moffat
+  Tunnel / Rollins Pass, Peaceful Valley, West Magnolia and Wild Basin have no
+  grooming or facilities; their tint and outline are grey (`#6b7480`, a
+  "Backcountry area" row in the map key) so they read differently from the
+  nordic centres at a glance. Set in `BACKCOUNTRY_AREAS` in `config.js`.
+- **Club card.** Bottom-left: the BNC mark, a join link to the club's
+  membership page and the feedback address. On phones the pitch line drops.
 - **Area logos.** North Boulder Park is the club's main area but a speck at
   regional scale; Eldora, Devil's Thumb Ranch and Snow Mountain Ranch are the
   commercial nordic centres. Each gets its logo (the BNC snowflake, Eldora's
@@ -195,7 +202,7 @@ Sources: [Ordnance Survey — text on maps][os-text];
   at the bottom of the map key, so hiding the key hides them too. Touch
   screens press and hold for the same reading in a popup.
 - **Club supporters** (`partners.js`) show their own mark from z10 (name
-  from z11), kept further in so it never crowds the North Boulder Park logo.
+  from z11); it gives way to the area logos where they'd collide.
 - **The selected trail** gets a white halo with a navy edge, and the other
   trails fade to 30 %. The halo avoids yellow/orange/red/purple (slope
   shading) and green/blue/black (difficulty). Navy **S** and **E** markers sit

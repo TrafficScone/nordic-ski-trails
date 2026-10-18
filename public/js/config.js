@@ -55,6 +55,15 @@ export const UNITS = 'mi'; // 'mi' | 'km'
 // ([lng, lat]) places the logo (default: the middle of the area's bounding box).
 // North Boulder Park is the club's home area; Eldora and the two ranches use
 // their own marks.
+// Backcountry areas: no grooming, no facilities. Their tint and outline are
+// grey instead of their CalTopo colour, and the map key says what grey means.
+// Names are the CalTopo polygon titles.
+export const BACKCOUNTRY_AREAS = [
+  'Brainard Lake', 'Hessie/Lost Lake', 'Moffat Tunnel / Rollins Pass',
+  'Peaceful Valley', 'West Magnolia', 'Wild Basin (RMNP)',
+];
+export const BACKCOUNTRY_COLOR = '#6b7480';
+
 export const AREA_MARKS = {
   'North Boulder Park': { mark: 'icons/bnc-mark.png', color: '#005daa', at: [-105.28692, 40.02824] },
   Eldora: { mark: 'icons/eldora-mark.png', color: '#e75300', at: [-105.5819, 39.93828] },

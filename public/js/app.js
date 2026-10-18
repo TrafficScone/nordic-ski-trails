@@ -11,7 +11,7 @@
 // ---------------------------------------------------------------------------
 
 import { basemapStyle } from './basemap.js';
-import { DEFAULT_VIEW, DEM_TILES, FALLBACK_COLOR, AREA_MARKS, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
+import { AREA_MARKS, BACKCOUNTRY_AREAS, BACKCOUNTRY_COLOR, DEFAULT_VIEW, DEM_TILES, FALLBACK_COLOR, MAPTILER_KEY, TRAILS_DIR, UNITS } from './config.js';
 import { HIT_LAYERS, PARTNER_LAYERS, TRAIL_MINZOOM, areaMarkLayers, partnerLayers, selectionGlowLayers, selectionMarkerLayers, trailLayers, trailOpacity } from './layers.js';
 import { conditionLinksFor } from './conditions.js';
 import { icon, iconForUrl } from './icons.js';
@@ -50,6 +50,8 @@ map.addControl(new maplibregl.NavigationControl(), 'top-right');
 map.addControl(new maplibregl.GeolocateControl({ trackUserLocation: true }), 'top-right');
 map.addControl(new maplibregl.FullscreenControl(), 'top-right');
 map.addControl(new maplibregl.ScaleControl({ unit: UNITS === 'mi' ? 'imperial' : 'metric' }), 'bottom-right');
+// The club card (index.html): join link and feedback address, bottom-left.
+map.addControl({ onAdd: () => { $('#club').classList.add('maplibregl-ctrl'); return $('#club'); }, onRemove: () => {} }, 'bottom-left');
 
 // Latitude/longitude and elevation under the mouse (decimal degrees, ~1 m).
 // Touch screens have no hover: there, press and hold for the same reading in
@@ -133,7 +135,7 @@ map.on('load', async () => {
   renderList();
   renderSlopeLegend();
   renderFilters($('#filters'), filterState, applyFilters);
-  renderLegend($('#legend'));
+  renderLegend($('#legend'), { backcountryColor: BACKCOUNTRY_COLOR });
   setupKey();
 
   // A shared link (#trail/devils-thumb-trail) opens that trail; otherwise
@@ -290,6 +292,9 @@ function color(c) {
  */
 function assignAreas(features) {
   const areas = features.filter((f) => f.geometry.type.endsWith('Polygon'));
+  for (const { properties: p } of areas) {
+    if (BACKCOUNTRY_AREAS.includes(p._area)) p._color = BACKCOUNTRY_COLOR;
+  }
   for (const f of features) {
     if (f.properties._area || !areas.length) continue;
     const probe = centerOf(f.geometry);

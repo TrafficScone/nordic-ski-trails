@@ -237,7 +237,9 @@ export function partnerLayers(source) {
     {
       id: 'partner-icon', type: 'symbol', source, minzoom: 10,
       layout: {
-        'icon-image': ['get', 'mark'], 'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 0.8, 14, 1.1], 'icon-allow-overlap': true,
+        // Gives way to the area logos and their names (placed first) rather
+        // than covering North Boulder Park's label zoomed out.
+        'icon-image': ['get', 'mark'], 'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 0.8, 14, 1.1],
         'text-field': ['step', ['zoom'], '', 11, ['get', 'name']], 'text-font': LABEL_FONT, 'text-size': 12,
         'text-anchor': 'top', 'text-offset': [0, 1.3], 'text-optional': true,
       },

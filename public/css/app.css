@@ -24,7 +24,7 @@ button { font: inherit; color: inherit; }
 /* ---------- trail list ---------- */
 #panel {
   position: absolute; top: 10px; left: 10px; z-index: 2;
-  width: 280px; max-width: calc(100vw - 70px); max-height: calc(100dvh - 60px);
+  width: 280px; max-width: calc(100vw - 70px); max-height: calc(100dvh - 150px); /* room for the club card */
   display: flex; flex-direction: column;
   background: var(--panel); border-radius: var(--radius); box-shadow: var(--shadow);
   border-top: 4px solid var(--brand);
@@ -184,6 +184,19 @@ button { font: inherit; color: inherit; }
 .key .toggle { margin-top: 6px; padding: 0; border-top: 1px solid #eceef1; padding-top: 4px; }
 .key .legend { padding: 2px 0 0; }
 
+/* ---------- club card (floating, bottom-left) ---------- */
+.club {
+  display: flex; align-items: center; gap: 10px; width: 280px; max-width: calc(100vw - 150px);
+  padding: 8px 12px 8px 8px; background: var(--panel); border-radius: var(--radius); box-shadow: var(--shadow);
+  border-left: 4px solid var(--brand); font: 12px/1.35 var(--font); color: var(--ink-2);
+}
+.club-logo { flex: none; width: 40px; height: 40px; }
+.club-text { min-width: 0; }
+.club-text p { margin: 0; }
+.club-pitch { color: var(--ink); }
+.club-join { display: inline-block; padding: 2px 0; font-weight: 650; font-size: 13px; color: var(--brand); }
+.club-feedback a { color: var(--brand); overflow-wrap: anywhere; }
+
 /* ---------- map options ---------- */
 .toggle { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 6px; cursor: pointer; }
 .toggle input { width: 18px; height: 18px; accent-color: var(--brand); margin: 0; }
@@ -194,6 +207,10 @@ button { font: inherit; color: inherit; }
 
 @media (max-width: 640px) {
   #panel { width: auto; right: 60px; }
+  /* Phones: just the logo, the join link and the email. */
+  .club { gap: 8px; padding: 6px 10px 6px 6px; }
+  .club-logo { width: 32px; height: 32px; }
+  .club-pitch { display: none; }
 }
 
 /* Bigger map controls on touch screens — usable with cold or gloved hands. */
