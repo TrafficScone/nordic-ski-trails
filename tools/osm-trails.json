@@ -97,7 +97,9 @@
       "exclude": [
         "Eldora Ski Road",
         "Lake Eldora Ski Road",
-        "Eldora Spur"
+        "Eldora Spur",
+        "Kinglet Trail",
+        "503"
       ]
     },
     "Wild Basin (RMNP)": {
@@ -155,6 +157,46 @@
         "County Road 92J": "Middle Saint Vrain Road (FS 114): closed to vehicles mid-November to late June.",
         "Coney Creek Road": "Coney Flats Road (FS 507) from Beaver Reservoir: closed to vehicles mid-November to late June.",
         "Coney Flats Road": "Closed to vehicles mid-November to late June."
+      }
+    },
+    "Moffat Tunnel / Rollins Pass": {
+      "grooming": "ungroomed",
+      "exclude": [
+        "Tolland Road",
+        "Rollins Pass Trail",
+        "Rollins Pass Trailhead Road"
+      ],
+      "colors": {
+        "Forest Lakes Trail": "black",
+        "Arapaho Lakes Trail": "black",
+        "Crater Lakes Trail": "black",
+        "Clayton Lake Trail": "black",
+        "Needle Eye Bypass Trail": "black"
+      },
+      "splits": {
+        "Rollins Pass Road": {
+          "at": [
+            [
+              -105.6107,
+              39.9121
+            ],
+            "Forest Lakes Trail"
+          ],
+          "from": "east",
+          "colors": [
+            "green",
+            "blue",
+            "black"
+          ]
+        },
+        "South Boulder Creek Trail": {
+          "at": "Clayton Lake Trail",
+          "from": "east",
+          "colors": [
+            "blue",
+            "black"
+          ]
+        }
       }
     }
   },

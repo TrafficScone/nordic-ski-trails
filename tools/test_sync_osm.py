@@ -5,7 +5,7 @@
 
 import unittest
 
-from sync_osm import area_settings, clip_way, describe, in_polygon, name_key, nearest_vertex, split_line, stitch
+from sync_osm import area_settings, bridge, clip_way, describe, in_polygon, name_key, nearest_vertex, split_line, stitch
 
 SQUARE = [[[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]]]
 
@@ -71,6 +71,17 @@ class Split(unittest.TestCase):
         self.assertEqual(points, {(5, 0)})
         before, after = split_line(self.LINE, points, "east")
         self.assertEqual(after, [[5, 0], [3, 0], [0, 0]])
+
+    def test_several_cuts_give_pieces_in_order(self):
+        pieces = split_line(self.LINE, [{(3, 0)}, {(8, 0)}], "east")
+        self.assertEqual(pieces, [[[10, 0], [8, 0]], [[8, 0], [5, 0], [3, 0]], [[3, 0], [0, 0]]])
+
+    def test_bridge_joins_pieces_across_a_small_gap(self):
+        a, b = [[0, 0], [0.001, 0]], [[0.0015, 0], [0.003, 0]]
+        (joined,) = bridge([b, a])  # either direction: split_line orients it
+        self.assertIn(joined, ([[0, 0], [0.001, 0], [0.0015, 0], [0.003, 0]],
+                               [[0.003, 0], [0.0015, 0], [0.001, 0], [0, 0]]))
+        self.assertEqual(len(bridge([a, [[1, 1], [1.1, 1]]])), 2)
 
     def test_area_settings_keep_only_grooming_and_snow(self):
         config = {"A": {"grooming": "ungroomed", "colors": {}}, "B": {"exclude": []}, "C": {"needs_snow": True}}

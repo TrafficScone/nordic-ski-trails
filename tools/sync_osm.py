@@ -23,8 +23,9 @@ tools/osm-trails.json refines that, keyed by the polygon's CalTopo title:
         {"at": "Jean Lunning Trail",             where it last meets another trail
          "from": "east",                         counting from this end
          "colors": ["blue", "black"]}}           (or "at": [lng, lat], the point on
-                                                   the trail nearest it; a "drop"
-                                                   colour leaves that piece out)
+                                                   the trail nearest it, or a list of
+                                                   cuts with one more colour; a
+                                                   "drop" colour leaves that piece out)
     }
   },
   "trails": [ … ]   exact OSM way lists, optionally in coloured sections; give
@@ -298,21 +299,48 @@ def nearest_vertex(lines, point) -> set:
     return {tuple(min(lines[0], key=lambda c: haversine(c, point)))}
 
 
-def split_line(lines, points: set, start: str):
-    """Cut a single line in two where it last touches `points` (shared OSM
-    nodes), counting from its `start` end ("north", "south", "east", "west").
-    Returns [before, after], or None if it isn't one line or never touches."""
+def bridge(lines, max_gap_m=100):
+    """Join pieces whose ends are within `max_gap_m` (a short way lost in
+    clipping, a tunnel) into one line, so a split can run along all of it."""
+    lines = [list(l) for l in lines]
+    while len(lines) > 1:
+        best = None
+        for i, a in enumerate(lines):
+            for j, b in enumerate(lines):
+                if i == j:
+                    continue
+                for ra, rb in ((False, False), (False, True), (True, False), (True, True)):
+                    aa, bb = (a[::-1] if ra else a), (b[::-1] if rb else b)
+                    gap = haversine(aa[-1], bb[0])
+                    if gap <= max_gap_m and (best is None or gap < best[0]):
+                        best = (gap, i, j, aa + bb)
+        if not best:
+            break
+        _, i, j, joined = best
+        lines = [l for k, l in enumerate(lines) if k not in (i, j)] + [joined]
+    return lines
+
+
+def split_line(lines, points, start: str):
+    """Cut a single line where it last touches each set in `points` (shared
+    OSM nodes; one set, or a list of them for several cuts), counting from
+    its `start` end ("north", "south", "east", "west"). Returns the pieces in
+    order from `start`, or None if it isn't one line or misses a cut."""
     if len(lines) != 1:
         return None
+    cuts = points if isinstance(points, list) else [points]
     line = lines[0]
     axis, sign = {"east": (0, 1), "west": (0, -1), "north": (1, 1), "south": (1, -1)}[start]
     if (line[0][axis] - line[-1][axis]) * sign < 0:
         line = line[::-1]
-    hits = [i for i, c in enumerate(line) if tuple(c) in points and 0 < i < len(line) - 1]
-    if not hits:
-        return None
-    i = hits[-1]
-    return [line[:i + 1], line[i:]]
+    at = []
+    for cut in cuts:
+        hits = [i for i, c in enumerate(line) if tuple(c) in cut and 0 < i < len(line) - 1]
+        if not hits:
+            return None
+        at.append(hits[-1])
+    bounds = [0, *sorted(set(at)), len(line) - 1]
+    return [line[a:b + 1] for a, b in zip(bounds, bounds[1:])]
 
 
 def sync_area(area_name: str, polygons: list, area: dict, curated: set[str] = frozenset()) -> list[dict]:
@@ -388,12 +416,17 @@ def sync_area(area_name: str, polygons: list, area: dict, curated: set[str] = fr
         sections = [(title, lines, color)]
         split = splits.get(key)
         if split:
-            if isinstance(split["at"], list):
-                points = nearest_vertex(lines, split["at"])
-            else:
-                at = groups.get(name_key(split["at"]))
-                points = {tuple(c) for p in (at or {}).get("pieces", []) for c in p["coords"]}
-            cut = split_line(lines, points, split.get("from", "east")) if points else None
+            lines = bridge(lines)
+            ats = split["at"] if isinstance(split["at"], list) and not isinstance(split["at"][0], (int, float)) \
+                else [split["at"]]
+            points = []
+            for at in ats:
+                if isinstance(at, list):
+                    points.append(nearest_vertex(lines, at))
+                else:
+                    other = groups.get(name_key(at))
+                    points.append({tuple(c) for p in (other or {}).get("pieces", []) for c in p["coords"]})
+            cut = split_line(lines, points, split.get("from", "east")) if all(points) else None
             if cut:
                 sections = [(f"{title}_{n}", [part], c) for n, (part, c) in enumerate(zip(cut, split["colors"]), 1)
                             if c != "drop"]

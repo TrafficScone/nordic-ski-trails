@@ -103,6 +103,7 @@ polygon's CalTopo title, so it survives every re-export:
 | `min_length_m` | Drop pieces shorter than this (default 100 m; edge slivers). |
 | `grooming` | `"ungroomed"` / `"groomed"` for every trail in the area, overriding OSM. Ungroomed trails get a white centre stripe. |
 | `needs_snow` | `true` if the area is only skiable after heavy recent snowfall: its trails are drawn dashed. |
+| `splits` | Colour one trail in sections: `{"Wild Basin Trail": {"at": "Thunder Lake Trail", "from": "east", "colors": ["blue", "black"]}}` cuts where it meets that trail, counting from its east end. `at` can also be a `[lng, lat]` point or a list of cuts (one more colour than cuts); the colour `"drop"` leaves a piece off the map. |
 
 `trails` takes exact way lists for when an area isn't the right tool:
 `{"name": "…", "area": "Brainard Lake", "sections": [{"ways": [123, 456], "color": "blue", "description": "…"}]}`
